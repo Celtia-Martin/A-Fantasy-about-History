@@ -21,6 +21,10 @@ Las batallas no se deciden solo por la calidad de los personajes: ofrecen una se
 
 Las formaciones son variables, pero siempre estan formadas por X (de momento, 6) unidades. Se pueden cambiar momentos antes de la batalla. Los personajes que no entren en la formación estarán en el banquillo, y no otorgarán puntos.
 
+Hay 3 niveles de jerarquía: el editor, el administrador de liga y el jugador. Un EDITOR (normalmente los creadores) puede editar y ampliar las bases de datos, añadiendo personajes y batallas a las mismas. También puede modificar el ratio de batallas y de refresco del mercado. Un ADMINISTRADOR DE LIGA puede expulsar a jugadores de su liga, e imponer sanciones administrativas. El creador de la liga será quién tenga este rol. Un JUGADOR puede participar en batallas, pujar en el mercado, editar formaciones, etc.
+
+Es estrictamente PRIVADO para los creadores la Simulación de Batallas, el reparto de puntos y oro y el cambio de jugadores en el mercado.
+
 ## Entidades
 
 **- Usuario:** Tiene Nombre de Usuario y Contraseña. Puede estar asociado a una liga o a varias (si no está asociado, no puede jugar). Por cada liga, tiene una Formación (que se identifica según la liga a la que pertenece), un Equipo (conjunto de Personajes, identificados por la liga a la que pertenece) y una cantidad de puntos y oro.
