@@ -1,4 +1,4 @@
-package es.urjc.etsii.dad.historyfantasyweb;
+package es.urjc.etsii.dad.Entities;
 
 import javax.persistence.*;
 import org.springframework.web.context.annotation.SessionScope;
