@@ -6,6 +6,6 @@ import javax.persistence.*;
 public class Batalla {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-
+	private int id;
 	private int Tipo;
 }

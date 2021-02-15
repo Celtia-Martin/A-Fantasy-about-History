@@ -6,7 +6,8 @@ import javax.persistence.*;
 public class Personaje {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-
+	private int id;
+	
 	private String Nombre;
 	private int Rango;
 	private int Tipo;
