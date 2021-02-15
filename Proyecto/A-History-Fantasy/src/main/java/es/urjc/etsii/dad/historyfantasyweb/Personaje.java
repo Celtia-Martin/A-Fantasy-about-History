@@ -1,15 +1,18 @@
 package es.urjc.etsii.dad.historyfantasyweb;
 
 import javax.persistence.*;
-import org.springframework.web.context.annotation.SessionScope;
-
 
 @Entity
-public class User {
+public class Personaje {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 
 	private String Nombre;
-	private String Contrasena;
+	private int Rango;
+	private int Tipo;
+	private int Precio;
+	
+	private int vMilitar;
+	private int vDiplomatico;
+	private int vCultural;
 }
-
