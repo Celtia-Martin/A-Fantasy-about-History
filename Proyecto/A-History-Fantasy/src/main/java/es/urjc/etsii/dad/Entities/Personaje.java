@@ -16,4 +16,11 @@ public class Personaje {
 	private int vMilitar;
 	private int vDiplomatico;
 	private int vCultural;
+	
+	public String getNombre() {
+		return Nombre;
+	}
+	public void setNombre(String nombre) {
+		Nombre = nombre;
+	}
 }
