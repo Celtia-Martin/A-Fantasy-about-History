@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<meta charset= "UTF-8">
+		<STYLE type="text/css">
+ 		 h1 { text-align: center}
+
+	
+ 		</STYLE>
+	</head>
+<body>
+	<form action = "/newUser" method= "post" enctype="multipart/form-data">
+		<h1>Introduce los datos para crear una cuenta nueva</h1>
+		{{#errorUsuario}}
+			<p style="color:#FF5733"><center> El usuario ya existe</center> </p>
+		{{/errorUsuario}}
+		{{#errorContra}}
+		<center> 
+			<p style="color:#FF5733"><center> Debes añadir una contraseña</center> </p>
+		{{/errorContra}}
+        <p > 
+        	<center> 
+        		Nombre de usuario
+            </center>
+        </p>
+        <p>
+        	<center>
+  			<input type= 'text' name= 'nombre'/>
+            </center>
+            
+  		</p>
+        <p>
+            <center>
+                Contraseña 
+            </center>
+      </p>
+        <p>
+        	 <center>
+		    <input type= 'password' name= 'contrasena'/>
+             </center>
+      </p>
+      
+        <p>
+        	 <center>
+	  			<input type='submit' value= 'Crear cuenta'/>
+             </center>
+       </p>
+
+		  <form action="/pagina-principal">
+          <center>
+    <input id="centrado" type="submit" value="Atrás" />
+    </center>
+</form>
+
+
+
+		
+        
+	
+	</form>
+</body>
+</html>
