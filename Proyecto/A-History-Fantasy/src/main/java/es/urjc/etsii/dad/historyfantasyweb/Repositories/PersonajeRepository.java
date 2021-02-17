@@ -6,4 +6,5 @@ import es.urjc.etsii.dad.Entities.Personaje;
 
 public interface PersonajeRepository extends JpaRepository<Personaje, Long> {
 
+	@Query("SELECT p FROM Personaje p WHERE")
 }

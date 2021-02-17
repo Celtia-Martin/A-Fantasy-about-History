@@ -45,6 +45,11 @@ public class WebController {
 		
 		return "HTML";
 	}
+	@GetMapping("/")
+	public String Inicio (Model model) {
+		
+		return "index";
+	}
 	
 	
 }

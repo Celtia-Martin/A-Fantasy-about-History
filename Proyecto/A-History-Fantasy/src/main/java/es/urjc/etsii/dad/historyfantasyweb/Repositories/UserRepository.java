@@ -6,6 +6,7 @@ import es.urjc.etsii.dad.Entities.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
+	@Query("SELECT user FROM User user WHERE")
 }
 
 
