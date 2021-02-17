@@ -6,16 +6,16 @@ import javax.persistence.*;
 public class Personaje {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 	
 	private String Nombre;
-	private int Rango;
-	private int Tipo;
-	private int Precio;
+	private long Rango;
+	private long Tipo;
+	private long Precio;
 	
-	private int vMilitar;
-	private int vDiplomatico;
-	private int vCultural;
+	private long vMilitar;
+	private long vDiplomatico;
+	private long vCultural;
 	
 	public String getNombre() {
 		return Nombre;

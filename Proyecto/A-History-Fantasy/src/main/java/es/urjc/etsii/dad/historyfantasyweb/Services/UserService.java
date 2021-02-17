@@ -3,21 +3,24 @@ package es.urjc.etsii.dad.historyfantasyweb.Services;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.SessionScope;
 
 import es.urjc.etsii.dad.Entities.User;
 import es.urjc.etsii.dad.historyfantasyweb.Repositories.UserRepository;
 
-@Service
+//@Service
+@Component
+@SessionScope
 public class UserService {
 	
-	@Autowired
+	
 	private UserRepository users;
 	
 	//Hacer consultas

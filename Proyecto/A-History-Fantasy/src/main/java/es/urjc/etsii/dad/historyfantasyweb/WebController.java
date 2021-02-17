@@ -1,47 +1,61 @@
 package es.urjc.etsii.dad.historyfantasyweb;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import es.urjc.etsii.dad.Entities.*;
+import es.urjc.etsii.dad.historyfantasyweb.Services.BatallaService;
+import es.urjc.etsii.dad.historyfantasyweb.Services.FormacionService;
+import es.urjc.etsii.dad.historyfantasyweb.Services.MercadoService;
+import es.urjc.etsii.dad.historyfantasyweb.Services.PersonajeService;
+import es.urjc.etsii.dad.historyfantasyweb.Services.UserService;
 
 @Controller
 public class WebController {
 
-	public Personaje [] jugadores;
-	public Mercado mercado;
+	//public Personaje [] jugadores;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private BatallaService batallaService;
+	@Autowired
+	private FormacionService formacionService;
+	@Autowired
+	private MercadoService mercadoService;
+	@Autowired
+	private PersonajeService personajeService;
 	
 	@GetMapping("/nuevoUsuario")
 	public String NuevoUsuario(Model model) {
 		
 		
-		return "HTML";
+		return "newUsuario";
 	}
-	
+	@GetMapping("/LOGIN")
+	public String LogIn(Model model) {
+		
+		
+		return "LogIn";
+	}
 	@GetMapping("/clasificacion")
 	public String MostrarClasificacion(Model model) {
-		for(int i = 0; i < jugadores.length;i++) {
-			jugadores[i].getNombre();
-		}
+		
 		
 		return "HTML";
 	}
 	
 	@GetMapping("/mercado")
 	public String MostrarMercado(Model model) {
-		for(int i = 0; i < jugadores.length;i++) {
-			jugadores[i].getNombre();
-		}
+		
 		
 		return "HTML";
 	}
 	
 	@GetMapping("/formacion")
 	public String MostrarFormacion(Model model) {
-		for(int i = 0; i < jugadores.length;i++) {
-			jugadores[i].getNombre();
-		}
+	
 		
 		return "HTML";
 	}

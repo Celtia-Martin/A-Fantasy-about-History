@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Mercado {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 	
 	private Personaje [] opciones;
 }

@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Formacion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int ID;
+	private Long id;
 	
-	private Personaje [] formacion;
+	//private Personaje [] formacion;
 }
