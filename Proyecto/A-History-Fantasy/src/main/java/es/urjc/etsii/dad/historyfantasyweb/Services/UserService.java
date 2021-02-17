@@ -3,6 +3,9 @@ package es.urjc.etsii.dad.historyfantasyweb.Services;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +19,8 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository users;
+	
+	//Hacer consultas
 	
 	
 	public Collection<User> findAll() {
@@ -39,4 +44,27 @@ public class UserService {
 		this.users.deleteById(id);
 	}
 
+	/*
+	public boolean newUser(Usuario user) {
+		if(user.getNombre().trim().equals("")||user.getContrasena().trim().equals("")) {
+			return false;
+		}
+		if(users.containsKey(user.getNombre())) {
+			return false;
+		}
+		else {
+			users.put(user.getNombre(), user);
+			return true;
+		}
+	}
+	public Usuario logIn(Usuario user) {
+		if(!users.containsKey(user.getNombre())) {
+			return null;
+		}
+		Usuario original= users.get(user.getNombre());
+		if(original.getContrasena().equals(user.getContrasena())) {
+			return original;
+		}
+		return null;
+	}*/
 }

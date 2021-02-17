@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<meta charset= "UTF-8">
+		<STYLE type="text/css">
+ 		 h1 { text-align: center}
+
+	
+ 		</STYLE>
+	</head>
+<body>
+	<form action = "/newUser" method= "post" enctype="multipart/form-data">
+		<h1>Iniciar Sesión</h1>
+		{{#errorUsuario}}
+			<p style="color:#FF5733"><center> El usuario no existe</center> </p>
+		{{/errorUsuario}}
+		{{#errorContra}}
+		<center> 
+			<p style="color:#FF5733"><center> Contraseña incorrecta</center> </p>
+		{{/errorContra}}
+        <p > 
+        	<center> 
+        		Nombre de usuario
+            </center>
+        </p>
+        <p>
+        	<center>
+  			<input type= 'text' name= 'nombre'/>
+            </center>
+            
+  		</p>
+        <p>
+            <center>
+                Contraseña 
+            </center>
+      </p>
+        <p>
+        	 <center>
+		    <input type= 'password' name= 'contrasena'/>
+             </center>
+      </p>
+      
+        <p>
+        	 <center>
+	  			<input type='submit' value= 'Iniciar Sesión'/>
+             </center>
+       </p>
+
+		  <form action="/pagina-principal">
+          <center>
+    <input id="centrado" type="submit" value="Atrás" />
+    </center>
+</form>
+
+
+
+		
+        
+	
+	</form>
+</body>
+</html>

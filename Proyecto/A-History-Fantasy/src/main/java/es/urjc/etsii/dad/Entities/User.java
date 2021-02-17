@@ -12,5 +12,24 @@ public class User {
 	
 	private String Nombre;
 	private String Contrasena;
+	
+	public User(String nombre, String contrasena) {
+		this.Nombre= nombre;
+		this.Contrasena= contrasena;
+	}
+	
+	public void setNombre(String nombre) {
+		this.Nombre= nombre;
+	}
+	public void setContrasena(String contrasena) {
+		this.Contrasena= contrasena;
+	}
+	public String getNombre() {
+		return Nombre;
+	}
+	public String getContrasena() {
+		return Contrasena;
+	}
+	
 }
 
