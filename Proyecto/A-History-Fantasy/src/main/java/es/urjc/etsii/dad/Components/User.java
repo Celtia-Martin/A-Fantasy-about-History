@@ -11,26 +11,26 @@ public class User {
 	private Long id;
 	
 	private String nombre;
-	private String Contrasena;
+	private String contrasena;
 	@OneToOne
 	private Formacion miFormacion;
 	
 	public User(String nombre, String contrasena) {
 		this.nombre= nombre;
-		this.Contrasena= contrasena;
+		this.contrasena= contrasena;
 	}
 	
 	public void setNombre(String nombre) {
 		this.nombre= nombre;
 	}
 	public void setContrasena(String contrasena) {
-		this.Contrasena= contrasena;
+		this.contrasena= contrasena;
 	}
 	public String getNombre() {
 		return nombre;
 	}
 	public String getContrasena() {
-		return Contrasena;
+		return contrasena;
 	}
 	
 }

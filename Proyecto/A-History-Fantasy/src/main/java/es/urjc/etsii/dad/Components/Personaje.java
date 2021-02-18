@@ -8,10 +8,10 @@ public class Personaje {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String Nombre;
-	private long Rango;
-	private long Tipo;
-	private long Precio;
+	private String nombre;
+	private long rango;
+	private long tipo;
+	private long precio;
 	
 	private long vMilitar;
 	private long vDiplomatico;
@@ -21,9 +21,9 @@ public class Personaje {
 	private Formacion formacion;
 	
 	public String getNombre() {
-		return Nombre;
+		return nombre;
 	}
 	public void setNombre(String nombre) {
-		Nombre = nombre;
+		nombre = nombre;
 	}
 }

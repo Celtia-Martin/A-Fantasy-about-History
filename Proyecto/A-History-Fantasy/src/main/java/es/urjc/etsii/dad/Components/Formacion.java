@@ -12,4 +12,6 @@ public class Formacion {
 	
 	@OneToMany
 	private List<Personaje> personajes;
+	@OneToOne
+	private User propietario;
 }

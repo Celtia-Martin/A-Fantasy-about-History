@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Long> {
 	
 	List<User> findByNombre( String Nombre);
+
 	//@Query("SELECT user FROM User user WHERE")
 }
 
