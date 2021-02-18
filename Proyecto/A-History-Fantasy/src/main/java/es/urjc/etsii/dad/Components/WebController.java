@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WebController {
 
-	//public Personaje [] jugadores;
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -22,6 +21,7 @@ public class WebController {
 	
 	private boolean errorUsuario= false;
 	private boolean errorContra= false;
+	
 	@GetMapping("/newUsuario")
 	public String NuevoUsuario(Model model) {
 		
@@ -34,7 +34,7 @@ public class WebController {
 		
 		model.addAttribute("errorUsuario", errorUsuario);
 		model.addAttribute("errorContra", errorContra);
-		return "LogIn";
+		return "login";
 	}
 	@GetMapping("/clasificacion")
 	public String MostrarClasificacion(Model model) {
@@ -63,6 +63,8 @@ public class WebController {
 	}
 	@GetMapping("/menuPrincipal")
 	public String GetMenuPrincipal() {
+		
+		
 		return "menuPrincipal";
 	}
 	
