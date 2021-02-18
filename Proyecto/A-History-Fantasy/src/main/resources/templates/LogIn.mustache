@@ -6,7 +6,7 @@
  		</STYLE>
 	</head>
 <body>
-	<form action = "/newUser" method= "post" enctype="multipart/form-data">
+	<form action = "/login" method= "post" enctype="multipart/form-data">
 		<h1>Iniciar Sesión</h1>
 		{{#errorUsuario}}
 			<p style="color:#FF5733"><center> El usuario no existe</center> </p>
@@ -43,7 +43,7 @@
              </center>
        </p>
 
-		  <form action="/pagina-principal">
+		  <form action="/">
           <center>
     <input id="centrado" type="submit" value="Atrás" />
     </center>

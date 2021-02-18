@@ -1,4 +1,4 @@
-package es.urjc.etsii.dad.historyfantasyweb;
+package es.urjc.etsii.dad.Components;
 
 
 import org.springframework.boot.CommandLineRunner;

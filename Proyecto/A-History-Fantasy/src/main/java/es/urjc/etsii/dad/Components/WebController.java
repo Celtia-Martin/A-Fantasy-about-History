@@ -20,16 +20,20 @@ public class WebController {
 	@Autowired
 	private PersonajeService personajeService;
 	
-	@GetMapping("/nuevoUsuario")
+	private boolean errorUsuario= false;
+	private boolean errorContra= false;
+	@GetMapping("/newUsuario")
 	public String NuevoUsuario(Model model) {
 		
-		
+		model.addAttribute("errorUsuario", errorUsuario);
+		model.addAttribute("errorContra", errorContra);
 		return "newUsuario";
 	}
-	@GetMapping("/LOGIN")
+	@GetMapping("/login")
 	public String LogIn(Model model) {
 		
-		
+		model.addAttribute("errorUsuario", errorUsuario);
+		model.addAttribute("errorContra", errorContra);
 		return "LogIn";
 	}
 	@GetMapping("/clasificacion")
@@ -56,6 +60,10 @@ public class WebController {
 	public String Inicio (Model model) {
 		
 		return "index";
+	}
+	@GetMapping("/menuPrincipal")
+	public String GetMenuPrincipal() {
+		return "menuPrincipal";
 	}
 	
 	
