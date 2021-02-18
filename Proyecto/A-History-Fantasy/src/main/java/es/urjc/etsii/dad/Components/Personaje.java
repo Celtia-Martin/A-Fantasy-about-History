@@ -17,6 +17,9 @@ public class Personaje {
 	private long vDiplomatico;
 	private long vCultural;
 	
+	@OneToOne
+	private Formacion formacion;
+	
 	public String getNombre() {
 		return Nombre;
 	}

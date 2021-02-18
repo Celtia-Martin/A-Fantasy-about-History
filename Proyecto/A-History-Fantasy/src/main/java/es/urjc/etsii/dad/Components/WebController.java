@@ -4,10 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class WebController {
 
+	//public Personaje [] jugadores;
+	/*
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -18,10 +22,10 @@ public class WebController {
 	private MercadoService mercadoService;
 	@Autowired
 	private PersonajeService personajeService;
-	
+	*/
 	private boolean errorUsuario= false;
 	private boolean errorContra= false;
-	
+	private UserRepository repo;
 	@GetMapping("/newUsuario")
 	public String NuevoUsuario(Model model) {
 		
@@ -29,6 +33,22 @@ public class WebController {
 		model.addAttribute("errorContra", errorContra);
 		return "newUsuario";
 	}
+
+	@PostMapping("/newUsuario")
+	public String newUser(@RequestParam String nombre ,@RequestParam String contrasena) {
+		User nuevo= new User(nombre,contrasena);
+		//repo.save(nuevo);
+		return "menuPrincipal";
+		/*
+		if(userService.newUser(nuevo)) {
+			return "correct";
+		}
+		else {
+			return "newuser";
+		}
+*/
+	}
+	
 	@GetMapping("/login")
 	public String LogIn(Model model) {
 		
@@ -63,8 +83,6 @@ public class WebController {
 	}
 	@GetMapping("/menuPrincipal")
 	public String GetMenuPrincipal() {
-		
-		
 		return "menuPrincipal";
 	}
 	

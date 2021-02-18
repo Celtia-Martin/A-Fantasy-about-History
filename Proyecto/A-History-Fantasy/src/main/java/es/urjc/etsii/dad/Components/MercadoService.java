@@ -1,3 +1,4 @@
+/*
 package es.urjc.etsii.dad.Components;
 
 import java.util.Collection;
@@ -44,3 +45,4 @@ public class MercadoService {
 	}
 
 }
+*/

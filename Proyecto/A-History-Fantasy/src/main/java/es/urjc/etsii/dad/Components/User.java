@@ -10,22 +10,24 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String Nombre;
+	private String nombre;
 	private String Contrasena;
+	@OneToOne
+	private Formacion miFormacion;
 	
 	public User(String nombre, String contrasena) {
-		this.Nombre= nombre;
+		this.nombre= nombre;
 		this.Contrasena= contrasena;
 	}
 	
 	public void setNombre(String nombre) {
-		this.Nombre= nombre;
+		this.nombre= nombre;
 	}
 	public void setContrasena(String contrasena) {
 		this.Contrasena= contrasena;
 	}
 	public String getNombre() {
-		return Nombre;
+		return nombre;
 	}
 	public String getContrasena() {
 		return Contrasena;
