@@ -1,4 +1,4 @@
-package es.urjc.etsii.dad.historyfantasyweb.Services;
+package es.urjc.etsii.dad.Components;
 
 
 import java.util.Collection;
@@ -6,21 +6,21 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
-import es.urjc.etsii.dad.Entities.User;
-import es.urjc.etsii.dad.historyfantasyweb.Repositories.UserRepository;
+@Service
+//@Component
+//@SessionScope
+//@DependsOn("UserRepository")
 
-//@Service
-@Component
-@SessionScope
 public class UserService {
 	
-	
+	@Autowired
 	private UserRepository users;
 	
 	//Hacer consultas

@@ -1,16 +1,9 @@
-package es.urjc.etsii.dad.historyfantasyweb;
+package es.urjc.etsii.dad.Components;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import es.urjc.etsii.dad.Entities.*;
-import es.urjc.etsii.dad.historyfantasyweb.Services.BatallaService;
-import es.urjc.etsii.dad.historyfantasyweb.Services.FormacionService;
-import es.urjc.etsii.dad.historyfantasyweb.Services.MercadoService;
-import es.urjc.etsii.dad.historyfantasyweb.Services.PersonajeService;
-import es.urjc.etsii.dad.historyfantasyweb.Services.UserService;
 
 @Controller
 public class WebController {

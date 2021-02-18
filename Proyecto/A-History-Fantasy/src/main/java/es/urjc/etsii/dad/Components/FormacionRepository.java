@@ -1,9 +1,8 @@
-package es.urjc.etsii.dad.historyfantasyweb.Repositories;
+package es.urjc.etsii.dad.Components;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import es.urjc.etsii.dad.Entities.Formacion;
-
+import org.springframework.stereotype.Repository;
+@Repository
 public interface FormacionRepository extends JpaRepository<Formacion, Long> {
 
 }

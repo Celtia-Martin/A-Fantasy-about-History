@@ -1,4 +1,4 @@
-package es.urjc.etsii.dad.Entities;
+package es.urjc.etsii.dad.Components;
 
 import javax.persistence.*;
 

@@ -1,12 +1,11 @@
-package es.urjc.etsii.dad.Entities;
+package es.urjc.etsii.dad.Components;
 
 import javax.persistence.*;
 
 @Entity
-public class Formacion {
+public class Batalla {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-	//private Personaje [] formacion;
+	private Long tipo;
 }
