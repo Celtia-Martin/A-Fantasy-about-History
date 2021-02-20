@@ -10,11 +10,15 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	
 	private String nombre;
 	private String contrasena;
 	@OneToOne(cascade= CascadeType.ALL)
 	private Formacion formacion;
 	
+	public User() {
+		
+	}
 	public User(String nombre, String contrasena) {
 		this.nombre= nombre;
 		this.contrasena= contrasena;

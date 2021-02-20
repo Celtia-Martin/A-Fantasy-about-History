@@ -10,7 +10,9 @@
 		<h5><center> Contraseña incorrecta</center></h5>
 	{{/errorContra}}
 	
-	
+	{{#datosInsuficientes}}
+		<h5><center> Datos insuficientes</center></h5>
+	{{/datosInsuficientes}}
 	
 	<form action = "/login" method= "post" enctype="multipart/form-data">
 		

@@ -6,7 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+/*
+ * <dependency>
+		<groupId> org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+ */
 @Controller
 public class WebController {
 
@@ -14,9 +19,8 @@ public class WebController {
 	private boolean errorUsuario= false;
 	private boolean errorContra= false;
 	private boolean datosInsuficientes=false;
-	
 	@Autowired
-	private UserRepository repo;
+	private ControlUsuarios controlUsuarios= new ControlUsuarios();
 
 	private User propio;
 	@GetMapping("/newUsuario")
@@ -42,10 +46,19 @@ public class WebController {
 		}
 		else {
 			User nuevo= new User(nombre,contrasena);
-			repo.save(nuevo);
-			propio= nuevo;
-			model.addAttribute("name",propio.getNombre());
-			return "menuPrincipal";
+			if(controlUsuarios.newUser(nombre,contrasena)) {
+				propio= nuevo;
+				model.addAttribute("name",propio.getNombre());
+				return "menuPrincipal";
+			}
+			else {
+				errorUsuario=true;
+				model.addAttribute("errorUsuario", errorUsuario);
+				return "newUsuario";
+			}
+			
+		
+			
 		}
 		
 	}
@@ -56,6 +69,34 @@ public class WebController {
 		model.addAttribute("errorUsuario", errorUsuario);
 		model.addAttribute("errorContra", errorContra);
 		return "login";
+	}
+	@PostMapping("/login")
+	public String LoginPost(@RequestParam String nombre ,@RequestParam String contrasena, Model model) {
+		if(nombre.trim().equals("")||contrasena.trim().equals("")) {
+			datosInsuficientes=true;
+			model.addAttribute("datosInsuficientes",datosInsuficientes);
+			datosInsuficientes=false;
+			return "login";
+			
+		}
+		else {
+			User nuevo= new User(nombre,contrasena);
+			if(controlUsuarios.LogIn(nombre,contrasena)) {
+				propio= nuevo;
+				model.addAttribute("name",propio.getNombre());
+				return "menuPrincipal";
+			}
+			else {
+				errorUsuario=true;
+				model.addAttribute("errorUsuario", errorUsuario);
+				errorUsuario=false;
+				return "login";
+			}
+			
+		
+			
+		}
+		
 	}
 	@GetMapping("/clasificacion")
 	public String MostrarClasificacion(Model model) {
