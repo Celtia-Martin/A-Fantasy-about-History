@@ -10,44 +10,44 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class WebController {
 
-	//public Personaje [] jugadores;
-	/*
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private BatallaService batallaService;
-	@Autowired
-	private FormacionService formacionService;
-	@Autowired
-	private MercadoService mercadoService;
-	@Autowired
-	private PersonajeService personajeService;
-	*/
+	
 	private boolean errorUsuario= false;
 	private boolean errorContra= false;
+	private boolean datosInsuficientes=false;
+	
 	@Autowired
 	private UserRepository repo;
+
+	private User propio;
 	@GetMapping("/newUsuario")
 	public String NuevoUsuario(Model model) {
 		
 		model.addAttribute("errorUsuario", errorUsuario);
 		model.addAttribute("errorContra", errorContra);
+		model.addAttribute("datosInsuficientes",datosInsuficientes);
+		errorUsuario= false;
+		errorContra= false;
+		datosInsuficientes=false;
 		return "newUsuario";
 	}
 
 	@PostMapping("/newUsuario")
-	public String newUser(@RequestParam String nombre ,@RequestParam String contrasena) {
-		User nuevo= new User(nombre,contrasena);
-		repo.save(nuevo);
-		return "menuPrincipal";
-		/*
-		if(userService.newUser(nuevo)) {
-			return "correct";
+	public String newUser(@RequestParam String nombre ,@RequestParam String contrasena, Model model) {
+		if(nombre.trim().equals("")||contrasena.trim().equals("")) {
+			datosInsuficientes=true;
+			model.addAttribute("datosInsuficientes",datosInsuficientes);
+			datosInsuficientes=false;
+			return "newUsuario";
+			
 		}
 		else {
-			return "newuser";
+			User nuevo= new User(nombre,contrasena);
+			repo.save(nuevo);
+			propio= nuevo;
+			model.addAttribute("name",propio.getNombre());
+			return "menuPrincipal";
 		}
-*/
+		
 	}
 	
 	@GetMapping("/login")
@@ -61,21 +61,21 @@ public class WebController {
 	public String MostrarClasificacion(Model model) {
 		
 		
-		return "HTML";
+		return "clasificacion";
 	}
 	
 	@GetMapping("/mercado")
 	public String MostrarMercado(Model model) {
 		
 		
-		return "HTML";
+		return "mercado";
 	}
 	
 	@GetMapping("/formacion")
 	public String MostrarFormacion(Model model) {
 	
 		
-		return "HTML";
+		return "formacion";
 	}
 	@GetMapping("/")
 	public String Inicio (Model model) {
@@ -83,7 +83,8 @@ public class WebController {
 		return "index";
 	}
 	@GetMapping("/menuPrincipal")
-	public String GetMenuPrincipal() {
+	public String GetMenuPrincipal(Model model) {
+		model.addAttribute("name",propio.getNombre());
 		return "menuPrincipal";
 	}
 	

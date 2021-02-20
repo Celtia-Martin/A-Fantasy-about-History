@@ -3,12 +3,14 @@
 	<h1>Iniciar Sesión</h1>
 	
 	{{#errorUsuario}}
-		<p style="color:#FF5733"><center> El usuario no existe</center></p>
+		<h5><center> El usuario no existe</center></h5>
 	{{/errorUsuario}}
 	
 	{{#errorContra}}
-		<p style="color:#FF5733"><center> Contraseña incorrecta</center></p>
+		<h5><center> Contraseña incorrecta</center></h5>
 	{{/errorContra}}
+	
+	
 	
 	<form action = "/login" method= "post" enctype="multipart/form-data">
 		

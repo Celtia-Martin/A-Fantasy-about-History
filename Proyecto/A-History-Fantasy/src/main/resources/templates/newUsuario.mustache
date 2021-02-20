@@ -3,13 +3,17 @@
 	<h1>Introduce los datos para crear una cuenta nueva</h1>
 	
 	{{#errorUsuario}}
-		<p style="color:#FF5733"><center> El usuario ya existe</center> </p>
+		<h5><center> El usuario ya existe</center> </h5>
 	{{/errorUsuario}}
 		
 	{{#errorContra}}
-		<p style="color:#FF5733"><center> Debes añadir una contraseña</center> </p>
+		<h5><center> Debes añadir una contraseña</center> </h5>
 	{{/errorContra}}
 		
+	{{#datosInsuficientes}}
+		<h5><center> Datos insuficientes</center></h5>
+	{{/datosInsuficientes}}
+	
 	<form action = "/newUsuario" method= "post">	
         
         <p><center> Nombre de usuario </center></p>
