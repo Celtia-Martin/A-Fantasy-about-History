@@ -12,8 +12,8 @@ public class User {
 	
 	private String nombre;
 	private String contrasena;
-	@OneToOne
-	private Formacion miFormacion;
+	@OneToOne(cascade= CascadeType.ALL)
+	private Formacion formacion;
 	
 	public User(String nombre, String contrasena) {
 		this.nombre= nombre;

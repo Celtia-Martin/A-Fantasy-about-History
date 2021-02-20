@@ -10,7 +10,7 @@ public class Personaje {
 	
 	private String nombre;
 	private long rango;
-	private long tipo;
+	private Enums.TipoBatalla tipo;
 	private long precio;
 	
 	private long vMilitar;

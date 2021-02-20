@@ -12,6 +12,6 @@ public class Formacion {
 	
 	@OneToMany
 	private List<Personaje> personajes;
-	@OneToOne
+	@OneToOne(mappedBy="formacion")
 	private User propietario;
 }

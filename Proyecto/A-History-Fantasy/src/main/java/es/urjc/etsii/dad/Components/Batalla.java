@@ -9,7 +9,7 @@ public class Batalla {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private Long tipo;
+	private Enums.TipoBatalla tipo;
 	@ManyToMany
 	private List<Personaje> participantes;
 }

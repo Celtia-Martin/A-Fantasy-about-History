@@ -25,6 +25,7 @@ public class WebController {
 	*/
 	private boolean errorUsuario= false;
 	private boolean errorContra= false;
+	@Autowired
 	private UserRepository repo;
 	@GetMapping("/newUsuario")
 	public String NuevoUsuario(Model model) {
@@ -37,7 +38,7 @@ public class WebController {
 	@PostMapping("/newUsuario")
 	public String newUser(@RequestParam String nombre ,@RequestParam String contrasena) {
 		User nuevo= new User(nombre,contrasena);
-		//repo.save(nuevo);
+		repo.save(nuevo);
 		return "menuPrincipal";
 		/*
 		if(userService.newUser(nuevo)) {
