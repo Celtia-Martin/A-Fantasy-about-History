@@ -20,8 +20,10 @@ public class WebController {
 	private boolean errorContra= false;
 	private boolean datosInsuficientes=false;
 	@Autowired
-	private ControlUsuarios controlUsuarios= new ControlUsuarios();
+	private ControlUsuarios controlUsuarios;
 
+	@Autowired
+	private ControlPersonajes controlPersonajes;
 	private User propio;
 	@GetMapping("/newUsuario")
 	public String NuevoUsuario(Model model) {
@@ -68,6 +70,9 @@ public class WebController {
 		
 		model.addAttribute("errorUsuario", errorUsuario);
 		model.addAttribute("errorContra", errorContra);
+		errorUsuario= false;
+		errorContra= false;
+		datosInsuficientes=false;
 		return "login";
 	}
 	@PostMapping("/login")
@@ -95,6 +100,26 @@ public class WebController {
 			
 		
 			
+		}
+		
+	}
+	@GetMapping ("/newPersonaje")
+	public String CreadorDePersonajes(Model model) {
+		model.addAttribute("name",propio.getNombre());
+		return "personajes";
+	}
+	@PostMapping("/newPersonaje")
+	public String FormularioPersonajes(Model model,@RequestParam String nombre,@RequestParam String rango,@RequestParam String tipo,@RequestParam String vMilitar,@RequestParam String vDiplo,@RequestParam String vCultu,@RequestParam String precio) {
+		//Personaje p= new Personaje(nombre,rango,tipo,precio,vMilitar,vDiplo,vCultu);
+		Personaje p= new Personaje(nombre,1,Enums.TipoBatalla.POLITICA,200,2,2,2);
+		if(controlPersonajes.newPersonaje(p)) {
+			model.addAttribute("name",propio.getNombre());
+			return "menuPrincipal";
+			
+		}
+		else {
+			model.addAttribute("name",propio.getNombre());
+			return "personajes";
 		}
 		
 	}

@@ -10,5 +10,6 @@ public interface PersonajeRepository extends JpaRepository<Personaje, Long> {
 
 	//@Query("SELECT p FROM Personaje p WHERE")
 	Optional<Personaje> findByFormacion(Formacion formacion);
-	List<Personaje> findByNombre(String nombre);
+	Optional<Personaje> findByNombre(String nombre);
+
 }

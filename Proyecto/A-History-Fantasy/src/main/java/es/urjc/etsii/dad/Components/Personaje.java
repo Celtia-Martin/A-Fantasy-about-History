@@ -20,6 +20,18 @@ public class Personaje {
 	@OneToOne
 	private Formacion formacion;
 	
+	public Personaje() {
+		
+	}
+	public Personaje(String nombre, long rango, Enums.TipoBatalla tipo, long precio, long vMilitar,long vDiplomatico, long vCultural) {
+		this.nombre=nombre;
+		this.rango=rango;
+		this.tipo=tipo;
+		this.precio=precio;
+		this.vMilitar=vMilitar;
+		this.vDiplomatico= vDiplomatico;
+		this.vCultural= vCultural;
+	}
 	public String getNombre() {
 		return nombre;
 	}
