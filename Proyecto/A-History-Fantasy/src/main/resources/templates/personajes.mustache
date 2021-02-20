@@ -1,0 +1,68 @@
+{{>Header}}
+
+	<header>
+		<h1> Nuevos Personajes </h1>
+			
+		<h4> <center> Logged as: {{name}} </center></h4>
+	</header>
+		
+	<section>
+		<h3> Añade la siguiente información para crear un personaje </h3>
+	</section>
+		
+	<form action = "/nuevoPersonaje" method= "post" enctype="multipart/form-data">
+		
+        <p><center> Nombre del personaje </center></p>
+        
+        <p><center>
+  			<input type= 'text' name= 'nombre'/>
+        </center></p>
+  		
+        <p><center> Rango </center></p>
+      	
+        <p><center>
+		    <input type= 'text' name= 'rango'/>
+        </center></p>
+        
+        <p><center> Tipo </center></p>
+      	
+        <p><center>
+		    <input type= 'text' name= 'tipo'/>
+        </center></p>
+        
+        <p><center> Valor Militar </center></p>
+      	
+        <p><center>
+		    <input type= 'text' name= 'vMilitar'/>
+        </center></p>
+        
+        <p><center> Valor Diplomático </center></p>
+      	
+        <p><center>
+		    <input type= 'text' name= 'vDiplo'/>
+        </center></p>
+        
+        <p><center> Valor Cultural </center></p>
+      	
+        <p><center>
+		    <input type= 'text' name= 'vCultu'/>
+        </center></p>
+        
+        <p><center> Precio </center></p>
+      	
+        <p><center>
+		    <input type= 'text' name= 'precio'/>
+        </center></p>
+      
+        <p><center>
+	  		<input type='submit' value= 'Crear Personaje'/>
+        </center></p>
+	</form>
+	
+	<footer>
+		<p><center>
+			<a href="/menuPrincipal"><button class="button button1"> Atrás </button></a>
+		</center></p>
+	</footer>
+
+{{>Footer}}
