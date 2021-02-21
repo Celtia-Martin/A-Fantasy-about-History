@@ -20,6 +20,7 @@ public class Personaje {
 	private long vMilitar;
 	private long vDiplomatico;
 	private long vCultural;
+	private String image;
 	@Lob
 	@JsonIgnore
 	private Blob imageFile;
@@ -30,6 +31,7 @@ public class Personaje {
 	public Personaje() {
 		
 	}
+	
 	public Personaje(String nombre, long rango, Enums.TipoBatalla tipo, long precio, long vMilitar,long vDiplomatico, long vCultural) {
 		this.nombre=nombre;
 		this.rango=rango;
@@ -39,10 +41,22 @@ public class Personaje {
 		this.vDiplomatico= vDiplomatico;
 		this.vCultural= vCultural;
 	}
+	public void setImageFile(Blob imageFile,int size) {
+		
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
 	public void setNombre(String nombre) {
-		nombre = nombre;
+		this.nombre = nombre;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 }

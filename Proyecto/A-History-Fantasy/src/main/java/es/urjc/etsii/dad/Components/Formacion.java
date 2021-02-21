@@ -14,4 +14,8 @@ public class Formacion {
 	private List<Personaje> personajes;
 	@OneToOne(mappedBy="formacion")
 	private User propietario;
+	
+	public Formacion() {
+		//Añadir por defecto
+	}
 }
