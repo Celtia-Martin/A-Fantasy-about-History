@@ -2,13 +2,12 @@ package es.urjc.etsii.dad.Components;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
-
-import antlr.collections.List;
 
 @Controller
 public class ControlUsuarios implements CommandLineRunner {
@@ -54,6 +53,12 @@ public class ControlUsuarios implements CommandLineRunner {
 	public Optional<User> findByNombre(String nombre)  {
 		return repository.findByNombre(nombre);
 	}
+	
+	public List<User> findTop10ByPuntosDesc(){
+		return repository.findTop10ByOrderByPuntosDesc();
+	}
+	
+	
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub

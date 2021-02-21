@@ -26,9 +26,10 @@ import jdk.internal.org.jline.utils.Log;
 public class WebController {
 
 	
-	private boolean errorUsuario= false;
-	private boolean errorContra= false;
-	private boolean datosInsuficientes=false;
+	private boolean errorUsuario = false;
+	private boolean errorContra = false;
+	private boolean datosInsuficientes = false;
+	
 	@Autowired
 	private ControlUsuarios controlUsuarios;
 
@@ -74,11 +75,7 @@ public class WebController {
 				model.addAttribute("errorUsuario", errorUsuario);
 				return "newUsuario";
 			}
-			
-		
-			
 		}
-		
 	}
 	
 	@GetMapping("/mostrarTodosPersonajes")
@@ -99,14 +96,15 @@ public class WebController {
 		datosInsuficientes=false;
 		return "login";
 	}
+	
 	@PostMapping("/login")
 	public String LoginPost(@RequestParam String nombre ,@RequestParam String contrasena, Model model) {
 		if(nombre.trim().equals("")||contrasena.trim().equals("")) {
 			datosInsuficientes=true;
 			model.addAttribute("datosInsuficientes",datosInsuficientes);
 			datosInsuficientes=false;
-			return "login";
 			
+			return "login";
 		}
 		else {
 			User nuevo= new User(nombre,contrasena);
@@ -121,17 +119,15 @@ public class WebController {
 				errorUsuario=false;
 				return "login";
 			}
-			
-		
-			
 		}
-		
 	}
+	
 	@GetMapping ("/newPersonaje")
 	public String CreadorDePersonajes(Model model) {
 		model.addAttribute("name",currentUser);
 		return "personajes";
 	}
+	
 	@PostMapping("/newPersonaje")
 	public String FormularioPersonajes(Model model,@RequestParam String nombre,@RequestParam long rango,@RequestParam String tipo,@RequestParam long vMilitar,@RequestParam long vDiplo,@RequestParam long vCultu,@RequestParam long precio,@RequestParam MultipartFile image) throws IOException {
 		Personaje p= new Personaje(nombre,rango,Enums.TipoBatalla.valueOf(tipo),precio,vMilitar,vDiplo,vCultu,false);
@@ -143,7 +139,6 @@ public class WebController {
 		if(controlPersonajes.newPersonaje(p)) {
 			model.addAttribute("name",currentUser);
 			return "menuPrincipal";
-			
 		}
 		else {
 			model.addAttribute("name",currentUser);
@@ -153,7 +148,7 @@ public class WebController {
 	}
 	@GetMapping("/clasificacion")
 	public String MostrarClasificacion(Model model) {
-		
+		model.addAttribute("clasificacion", controlUsuarios.findTop10ByPuntosDesc());
 		
 		return "clasificacion";
 	}

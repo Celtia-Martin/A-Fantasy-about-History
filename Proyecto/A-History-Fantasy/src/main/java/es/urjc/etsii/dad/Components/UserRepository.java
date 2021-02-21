@@ -11,6 +11,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findByNombre( String Nombre);
 	Optional<User> findById( Long id);
 	
+	List <User>findTop10ByOrderByPuntosDesc();
+	
 	//@Query("SELECT user FROM User user WHERE")
 }
 
