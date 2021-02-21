@@ -41,8 +41,8 @@ public class Personaje {
 		this.vDiplomatico= vDiplomatico;
 		this.vCultural= vCultural;
 	}
-	public void setImageFile(Blob imageFile,int size) {
-		
+	public void setImageFile(Blob imageFile) {
+		this.imageFile=imageFile;
 	}
 	
 	public String getNombre() {

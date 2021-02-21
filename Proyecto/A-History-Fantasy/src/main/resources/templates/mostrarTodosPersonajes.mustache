@@ -1,0 +1,29 @@
+{{>Header}}
+<table border="1" align="center" cellspacing="0" cellpadding="10">
+			<tr>
+		    	<th>Nombre</th>
+		    	<th>Rango</th>
+		    	<th>Tipo</th>
+		    	<th>Valor Militar</th>
+		    	<th>Valor Diplomático</th>
+		    	<th>Valor Cultural</th>
+		    	<th>Precio</th>
+		    	<th>Pujar</th>
+		    	<th>Estado</th>
+		  	</tr>
+		  	{{#personajes}}
+		  	
+		  	<tr>
+		    	<th>{{nombre}}</th>
+		    	<th>{{rango}}</th>
+		    	<th>{{tipo}}</th>
+		    	<th>{{vMilitar}}</th>
+		    	<th>{{vDiplomatico}}</th>
+		    	<th>{{vCultural}}</th>
+		    	<th>{{precio}}</th>
+		    	
+		    	
+		  	</tr>
+		  	{{/personajes}}
+</table>
+{{>Footer}}

@@ -1,11 +1,18 @@
 package es.urjc.etsii.dad.Components;
 
+import java.io.IOException;
+import java.net.URI;
+import java.util.List;
+
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 /*
  * <dependency>
 		<groupId> org.springframework.boot</groupId>
@@ -65,6 +72,14 @@ public class WebController {
 		
 	}
 	
+	@GetMapping("/mostrarTodosPersonajes")
+	public String mostrarPersonajes(Model model) {
+		List<Personaje> aMostrar=controlPersonajes.findAll();
+		model.addAttribute("personajes",aMostrar);
+		return "mostrarTodosPersonajes";
+		
+	}
+	
 	@GetMapping("/login")
 	public String LogIn(Model model) {
 		
@@ -109,9 +124,13 @@ public class WebController {
 		return "personajes";
 	}
 	@PostMapping("/newPersonaje")
-	public String FormularioPersonajes(Model model,@RequestParam String nombre,@RequestParam String rango,@RequestParam String tipo,@RequestParam String vMilitar,@RequestParam String vDiplo,@RequestParam String vCultu,@RequestParam String precio) {
+	public String FormularioPersonajes(Model model,@RequestParam String nombre,@RequestParam String rango,@RequestParam String tipo,@RequestParam String vMilitar,@RequestParam String vDiplo,@RequestParam String vCultu,@RequestParam String precio,@RequestParam MultipartFile image) throws IOException {
 		//Personaje p= new Personaje(nombre,rango,tipo,precio,vMilitar,vDiplo,vCultu);
 		Personaje p= new Personaje(nombre,1,Enums.TipoBatalla.POLITICA,200,2,2,2);
+		URI location= fromCurrentRequest().build().toUri();
+		p.setImage(location.toString());
+		p.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
+		
 		if(controlPersonajes.newPersonaje(p)) {
 			model.addAttribute("name",propio.getNombre());
 			return "menuPrincipal";
@@ -157,8 +176,23 @@ public class WebController {
 	
 }
 
-
-
+/*
+@GetMapping("/{id}/image")
+public ResponseEntity<Object> downloadImage(@PathVariable long id)
+ throws SQLException {
+ Post post = posts.findById(id).orElseThrow();
+ if (post.getImageFile() != null) {
+ Resource file = new InputStreamResource(
+ post.getImageFile().getBinaryStream());
+ return ResponseEntity.ok()
+ .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+ .contentLength(post.getImageFile().length())
+ .body(file);
+ } else {
+ return ResponseEntity.notFound().build();
+ }
+}
+*/
 /*
 import java.nio.file.Files;
 import java.nio.file.Path;
