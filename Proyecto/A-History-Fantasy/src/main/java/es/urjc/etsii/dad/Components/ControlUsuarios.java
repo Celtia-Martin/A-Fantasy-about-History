@@ -15,8 +15,10 @@ public class ControlUsuarios implements CommandLineRunner {
 
 	@Autowired
 	private UserRepository repository;
+	
 	public boolean newUser (String nombre, String contra) {
 		Optional<User> mismoNombre= repository.findByNombre(nombre);
+		
 		if(mismoNombre.isPresent()) {
 			return false;
 		}
@@ -24,11 +26,11 @@ public class ControlUsuarios implements CommandLineRunner {
 			repository.save(new User(nombre,contra));
 			return true;
 		}
-		
 	}
 	
 	public boolean LogIn(String nombre, String contra) {
 		Optional<User> mismoNombre= repository.findByNombre(nombre);
+		
 		if(!mismoNombre.isPresent()) {
 			return false;
 		}
@@ -38,7 +40,6 @@ public class ControlUsuarios implements CommandLineRunner {
 				return true;
 			}
 			else {
-				
 				return false;
 			}
 		}
@@ -47,7 +48,5 @@ public class ControlUsuarios implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		
 	}
-	
 }
