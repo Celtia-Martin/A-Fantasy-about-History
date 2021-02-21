@@ -13,17 +13,23 @@ public class User {
 	
 	private String nombre;
 	private String contrasena;
+	private long dinero;
+	private long puntos;
+	
 	@OneToOne(cascade= CascadeType.ALL)
 	private Formacion formacion;
 	
 	public User() {
-		
+		setDinero(0);
+		setPuntos(0);
 	}
 	public User(String nombre, String contrasena) {
 		this.nombre= nombre;
 		this.contrasena= contrasena;
 	}
-	
+	public void setFormacion(Formacion f) {
+		formacion = f;
+	}
 	public void setNombre(String nombre) {
 		this.nombre= nombre;
 	}
@@ -35,6 +41,21 @@ public class User {
 	}
 	public String getContrasena() {
 		return contrasena;
+	}
+	public Formacion getFormacion() {
+		return formacion;
+	}
+	public long getDinero() {
+		return dinero;
+	}
+	public void setDinero(long dinero) {
+		this.dinero = dinero;
+	}
+	public long getPuntos() {
+		return puntos;
+	}
+	public void setPuntos(long puntos) {
+		this.puntos = puntos;
 	}
 	
 }

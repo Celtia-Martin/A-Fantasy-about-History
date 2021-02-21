@@ -1,5 +1,6 @@
 package es.urjc.etsii.dad.Components;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,21 @@ public class ControlPersonajes implements CommandLineRunner {
 		}
 	}
 	
+	public Optional<Personaje> findByNombre(String nombre){
+		return repository.findByNombre(nombre);
+	}
+	
+	public void addDefault(Personaje p) {
+		repository.save(p);
+	}
 	@Override
 	public void run(String... args) throws Exception {
-		repository.save(new Personaje("Juana de Arco",5,TipoBatalla.MILITAR,115,5,4,1));
-		repository.save(new Personaje("Mark Evans",5,TipoBatalla.MILITAR,100,5,2,3));
-		repository.save(new Personaje("Rosalia de Castro",4,TipoBatalla.CULTURAL,200,2,5,5));
+		
+		repository.save(new Personaje("Juana de Arco",5,TipoBatalla.MILITAR,115,5,4,1,false));
+		repository.save(new Personaje("Mark Evans",5,TipoBatalla.MILITAR,100,5,2,3,false));
+		repository.save(new Personaje("Rosalia de Castro",4,TipoBatalla.CULTURAL,200,2,5,5,false));
+	}
+	public List<Personaje> findAll(){//Posteriormente mostrar paginas de personajes!
+		return repository.findAll();
 	}
 }

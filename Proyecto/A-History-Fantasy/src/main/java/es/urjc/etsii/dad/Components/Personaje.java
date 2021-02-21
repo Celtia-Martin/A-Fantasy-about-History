@@ -20,19 +20,22 @@ public class Personaje {
 	private long vMilitar;
 	private long vDiplomatico;
 	private long vCultural;
+	private boolean isDefault;
 	private String image;
 	@Lob
 	@JsonIgnore
 	private Blob imageFile;
 	
-	@OneToOne
+	@ManyToOne 
+	@JsonIgnore
 	private Formacion formacion;
 	
 	public Personaje() {
 		
 	}
 	
-	public Personaje(String nombre, long rango, Enums.TipoBatalla tipo, long precio, long vMilitar,long vDiplomatico, long vCultural) {
+	public Personaje(String nombre, long rango, Enums.TipoBatalla tipo, long precio, long vMilitar,long vDiplomatico, long vCultural,boolean isDefault) {
+		this.isDefault= isDefault;
 		this.nombre=nombre;
 		this.rango=rango;
 		this.tipo=tipo;
@@ -58,5 +61,8 @@ public class Personaje {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+	public void setFormacion(Formacion formacion) {
+		this.formacion= formacion;
 	}
 }

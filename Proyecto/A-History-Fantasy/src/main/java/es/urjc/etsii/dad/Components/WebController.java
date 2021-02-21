@@ -3,6 +3,7 @@ package es.urjc.etsii.dad.Components;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import jdk.internal.org.jline.utils.Log;
 /*
  * <dependency>
 		<groupId> org.springframework.boot</groupId>
@@ -31,7 +34,11 @@ public class WebController {
 
 	@Autowired
 	private ControlPersonajes controlPersonajes;
-	private User propio;
+	
+	@Autowired
+	private ControlFormaciones controlFormacion;
+	
+	private String currentUser;
 	@GetMapping("/newUsuario")
 	public String NuevoUsuario(Model model) {
 		
@@ -55,9 +62,11 @@ public class WebController {
 		}
 		else {
 			User nuevo= new User(nombre,contrasena);
-			if(controlUsuarios.newUser(nombre,contrasena)) {
-				propio= nuevo;
-				model.addAttribute("name",propio.getNombre());
+			
+			if(controlUsuarios.newUser(nombre,contrasena,controlPersonajes,controlFormacion)) {
+				currentUser= nuevo.getNombre();	
+				//controlFormacion.NewFormacion(nuevaFormacion, nuevo);
+				model.addAttribute("name",currentUser);
 				return "menuPrincipal";
 			}
 			else {
@@ -102,8 +111,8 @@ public class WebController {
 		else {
 			User nuevo= new User(nombre,contrasena);
 			if(controlUsuarios.LogIn(nombre,contrasena)) {
-				propio= nuevo;
-				model.addAttribute("name",propio.getNombre());
+				currentUser= nuevo.getNombre();
+				model.addAttribute("name",currentUser);
 				return "menuPrincipal";
 			}
 			else {
@@ -120,24 +129,24 @@ public class WebController {
 	}
 	@GetMapping ("/newPersonaje")
 	public String CreadorDePersonajes(Model model) {
-		model.addAttribute("name",propio.getNombre());
+		model.addAttribute("name",currentUser);
 		return "personajes";
 	}
 	@PostMapping("/newPersonaje")
-	public String FormularioPersonajes(Model model,@RequestParam String nombre,@RequestParam String rango,@RequestParam String tipo,@RequestParam String vMilitar,@RequestParam String vDiplo,@RequestParam String vCultu,@RequestParam String precio,@RequestParam MultipartFile image) throws IOException {
-		//Personaje p= new Personaje(nombre,rango,tipo,precio,vMilitar,vDiplo,vCultu);
-		Personaje p= new Personaje(nombre,1,Enums.TipoBatalla.POLITICA,200,2,2,2);
+	public String FormularioPersonajes(Model model,@RequestParam String nombre,@RequestParam long rango,@RequestParam String tipo,@RequestParam long vMilitar,@RequestParam long vDiplo,@RequestParam long vCultu,@RequestParam long precio,@RequestParam MultipartFile image) throws IOException {
+		Personaje p= new Personaje(nombre,rango,Enums.TipoBatalla.valueOf(tipo),precio,vMilitar,vDiplo,vCultu,false);
+		//Personaje p= new Personaje(nombre,1,Enums.TipoBatalla.DIPLOMATICO,200,2,2,2,false);
 		URI location= fromCurrentRequest().build().toUri();
 		p.setImage(location.toString());
 		p.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
 		
 		if(controlPersonajes.newPersonaje(p)) {
-			model.addAttribute("name",propio.getNombre());
+			model.addAttribute("name",currentUser);
 			return "menuPrincipal";
 			
 		}
 		else {
-			model.addAttribute("name",propio.getNombre());
+			model.addAttribute("name",currentUser);
 			return "personajes";
 		}
 		
@@ -159,6 +168,14 @@ public class WebController {
 	@GetMapping("/formacion")
 	public String MostrarFormacion(Model model) {
 	
+		Optional<User> current= controlUsuarios.findByNombre(currentUser);
+		if(current.isPresent()) {
+			Formacion miFormacion= current.get().getFormacion();
+			if(miFormacion!=null) {
+				model.addAttribute("personajes",miFormacion.getPersonajes());
+			}
+		}
+		
 		
 		return "formacion";
 	}
@@ -169,7 +186,7 @@ public class WebController {
 	}
 	@GetMapping("/menuPrincipal")
 	public String GetMenuPrincipal(Model model) {
-		model.addAttribute("name",propio.getNombre());
+		model.addAttribute("name",currentUser);
 		return "menuPrincipal";
 	}
 	

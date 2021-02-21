@@ -1,5 +1,6 @@
 package es.urjc.etsii.dad.Components;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -11,5 +12,5 @@ public class Mercado {
 	private Long id;
 	
 	@ManyToMany
-	private List<Personaje> oferta;
+	private List<Personaje> oferta=  new ArrayList<>();
 }

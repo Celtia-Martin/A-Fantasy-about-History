@@ -16,14 +16,20 @@ public class ControlUsuarios implements CommandLineRunner {
 	@Autowired
 	private UserRepository repository;
 	
-	public boolean newUser (String nombre, String contra) {
+	public boolean newUser (String nombre, String contra,ControlPersonajes controlPersonajes,ControlFormaciones controlFormaciones) {
 		Optional<User> mismoNombre= repository.findByNombre(nombre);
 		
 		if(mismoNombre.isPresent()) {
 			return false;
 		}
 		else {
-			repository.save(new User(nombre,contra));
+			Formacion nuevaFormacion= new Formacion();
+			nuevaFormacion.initFormacion(controlPersonajes);
+			User nuevo=new User(nombre,contra);
+			nuevo.setFormacion(nuevaFormacion);
+			repository.save(nuevo);
+			controlFormaciones.NewFormacion(nuevaFormacion);
+			nuevaFormacion.SetFormationToPersonaje();
 			return true;
 		}
 	}
@@ -45,6 +51,9 @@ public class ControlUsuarios implements CommandLineRunner {
 		}
 	}
 
+	public Optional<User> findByNombre(String nombre)  {
+		return repository.findByNombre(nombre);
+	}
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
