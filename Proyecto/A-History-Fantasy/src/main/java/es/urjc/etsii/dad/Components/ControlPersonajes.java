@@ -1,5 +1,6 @@
 package es.urjc.etsii.dad.Components;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,13 +33,16 @@ public class ControlPersonajes implements CommandLineRunner {
 		return repository.findByNombre(nombre);
 	}
 	public List<Personaje> getRandomMercado(){
-		int idx= (int)(Math.random()*(repository.count()-5));
-	
-		Page<Personaje> query= repository.findByIsDefaultAndTieneFormacion(false, false,PageRequest.of(idx, 5) );
-		if(query.hasContent()) {
-			return query.getContent();
+		
+		List<Personaje> result= new ArrayList<>();
+		List<Personaje> query= repository.findByIsDefaultAndTieneFormacion(false, false );
+		for(int i =0; i<5 ;i ++) {
+			int idx= (int)(Math.random()*(query.size()));
+			result.add(query.remove(idx));
+			
 		}
-		else return null;
+		
+		return result;
 	}
 	public void addDefault(Personaje p) {
 		repository.save(p);

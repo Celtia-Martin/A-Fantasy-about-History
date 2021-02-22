@@ -13,7 +13,7 @@ public interface PersonajeRepository extends JpaRepository<Personaje, Long> {
 
 	//@Query("SELECT p FROM Personaje p WHERE")
 	//@Query ("SELECT * FROM Personaje  WHERE nombre == 'Celtia' ")
-	Page<Personaje> findByIsDefaultAndTieneFormacion(boolean isDefault, boolean tieneFormacion,Pageable page);
+	List<Personaje> findByIsDefaultAndTieneFormacion(boolean isDefault, boolean tieneFormacion);
 	Optional<Personaje> findByFormacion(Formacion formacion);
 	Optional<Personaje> findByNombre(String nombre);
 
