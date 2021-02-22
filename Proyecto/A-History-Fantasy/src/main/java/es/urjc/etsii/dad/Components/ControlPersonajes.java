@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
 
 import es.urjc.etsii.dad.Components.Enums.*;
@@ -30,7 +31,15 @@ public class ControlPersonajes implements CommandLineRunner {
 	public Optional<Personaje> findByNombre(String nombre){
 		return repository.findByNombre(nombre);
 	}
+	public List<Personaje> getRandomMercado(){
+		int idx= (int)(Math.random()*(repository.count()-5));
 	
+		Page<Personaje> query= repository.findByIsDefaultAndTieneFormacion(false, false,PageRequest.of(idx, 5) );
+		if(query.hasContent()) {
+			return query.getContent();
+		}
+		else return null;
+	}
 	public void addDefault(Personaje p) {
 		repository.save(p);
 	}

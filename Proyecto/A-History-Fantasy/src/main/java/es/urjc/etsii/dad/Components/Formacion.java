@@ -28,6 +28,7 @@ public class Formacion { //al eliminar un default se elimina tambien de la base 
 		String nom = RandomizarPersonaje(TipoBatalla.MILITAR);
 		
 		Personaje p=new Personaje(nom, 1, TipoBatalla.MILITAR, 1000, 200, 100, 100,true);
+		p.setTieneFormacion(true);
 		control.addDefault(p);
 		personajes.add(p);
 
@@ -36,6 +37,7 @@ public class Formacion { //al eliminar un default se elimina tambien de la base 
 		nom = RandomizarPersonaje(TipoBatalla.MILITAR);
 		
 		p= new Personaje(nom, 1, TipoBatalla.MILITAR, 1000, 200, 100, 100,true);
+		p.setTieneFormacion(true);
 		control.addDefault(p);
 		personajes.add(p);
 		
@@ -43,6 +45,7 @@ public class Formacion { //al eliminar un default se elimina tambien de la base 
 		nom = RandomizarPersonaje(TipoBatalla.DIPLOMATICO);
 		
 		p= new Personaje(nom, 1, TipoBatalla.DIPLOMATICO, 1000, 100, 200, 100,true);
+		p.setTieneFormacion(true);
 		control.addDefault(p);
 		personajes.add(p);
 	
@@ -50,6 +53,7 @@ public class Formacion { //al eliminar un default se elimina tambien de la base 
 		nom = RandomizarPersonaje(TipoBatalla.DIPLOMATICO);
 		
 		p= new Personaje(nom, 1, TipoBatalla.DIPLOMATICO, 1000, 100, 200, 100,true);
+		p.setTieneFormacion(true);
 		control.addDefault(p);
 		personajes.add(p);
 		
@@ -57,6 +61,7 @@ public class Formacion { //al eliminar un default se elimina tambien de la base 
 		nom = RandomizarPersonaje(TipoBatalla.CULTURAL);
 		
 		p=new Personaje(nom, 1, TipoBatalla.CULTURAL, 1000, 100, 100, 200,true);
+		p.setTieneFormacion(true);
 		control.addDefault(p);
 		personajes.add(p);
 
@@ -64,6 +69,7 @@ public class Formacion { //al eliminar un default se elimina tambien de la base 
 		nom = RandomizarPersonaje(TipoBatalla.CULTURAL);
 		
 		p= new Personaje(nom, 1, TipoBatalla.CULTURAL, 1000, 100, 100, 200,true);
+		p.setTieneFormacion(true);
 		control.addDefault(p);
 		personajes.add(p);
 		

@@ -21,6 +21,7 @@ public class Personaje {
 	private long vDiplomatico;
 	private long vCultural;
 	private boolean isDefault;
+	private boolean tieneFormacion;
 	private String image;
 	@Lob
 	@JsonIgnore
@@ -43,6 +44,7 @@ public class Personaje {
 		this.vMilitar=vMilitar;
 		this.vDiplomatico= vDiplomatico;
 		this.vCultural= vCultural;
+		setTieneFormacion(false);
 	}
 	public void setImageFile(Blob imageFile) {
 		this.imageFile=imageFile;
@@ -64,5 +66,13 @@ public class Personaje {
 	}
 	public void setFormacion(Formacion formacion) {
 		this.formacion= formacion;
+	}
+
+	public boolean isTieneFormacion() {
+		return tieneFormacion;
+	}
+
+	public void setTieneFormacion(boolean tieneFormacion) {
+		this.tieneFormacion = tieneFormacion;
 	}
 }
