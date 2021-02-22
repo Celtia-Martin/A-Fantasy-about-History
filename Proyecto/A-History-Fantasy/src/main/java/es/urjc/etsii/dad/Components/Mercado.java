@@ -13,4 +13,14 @@ public class Mercado {
 	
 	@ManyToMany
 	private List<Personaje> oferta=  new ArrayList<>();
+	
+	public Mercado() {
+		
+	}
+	public void addPersonajes(List<Personaje> personajes) {
+		oferta.addAll(personajes);
+	}
+	public List<Personaje> getOferta(){
+		return oferta;
+	}
 }

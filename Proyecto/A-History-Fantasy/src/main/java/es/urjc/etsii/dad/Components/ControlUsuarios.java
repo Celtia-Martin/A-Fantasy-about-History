@@ -15,9 +15,11 @@ public class ControlUsuarios implements CommandLineRunner {
 	@Autowired
 	private UserRepository repository;
 	
-	public boolean newUser (String nombre, String contra,ControlPersonajes controlPersonajes,ControlFormaciones controlFormaciones) {
+	public boolean newUser (String nombre, String contra,ControlPersonajes controlPersonajes,ControlFormaciones controlFormaciones,ControlMercado controlMercado) {
 		Optional<User> mismoNombre= repository.findByNombre(nombre);
-		
+		if(repository.count()==0) {
+			controlMercado.newMercado(controlPersonajes);
+		}
 		if(mismoNombre.isPresent()) {
 			return false;
 		}

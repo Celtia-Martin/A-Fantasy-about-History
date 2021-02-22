@@ -39,6 +39,9 @@ public class WebController {
 	@Autowired
 	private ControlFormaciones controlFormacion;
 	
+	@Autowired
+	private ControlMercado controlMercado;
+	
 	private String currentUser;
 	@GetMapping("/newUsuario")
 	public String NuevoUsuario(Model model) {
@@ -49,6 +52,7 @@ public class WebController {
 		errorUsuario= false;
 		errorContra= false;
 		datosInsuficientes=false;
+
 		return "newUsuario";
 	}
 
@@ -64,7 +68,7 @@ public class WebController {
 		else {
 			User nuevo= new User(nombre,contrasena);
 			
-			if(controlUsuarios.newUser(nombre,contrasena,controlPersonajes,controlFormacion)) {
+			if(controlUsuarios.newUser(nombre,contrasena,controlPersonajes,controlFormacion,controlMercado)) {
 				currentUser= nuevo.getNombre();	
 				//controlFormacion.NewFormacion(nuevaFormacion, nuevo);
 				model.addAttribute("name",currentUser);
@@ -155,7 +159,8 @@ public class WebController {
 	
 	@GetMapping("/mercado")
 	public String MostrarMercado(Model model) {
-		
+		List<Personaje> oferta= controlMercado.findAllPersonajes((long) 0);
+		model.addAttribute("mercado",oferta);
 		
 		return "mercado";
 	}

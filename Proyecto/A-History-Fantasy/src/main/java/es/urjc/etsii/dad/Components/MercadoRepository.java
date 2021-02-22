@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface MercadoRepository extends JpaRepository<Mercado, Long> {
 
 	Optional<Mercado>findById(Long id);
+	Optional<Mercado>findFirstBy();
 }
