@@ -9,7 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
-@Controller
+@Service
 public class ControlUsuarios implements CommandLineRunner {
 
 	@Autowired

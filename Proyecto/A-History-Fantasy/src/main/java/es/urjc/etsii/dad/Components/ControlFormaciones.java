@@ -5,8 +5,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
-@Controller
+@Service
 public class ControlFormaciones  implements CommandLineRunner{
 
 	@Autowired

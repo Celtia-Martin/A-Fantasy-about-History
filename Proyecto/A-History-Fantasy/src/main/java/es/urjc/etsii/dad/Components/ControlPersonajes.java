@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import es.urjc.etsii.dad.Components.Enums.*;
 
-@Controller
+@Service
 public class ControlPersonajes implements CommandLineRunner {
 
 	@Autowired
