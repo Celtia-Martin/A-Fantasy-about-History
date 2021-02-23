@@ -49,6 +49,9 @@ public class Personaje {
 	public void setImageFile(Blob imageFile) {
 		this.imageFile=imageFile;
 	}
+	public Blob getImageFile() {
+		return imageFile;
+	}
 	
 	public String getNombre() {
 		return nombre;

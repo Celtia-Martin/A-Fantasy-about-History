@@ -2,12 +2,16 @@ package es.urjc.etsii.dad.Components;
 
 import java.io.IOException;
 import java.net.URI;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +25,10 @@ import jdk.internal.org.jline.utils.Log;
 		<groupId> org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		spring.datasource.url=jdbc:mysql://localhost/HistoryFantasy
+spring.datasource.username=root
+spring.datasource.password=GatoPato115
+spring.jpa.hibernate.ddl-auto=create-drop
  */
 @Controller
 public class WebController {
@@ -83,8 +91,19 @@ public class WebController {
 	}
 	
 	@GetMapping("/mostrarTodosPersonajes")
-	public String mostrarPersonajes(Model model) {
+	public String mostrarPersonajes(Model model) throws SQLException, IOException {
 		List<Personaje> aMostrar=controlPersonajes.findAll();
+		/*Optional<Personaje> prueba= controlPersonajes.findByNombre("Celtia");
+		if(prueba.isPresent()) {
+			Blob image= prueba.get().getImageFile();
+			Resource res=  new InputStreamResource(
+					 image.getBinaryStream());
+			model.addAttribute("image",res.getURL());
+			
+		}*/
+		else {
+			model.addAttribute("image",null);
+		}
 		model.addAttribute("personajes",aMostrar);
 		return "mostrarTodosPersonajes";
 		
