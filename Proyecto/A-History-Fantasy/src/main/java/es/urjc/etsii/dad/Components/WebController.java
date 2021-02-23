@@ -154,6 +154,8 @@ public class WebController {
 	public String MostrarClasificacion(Model model) {
 		model.addAttribute("clasificacion", controlUsuarios.findTop10ByPuntosDesc());
 		
+		model.addAttribute("name",currentUser);
+		
 		return "clasificacion";
 	}
 	
@@ -161,6 +163,8 @@ public class WebController {
 	public String MostrarMercado(Model model) {
 		List<Personaje> oferta= controlMercado.findAllPersonajes((long) 0);
 		model.addAttribute("mercado",oferta);
+		
+		model.addAttribute("name",currentUser);
 		
 		return "mercado";
 	}
@@ -176,6 +180,7 @@ public class WebController {
 			}
 		}
 		
+		model.addAttribute("name",currentUser);
 		
 		return "formacion";
 	}
