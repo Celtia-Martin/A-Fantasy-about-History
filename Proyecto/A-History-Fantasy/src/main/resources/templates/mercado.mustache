@@ -32,7 +32,9 @@
 		    	<td>{{vDiplomatico}}</td>
 		    	<td>{{vCultural}}</td>
 		    	<td>{{precio}}</td>
-		    	<td><button>Pujar</button></td>
+		    	<form action = "/pujarPersonaje/{{id}}" method= "post">
+		    		<td><input type='submit' value= 'Pujar'/></td>
+		    	</form>
 		    	<td>No pujado</td>
 		  	</tr>
 		  	{{/mercado}}

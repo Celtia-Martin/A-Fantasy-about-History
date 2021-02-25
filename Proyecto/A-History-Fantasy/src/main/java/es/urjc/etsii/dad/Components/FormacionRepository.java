@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface FormacionRepository extends JpaRepository<Formacion, Long> {
 
 	Optional<Formacion> findByPropietario(User user);
+	
 }

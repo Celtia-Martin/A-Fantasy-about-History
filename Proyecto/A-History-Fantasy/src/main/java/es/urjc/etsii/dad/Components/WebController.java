@@ -15,6 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +26,8 @@ import jdk.internal.org.jline.utils.Log;
 		<groupId> org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		spring.datasource.url=jdbc:mysql://localhost/HistoryFantasy
+	
+spring.datasource.url=jdbc:mysql://localhost:3306/HistoryFantasy
 spring.datasource.username=root
 spring.datasource.password=GatoPato115
 spring.jpa.hibernate.ddl-auto=create-drop
@@ -100,10 +102,10 @@ public class WebController {
 					 image.getBinaryStream());
 			model.addAttribute("image",res.getURL());
 			
-		}*/
+		}
 		else {
 			model.addAttribute("image",null);
-		}
+		}*/
 		model.addAttribute("personajes",aMostrar);
 		return "mostrarTodosPersonajes";
 		
@@ -180,7 +182,7 @@ public class WebController {
 	
 	@GetMapping("/mercado")
 	public String MostrarMercado(Model model) {
-		List<Personaje> oferta= controlMercado.findAllPersonajes((long) 0);
+		List<Personaje> oferta= controlMercado.findAllPersonajes();
 		model.addAttribute("mercado",oferta);
 		
 		model.addAttribute("name",currentUser);
@@ -213,7 +215,28 @@ public class WebController {
 		model.addAttribute("name",currentUser);
 		return "menuPrincipal";
 	}
-	
+	@PostMapping("/venderPersonaje/{id}")
+	public String FormularioPersonajes(Model model,@PathVariable int id) {
+		Optional<User> current= controlUsuarios.findByNombre(currentUser);
+		if(current.isPresent()) {
+			Optional<Personaje> personaje= controlPersonajes.findById((long)id);
+			if(personaje.isPresent()) {
+				Formacion miFormacion= current.get().getFormacion();
+				if(miFormacion.deletePersonaje(id) ) {
+					long precio= personaje.get().getPrecio();
+					current.get().setDinero(current.get().getDinero()+precio);
+					personaje.get().setTieneFormacion(false);
+					if(personaje.get().isDefault()) {
+						controlPersonajes.deleteById((long)id);
+					}
+				}
+			}
+			
+			
+		}
+		return MostrarFormacion(model);
+		
+	}
 	
 }
 

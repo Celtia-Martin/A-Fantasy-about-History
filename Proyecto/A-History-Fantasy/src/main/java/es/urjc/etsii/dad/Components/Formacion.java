@@ -96,6 +96,12 @@ public class Formacion { //al eliminar un default se elimina tambien de la base 
 	public List<Personaje> getPersonajes(){
 		return personajes;
 	}
+	public boolean deletePersonaje(long id) {
+		return(personajes.removeIf(p -> p.getId()==id));
+	}
+	public void addPersonaje(Personaje p) {
+		personajes.add(p);
+	}
 }
 
 

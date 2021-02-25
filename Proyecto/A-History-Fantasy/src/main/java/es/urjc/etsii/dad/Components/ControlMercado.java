@@ -23,7 +23,7 @@ public class ControlMercado  implements CommandLineRunner {
 		nuevo.addPersonajes(mercado);
 		repository.save(nuevo);
 	}
-	public List<Personaje> findAllPersonajes(Long index){
+	public List<Personaje> findAllPersonajes(){
 		Optional<Mercado> mercado= repository.findFirstBy();
 		if(mercado.isPresent()) {
 			return mercado.get().getOferta();

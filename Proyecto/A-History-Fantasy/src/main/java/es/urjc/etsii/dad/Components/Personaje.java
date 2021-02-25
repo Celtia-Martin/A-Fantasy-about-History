@@ -36,11 +36,11 @@ public class Personaje {
 	}
 	
 	public Personaje(String nombre, long rango, Enums.TipoBatalla tipo, long precio, long vMilitar,long vDiplomatico, long vCultural,boolean isDefault) {
-		this.isDefault= isDefault;
+		this.setDefault(isDefault);
 		this.nombre=nombre;
 		this.rango=rango;
 		this.tipo=tipo;
-		this.precio=precio;
+		this.setPrecio(precio);
 		this.vMilitar=vMilitar;
 		this.vDiplomatico= vDiplomatico;
 		this.vCultural= vCultural;
@@ -59,7 +59,9 @@ public class Personaje {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
+	public Long getId() {
+		return id;
+	}
 	public String getImage() {
 		return image;
 	}
@@ -77,5 +79,21 @@ public class Personaje {
 
 	public void setTieneFormacion(boolean tieneFormacion) {
 		this.tieneFormacion = tieneFormacion;
+	}
+
+	public long getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(long precio) {
+		this.precio = precio;
+	}
+
+	public boolean isDefault() {
+		return isDefault;
+	}
+
+	public void setDefault(boolean isDefault) {
+		this.isDefault = isDefault;
 	}
 }

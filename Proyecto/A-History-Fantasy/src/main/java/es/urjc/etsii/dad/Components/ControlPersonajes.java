@@ -52,6 +52,12 @@ public class ControlPersonajes implements CommandLineRunner {
 	public void addDefault(Personaje p) {
 		repository.save(p);
 	}
+	public Optional<Personaje> findById(Long id){
+		return repository.findById(id);
+	}
+	public void deleteById(Long id){
+		repository.deleteById(id);
+	}
 	@Override
 	public void run(String... args) throws Exception {
 		

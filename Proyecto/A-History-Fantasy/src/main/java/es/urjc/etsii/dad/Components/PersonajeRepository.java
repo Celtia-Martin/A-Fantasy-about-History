@@ -17,5 +17,6 @@ public interface PersonajeRepository extends JpaRepository<Personaje, Long> {
 	Optional<Personaje> findByFormacion(Formacion formacion);
 	Optional<Personaje> findByNombre(String nombre);
 	Page<Personaje> findByIsDefaultAndTieneFormacion(boolean isDefault, boolean tieneFormacion,Pageable page);
-
+	Optional<Personaje> findById(Long id);
+	void deleteById(Long id);
 }

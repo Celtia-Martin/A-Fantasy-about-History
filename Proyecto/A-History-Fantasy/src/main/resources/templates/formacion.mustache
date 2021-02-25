@@ -37,7 +37,9 @@
 		    	<th>{{vDiplomatico}}</th>
 		    	<th>{{vCultural}}</th>
 		    	<th>{{precio}}</th>
-		    	<td><button>Vender</button></td>
+		    	<form action = "/venderPersonaje/{{id}}" method= "post" >
+		    		<td><input type='submit' value= 'Vender'/></td>
+		    	</form>
 		    	<td></td>
 		    	
 		  	</tr>
