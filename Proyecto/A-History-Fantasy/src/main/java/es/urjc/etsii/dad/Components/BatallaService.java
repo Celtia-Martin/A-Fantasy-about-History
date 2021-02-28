@@ -113,6 +113,7 @@ public class BatallaService {
 					jug.get().setDinero(jug.get().getDinero() + dinero);
 				}
 			}
+			batallas.delete(bat.get());
 		}
 	}
 	
@@ -129,9 +130,9 @@ public class BatallaService {
 		return batallas.findById(id);
 	}
 
-	public void save(Batalla post) {
+	public void save(Batalla batalla) {
 
-		batallas.save(post);
+		batallas.save(batalla);
 	}
 
 	public void deleteById(long id) {

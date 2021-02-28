@@ -17,6 +17,10 @@ public class Batalla {
 	private List<Personaje> participantes;
 
 
+	public Batalla() {
+		int random= (int) (Math.random()*Enums.TipoBatalla.values().length);
+		tipo= Enums.TipoBatalla.values() [random];
+	}
 	public Enums.TipoBatalla getTipo() {
 		return tipo;
 	}

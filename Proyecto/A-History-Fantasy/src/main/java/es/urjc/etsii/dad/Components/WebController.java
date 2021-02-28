@@ -52,6 +52,9 @@ public class WebController {
 	@Autowired
 	private ControlMercado controlMercado;
 	
+	@Autowired
+	private BatallaService controlBatalla;
+	
 	private String currentUser;
 	@GetMapping("/newUsuario")
 	public String NuevoUsuario(Model model) {
@@ -236,6 +239,13 @@ public class WebController {
 		}
 		return MostrarFormacion(model);
 		
+	}
+	@PostMapping("/ejecutarBatalla")
+	public String FormularioPersonajes(Model model) {
+		Batalla batalla= new Batalla();
+		controlBatalla.save(batalla);
+		controlBatalla.RealizarBatalla();
+		return GetMenuPrincipal(model);
 	}
 	
 }
