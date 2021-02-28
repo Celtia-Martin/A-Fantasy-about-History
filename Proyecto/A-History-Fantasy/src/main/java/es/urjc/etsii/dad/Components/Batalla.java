@@ -15,4 +15,9 @@ public class Batalla {
 	
 	@ManyToMany
 	private List<Personaje> participantes;
+
+
+	public Enums.TipoBatalla getTipo() {
+		return tipo;
+	}
 }

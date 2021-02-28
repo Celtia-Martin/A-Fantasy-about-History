@@ -53,6 +53,22 @@ public class Personaje {
 		return imageFile;
 	}
 	
+	public String getTipo() {
+		return tipo.toString();
+	}
+	
+	public int getVMilitar() {
+		return (int) vMilitar;
+	}
+	
+	public int getVDiplomatico() {
+		return (int) vDiplomatico;
+	}
+	
+	public int getVCultural() {
+		return (int) vCultural;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}

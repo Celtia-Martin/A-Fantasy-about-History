@@ -12,5 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface BatallaRepository extends JpaRepository<Batalla, Long> {
 
 	Optional<Batalla> findById( Long Id);
+	Optional<Batalla> findFirstBy();
 	Page<Batalla> findByTipo( Enums.TipoBatalla tipo, Pageable page);
 }
