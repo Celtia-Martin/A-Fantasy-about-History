@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.domain.Page;
@@ -25,17 +27,23 @@ public class BatallaService {
 	@Autowired
 	private UserRepository jugadores;
 	
-	
+	private Logger log = LoggerFactory.getLogger(BatallaService.class);
+
 	//Hacer consultas
 	
 	public void RealizarBatalla() {
 		Optional<Batalla> bat = batallas.findFirstBy();
 		
 		if(bat.isPresent()) {
-		
+			
 			Enums.TipoBatalla tipo = bat.get().getTipo();
 			
-			for(int i = 0; i < jugadores.count();i++) {
+			int limit = (int) jugadores.count();
+			
+			List<User> listJug = jugadores.findAll();
+			
+			for(int i = 0; i < limit;i++) {
+				
 				int dinero = 0;
 				int puntos = 0;
 				
@@ -43,79 +51,76 @@ public class BatallaService {
 				int vDiplomatico = 0;
 				int vCultural = 0;
 				
-				Long l = (long) i;
+				User jug = listJug.get(i);
 				
-				Optional<User> jug = jugadores.findById(l);
-				
-				if(jug.isPresent()) {
-					Formacion form = jug.get().getFormacion();
+				Formacion form = jug.getFormacion();
 					
-					List <Personaje> per = form.getPersonajes();
+				List <Personaje> per = form.getPersonajes();
 					
-					int puntosTotales = 0;
-					int puntosFinales = 0;
+				int puntosTotales = 0;
+				int puntosFinales = 0;
 					
-					for (int j = 0; j < per.size();j++) {
+				for (int j = 0; j < per.size();j++) {
 						
-						puntosTotales = 0;
+					puntosTotales = 0;
 						
-						vMilitar = per.get(j).getVMilitar();
-						vDiplomatico = per.get(j).getVDiplomatico();
-						vCultural = per.get(j).getVCultural();
+					vMilitar = per.get(j).getVMilitar();
+					vDiplomatico = per.get(j).getVDiplomatico();
+					vCultural = per.get(j).getVCultural();
 						
-						switch(tipo) {
+					switch(tipo) {
 						
-							case MILITAR: 
-								if(per.get(j).getTipo() == "Militar") {
-									puntosTotales += vMilitar * 2;
-								} else {
-									puntosTotales += vMilitar;
-								}
-							
-								puntosTotales += vDiplomatico;
-								puntosTotales += vCultural;
-							
-								break;
-				
-							case DIPLOMATICO:
-								if(per.get(j).getTipo() == "Diplomatico") {
-									puntosTotales += vDiplomatico * 2;
-								} else {
-									puntosTotales += vDiplomatico;
-								}
-							
-								puntosTotales += vCultural;
+						case MILITAR: 
+							if(per.get(j).getTipo() == "Militar") {
+								puntosTotales += vMilitar * 2;
+							} else {
 								puntosTotales += vMilitar;
+							}
 							
-								break;
-					
-							case CULTURAL:
-								if(per.get(j).getTipo() == "Cultural") {
-									puntosTotales += vCultural * 2;
-								} else {
-									puntosTotales += vCultural;
-								}
+							puntosTotales += vDiplomatico;
+							puntosTotales += vCultural;
 							
+							break;
+				
+						case DIPLOMATICO:
+							if(per.get(j).getTipo() == "Diplomatico") {
+								puntosTotales += vDiplomatico * 2;
+							} else {
 								puntosTotales += vDiplomatico;
-								puntosTotales += vMilitar;
+							}
 							
-								break;
-						}
-						
-						puntosFinales = puntosTotales;
-						
+							puntosTotales += vCultural;
+							puntosTotales += vMilitar;
+							
+							break;
+					
+						case CULTURAL:
+							if(per.get(j).getTipo() == "Cultural") {
+								puntosTotales += vCultural * 2;
+							} else {
+								puntosTotales += vCultural;
+							}
+							
+							puntosTotales += vDiplomatico;
+							puntosTotales += vMilitar;
+							
+							break;
 					}
-					
-					puntos = puntosFinales;
-					dinero = puntosFinales * 3;
-					
-					jug.get().setPuntos(jug.get().getPuntos() + puntosFinales);
-					jug.get().setDinero(jug.get().getDinero() + dinero);
+						
+					puntosFinales += puntosTotales;
 				}
+					
+				puntos = puntosFinales;
+				dinero = puntosFinales * 3;
+					
+				jug.setPuntos(jug.getPuntos() + puntosFinales);
+				jug.setDinero(jug.getDinero() + dinero);
 			}
-			batallas.delete(bat.get());
 		}
+		
+		batallas.delete(bat.get());
 	}
+	
 	
 	
 	public Collection<Batalla> findAll() {
