@@ -20,7 +20,7 @@ public class ControlPuja implements CommandLineRunner {
 	}
 
 	public Optional<Puja> findMejorPujaByPersonajeId(Long id){
-		return repository.findFirstByPersonajePujado_IdOrderByValor(id);
+		return repository.findFirstByPersonajePujado_IdOrderByValorDesc(id);
 	}
 	public boolean Pujar(User user, Personaje personaje, int valor) {
 		if(valor> user.getDinero()) {
@@ -38,21 +38,35 @@ public class ControlPuja implements CommandLineRunner {
 	}
 	public void ReiniciarMercado(ControlMercado controlMercado) {
 		List<Personaje> oferta= controlMercado.findAllPersonajes();
+		boolean listo;
 		for( Personaje p: oferta) {
-			Optional<Puja> ganadora= repository.findFirstByPersonajePujado_IdOrderByValor(p.getId());
-			if(ganadora.isPresent()) {
-				User ganador= ganadora.get().getUser();
-				if(ganador.getDinero()>=ganadora.get().getValor()) {
-					Formacion formacion= ganador.getFormacion();
-					formacion.addPersonaje(p);
-					ganador.setDinero(ganador.getDinero()-ganadora.get().getValor());
+			listo=false;
+			while(!listo) {
+				Optional<Puja> ganadora= repository.findFirstByPersonajePujado_IdOrderByValorDesc(p.getId());
+				if(ganadora.isPresent()) {
+					User ganador= ganadora.get().getUser();
+					if(ganador.getDinero()>=ganadora.get().getValor()) {
+						Formacion formacion= ganador.getFormacion();
+						if(formacion.contPersonajes()<6) {
+							p.setTieneFormacion(true);
+							formacion.addPersonaje(p);
+							ganador.setDinero(ganador.getDinero()-ganadora.get().getValor());
+							listo=true;
+						}
+						else {
+							listo= false;
+						}
+						
+					}else {
+						repository.delete(ganadora.get());
+					}
 				}
-				
-				
+				else {
+					listo=true;
+				}
 			}
 			
 		}
-		
 		
 		repository.deleteAll();
 	}

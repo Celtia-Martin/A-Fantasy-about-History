@@ -39,6 +39,8 @@ public class WebController {
 	private boolean errorUsuario = false;
 	private boolean errorContra = false;
 	private boolean datosInsuficientes = false;
+	private boolean errorPuja= false;
+	private boolean pujaRealizada= false;
 	
 	@Autowired
 	private ControlUsuarios controlUsuarios;
@@ -54,6 +56,9 @@ public class WebController {
 	
 	@Autowired
 	private BatallaService controlBatalla;
+	
+	@Autowired
+	private ControlPuja controlPuja;
 	
 	private String currentUser;
 	@GetMapping("/newUsuario")
@@ -187,7 +192,10 @@ public class WebController {
 	public String MostrarMercado(Model model) {
 		List<Personaje> oferta= controlMercado.findAllPersonajes();
 		model.addAttribute("mercado",oferta);
-		
+		model.addAttribute("errorPuja",errorPuja);
+		model.addAttribute("pujaRealizada",pujaRealizada);
+		errorPuja=false;
+		pujaRealizada=false;
 		model.addAttribute("name",currentUser);
 		
 		return "mercado";
@@ -240,11 +248,35 @@ public class WebController {
 		return MostrarFormacion(model);
 		
 	}
+	
+	@PostMapping("/pujarPersonaje/{id}")
+	public String PujandoPersonaje(Model model,@PathVariable int id,@RequestParam long valor) {
+		
+		Optional<User>current= controlUsuarios.findByNombre(currentUser);
+		Optional<Personaje> personaje= controlPersonajes.findById((long)id);
+		
+		if(current.isPresent()&&personaje.isPresent()) {
+			
+			boolean completado= controlPuja.Pujar(current.get(), personaje.get(), (int) valor);
+			errorPuja= !completado;
+			pujaRealizada= completado;
+		}
+		else {
+			errorPuja= true;
+		}
+		return MostrarMercado(model);
+	}
 	@PostMapping("/ejecutarBatalla")
 	public String FormularioPersonajes(Model model) {
 		Batalla batalla= new Batalla();
 		controlBatalla.save(batalla);
 		controlBatalla.RealizarBatalla();
+		return GetMenuPrincipal(model);
+	}
+	@PostMapping("/refrescarMercado")
+	public String RefrescarMercado(Model model) {
+		controlPuja.ReiniciarMercado(controlMercado);
+		controlMercado.newMercado(controlPersonajes);
 		return GetMenuPrincipal(model);
 	}
 	

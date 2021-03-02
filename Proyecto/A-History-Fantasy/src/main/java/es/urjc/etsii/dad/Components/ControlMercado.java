@@ -18,10 +18,15 @@ public class ControlMercado  implements CommandLineRunner {
 	}
 	
 	public void newMercado(ControlPersonajes controlpersonaje) {
+		Optional<Mercado> current= repository.findFirstBy();
+		if(current.isPresent()) {
+			repository.delete(current.get());
+		}
 		Mercado nuevo= new Mercado();
 		List<Personaje> mercado= controlpersonaje.getRandomMercado();
 		nuevo.addPersonajes(mercado);
 		repository.save(nuevo);
+		
 	}
 	public List<Personaje> findAllPersonajes(){
 		Optional<Mercado> mercado= repository.findFirstBy();
