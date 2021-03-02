@@ -71,15 +71,15 @@ public class ControlPersonajes implements CommandLineRunner {
 		repository.save(new Personaje("María Teresa de Calcuta",2,TipoBatalla.DIPLOMATICO,200,100,150,200,false));
 		repository.save(new Personaje("Elvis",5,TipoBatalla.CULTURAL,2000,200,600,600,false));
 		repository.save(new Personaje("Marie Curie",5,TipoBatalla.CULTURAL,2000,100,200,750,false));
-		
-		repository.save(new Personaje("Mark Evans",1,TipoBatalla.MILITAR,100,200,100,150,false));
-		repository.save(new Personaje("Rosalia de Castro",4,TipoBatalla.CULTURAL,1500,100,600,600,false));
-		repository.save(new Personaje("Cleopatra",5,TipoBatalla.DIPLOMATICO,2000,300,300,650,false));
+		repository.save(new Personaje("Anne Bonny",4,TipoBatalla.MILITAR,1500,775,100,150,false));
+		repository.save(new Personaje("María Pita",5,TipoBatalla.MILITAR,2000,800,600,300,false));
+		repository.save(new Personaje("Las Marías",3,TipoBatalla.CULTURAL,750,100,500,400,false));
+		/*
 		repository.save(new Personaje("Napoleón",4,TipoBatalla.MILITAR,1300,400,100,300,false));
 		repository.save(new Personaje("Cervantes",5,TipoBatalla.CULTURAL,2300,300,700,700,false));
 		repository.save(new Personaje("Nobunaga",5,TipoBatalla.MILITAR,2000,650,500,100,false));
 		repository.save(new Personaje("María Teresa de Calcuta",2,TipoBatalla.DIPLOMATICO,200,100,150,200,false));
-		repository.save(new Personaje("Elvis",5,TipoBatalla.CULTURAL,2000,200,600,600,false));
+		repository.save(new Personaje("Elvis",5,TipoBatalla.CULTURAL,2000,200,600,600,false));*/
 	}
 	public List<Personaje> findAll(){//Posteriormente mostrar paginas de personajes!
 		return repository.findAll();
