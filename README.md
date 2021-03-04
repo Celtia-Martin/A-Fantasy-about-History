@@ -7,7 +7,20 @@
 | Celtia      | Martin García     | c.martinga.2017@alumnos.urjc.es    | https://github.com/Celtia-Martin      |
 | Daniel      | Muñoz Rivera      | d.munozri.2017@alumnos.urjc.es     | https://github.com/MeSientoYMeCallo99 |
 
-## Descripcion
+# INDICE
+
+## [1.- DESCRIPCION	](#descripcion)
+### [1.1.- APLICACION ](#aplicacion)
+### [1.2.- ENTIDADES](#entidades)
+### [1.3.- SERVIDOR INTERNO](#servidorInterno)
+## [2.- MODELO DE DATOS](#modeloDeDatos)	
+## [3.- PANTALLAS](#pantallas)
+### [3.1.- CAPTURAS ](#capturasPantalla)
+### [3.2.- DIAGRAMA DE NAVEGACIÓN ](#diagramaNavegacion)
+
+## DESCRIPCION <a name="descripcion"/>
+
+### APLICACION <a name="aplicacion"/>
 
 A Fantasy about History es una aplicación web que presenta un juego de tipo Fantasy (Biwenger, Comunio, La Liga Fantasy), pero que no depende de ningun suceso real, ya que se juega con personajes históricos. Como cualquier aplicación Fantasy, los usuarios tendrán que iniciar sesión y unirse a la liga del juego.
 
@@ -23,7 +36,7 @@ Hay 2 niveles de jerarquía: el administrador de liga y el jugador. Un ADMINISTR
 
 Es estrictamente PRIVADO para los creadores la Simulación de Batallas, el reparto de puntos y oro y el cambio de jugadores en el mercado.
 
-## Entidades
+### ENTIDADES <a name="entidades"/>
 
 **- Usuario:** Tiene Nombre de Usuario y Contraseña. Estan asociados a una Liga. En esa liga, tiene una Formación (que se identifica según la liga a la que pertenece) y una cantidad de puntos y oro.
 
@@ -33,11 +46,13 @@ Es estrictamente PRIVADO para los creadores la Simulación de Batallas, el repar
 
 **- Formaciones:** Tienen una ID. Tienen asignados una serie de Personajes. Definen la Formación que jugará la Batalla.
 
-**- Mercado:** Tiene una serie de Personajes. 
+**- Mercado:** Tiene una serie de Personajes.
+
+**- Puja:** Tienen un Usuario, un Personaje y una cantidad de Dinero. Sirven para elegir al ganador del Personaje que se encuentra en el mercado.
 
 **OPCIONAL**: Añadir varias **LIGAS**, que pueden ser públicas o privadas.
 
-## Servidor Interno
+### SERVIDOR INTERNO <a name="servidorInterno"/>
 
 Se encarga de:
 
@@ -46,5 +61,16 @@ Se encarga de:
 **- Refrescar el Mercado:** Selecciona aleatoriamente de la base de datos de personajes libres en la liga y los pone en el mercado. Esto ocurre cada 24 horas, en una hora concreta.
 
 **OPCIONAL**: Controlar el Calendario, el ratio de las batallas y la hora del refresco del mercado.
+
+## MODELO DE DATOS <a name="modeloDeDatos"/>
+
+
+## PANTALLAS <a name="pantallas"/>
+
+### CAPTURAS <a name="capturasPantalla"/>
+
+
+
+### DIAGRAMA DE NAVEGACIÓN <a name="diagramaNavegacion"/>
 
 
