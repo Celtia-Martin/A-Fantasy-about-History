@@ -17,9 +17,11 @@ public class ControlUsuarios implements CommandLineRunner {
 	
 	public boolean newUser (String nombre, String contra,ControlPersonajes controlPersonajes,ControlFormaciones controlFormaciones,ControlMercado controlMercado) {
 		Optional<User> mismoNombre= repository.findByNombre(nombre);
+		
 		if(repository.count()==0) {
 			controlMercado.newMercado(controlPersonajes);
 		}
+		
 		if(mismoNombre.isPresent()) {
 			return false;
 		}
@@ -58,6 +60,10 @@ public class ControlUsuarios implements CommandLineRunner {
 	
 	public List<User> findTop10ByPuntosDesc(){
 		return repository.findTop10ByOrderByPuntosDesc();
+	}
+	
+	public void deleteByNombre(String nombre) {
+		repository.deleteByNombre(nombre);
 	}
 	
 	
