@@ -61,6 +61,21 @@ public class WebController {
 	private ControlPuja controlPuja;
 	
 	private String currentUser;
+	
+	
+	public void ActualizarEncabezado(Model model) {
+		Optional<User> current= controlUsuarios.findByNombre(currentUser);
+		long dinero=0;
+		long puntos=0;
+		if(current.isPresent()) {
+			 dinero= current.get().getDinero();
+			 puntos= current.get().getPuntos();
+		}
+			
+		model.addAttribute("name",currentUser);
+		model.addAttribute("dinero",dinero);
+		model.addAttribute("puntos",puntos);
+	}
 	@GetMapping("/newUsuario")
 	public String NuevoUsuario(Model model) {
 		
@@ -90,7 +105,7 @@ public class WebController {
 				currentUser= nuevo.getNombre();	
 				//controlFormacion.NewFormacion(nuevaFormacion, nuevo);
 				model.addAttribute("name",currentUser);
-				return "menuPrincipal";
+				return GetMenuPrincipal(model);
 			}
 			else {
 				errorUsuario=true;
@@ -143,8 +158,8 @@ public class WebController {
 			User nuevo= new User(nombre,contrasena);
 			if(controlUsuarios.LogIn(nombre,contrasena)) {
 				currentUser= nuevo.getNombre();
-				model.addAttribute("name",currentUser);
-				return "menuPrincipal";
+				
+				return GetMenuPrincipal(model);
 			}
 			else {
 				errorUsuario=true;
@@ -157,24 +172,19 @@ public class WebController {
 	
 	@GetMapping ("/newPersonaje")
 	public String CreadorDePersonajes(Model model) {
-		model.addAttribute("name",currentUser);
+		ActualizarEncabezado(model);
 		return "personajes";
 	}
 	
 	@PostMapping("/newPersonaje")
-	public String FormularioPersonajes(Model model,@RequestParam String nombre,@RequestParam long rango,@RequestParam String tipo,@RequestParam long vMilitar,@RequestParam long vDiplo,@RequestParam long vCultu,@RequestParam long precio,@RequestParam MultipartFile image) throws IOException {
+	public String FormularioPersonajes(Model model,@RequestParam String nombre,@RequestParam long rango,@RequestParam String tipo,@RequestParam long vMilitar,@RequestParam long vDiplo,@RequestParam long vCultu,@RequestParam long precio)  {
 		Personaje p= new Personaje(nombre,rango,Enums.TipoBatalla.valueOf(tipo),precio,vMilitar,vDiplo,vCultu,false);
-		//Personaje p= new Personaje(nombre,1,Enums.TipoBatalla.DIPLOMATICO,200,2,2,2,false);
-		URI location= fromCurrentRequest().build().toUri();
-		p.setImage(location.toString());
-		p.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.getSize()));
-		
+
 		if(controlPersonajes.newPersonaje(p)) {
-			model.addAttribute("name",currentUser);
-			return "menuPrincipal";
+			return GetMenuPrincipal(model);
 		}
 		else {
-			model.addAttribute("name",currentUser);
+			ActualizarEncabezado(model);
 			return "personajes";
 		}
 		
@@ -182,9 +192,7 @@ public class WebController {
 	@GetMapping("/clasificacion")
 	public String MostrarClasificacion(Model model) {
 		model.addAttribute("clasificacion", controlUsuarios.findTop10ByPuntosDesc());
-		
-		model.addAttribute("name",currentUser);
-		
+		ActualizarEncabezado(model);
 		return "clasificacion";
 	}
 	
@@ -196,7 +204,7 @@ public class WebController {
 		model.addAttribute("pujaRealizada",pujaRealizada);
 		errorPuja=false;
 		pujaRealizada=false;
-		model.addAttribute("name",currentUser);
+		ActualizarEncabezado(model);
 		
 		return "mercado";
 	}
@@ -212,7 +220,7 @@ public class WebController {
 			}
 		}
 		
-		model.addAttribute("name",currentUser);
+		ActualizarEncabezado(model);
 		
 		return "formacion";
 	}
@@ -223,7 +231,7 @@ public class WebController {
 	}
 	@GetMapping("/menuPrincipal")
 	public String GetMenuPrincipal(Model model) {
-		model.addAttribute("name",currentUser);
+		ActualizarEncabezado(model);
 		return "menuPrincipal";
 	}
 	@PostMapping("/venderPersonaje/{id}")

@@ -22,10 +22,7 @@ public class Personaje {
 	private long vCultural;
 	private boolean isDefault;
 	private boolean tieneFormacion;
-	private String image;
-	@Lob
-	@JsonIgnore
-	private Blob imageFile;
+
 	
 	@ManyToOne 
 	@JsonIgnore
@@ -46,13 +43,7 @@ public class Personaje {
 		this.vCultural= vCultural;
 		setTieneFormacion(false);
 	}
-	public void setImageFile(Blob imageFile) {
-		this.imageFile=imageFile;
-	}
-	public Blob getImageFile() {
-		return imageFile;
-	}
-	
+
 	public String getTipo() {
 		return tipo.toString();
 	}
@@ -78,13 +69,7 @@ public class Personaje {
 	public Long getId() {
 		return id;
 	}
-	public String getImage() {
-		return image;
-	}
 
-	public void setImage(String image) {
-		this.image = image;
-	}
 	public void setFormacion(Formacion formacion) {
 		this.formacion= formacion;
 	}
