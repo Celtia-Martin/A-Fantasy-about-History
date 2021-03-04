@@ -29,4 +29,27 @@ public class ControlFormaciones  implements CommandLineRunner{
 	
 		return repository.findByPropietario(user);
 	}
+	public boolean VenderPersonaje( Long idPersonaje,User user,ControlPersonajes controlPersonajes) {
+		Optional<Personaje> personaje= controlPersonajes.findById((long)idPersonaje);
+		if(personaje.isPresent()) {
+			Personaje aVender= personaje.get();
+			Formacion miFormacion= user.getFormacion();
+			Long idFormacion= miFormacion.getId();
+			Optional<Formacion> formacion= repository.findById(idFormacion);
+			if(formacion.isPresent()) {
+				if(formacion.get().deletePersonaje(idPersonaje) ) {
+					long precio= aVender.getPrecio();
+					user.setDinero(user.getDinero()+precio);
+					aVender.setTieneFormacion(false);
+					aVender.setFormacion(null);
+					if(aVender.isDefault()) {
+						controlPersonajes.deleteById((long)idPersonaje);
+					}
+					return true;
+				}
+			}
+			
+		}
+		return false;
+	}
 }

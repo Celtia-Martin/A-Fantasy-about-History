@@ -242,22 +242,7 @@ public class WebController {
 		
 		if(current.isPresent()) {
 			
-			Optional<Personaje> personaje= controlPersonajes.findById((long)id);
-			
-			if(personaje.isPresent()) {
-				
-				Formacion miFormacion= current.get().getFormacion();
-				
-				if(miFormacion.deletePersonaje(id) ) {
-					long precio= personaje.get().getPrecio();
-					current.get().setDinero(current.get().getDinero()+precio);
-					personaje.get().setTieneFormacion(false);
-					
-					if(personaje.get().isDefault()) {
-						controlPersonajes.deleteById((long)id);
-					}
-				}
-			}
+			controlFormacion.VenderPersonaje((long)id,current.get(), controlPersonajes);
 		}
 		return MostrarFormacion(model);
 	}
