@@ -7,10 +7,6 @@
 	</section>
 	
 	<section>
-		<p><center>
-			<h4> Bienvenido a tu fantasy sobre personajes históricos </h4>
-		</center></p>
-		
 		<table border="1" align="center" cellspacing="0" cellpadding="10">
 		  	<tr>
 		    	<th>Nombre</th>
@@ -21,11 +17,7 @@
 		    	<th>Valor Cultural</th>
 		    	<th>Vender</th>
 		    	<th>Puntos</th>
-		    	
 		  	</tr>
-		  	
-		  	
-		  	
 		  	
 		  	{{#personajes}}
 		  	
@@ -40,18 +32,12 @@
 		    	<form action = "/venderPersonaje/{{id}}" method= "post" >
 		    		<td><input type='submit' value= 'Vender'/></td>
 		    	</form>
-		    	<td></td>
-		    	
 		  	</tr>
-		  	{{/personajes}}
 		  	
+		  	{{/personajes}}
 		  	
 		</table>
 	</section>
-	
-
-	
-	
 	
 	<footer>
 		<p><center>
