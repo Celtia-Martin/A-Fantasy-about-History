@@ -108,10 +108,21 @@ public class BatallaService {
 		}
 		
 		batallas.delete(bat.get());
+		nuevaBatalla();
 	}
 
-	public void save(Batalla batalla) {
+	public void nuevaBatalla() {
+		Batalla batalla = new Batalla();
 		batallas.save(batalla);
+	}
+	
+	public String getBatalla() {
+		Optional<Batalla> bat = batallas.findFirstBy();
+		
+		if(bat.isPresent()) {
+			return bat.get().getTipo().toString();
+		}
+		return "";
 	}
 
 }

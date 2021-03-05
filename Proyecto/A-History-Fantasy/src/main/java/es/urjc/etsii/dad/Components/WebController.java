@@ -68,10 +68,11 @@ public class WebController {
 	 void started() {
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 	}
+	
 	public boolean ActualizarEncabezado(Model model) {
 		if(currentUser!=null) {
-			
 			Optional<User> current= controlUsuarios.findByNombre(currentUser);
+			
 			if(current.isPresent()) {
 				long dinero = 0;
 				long puntos = 0;
@@ -89,14 +90,9 @@ public class WebController {
 			else {
 				return false;
 			}
-			
-			
 		}
 		return false;
-		
 	}
-	
-	
 	
 	@GetMapping("/newUsuario")
 	public String NuevoUsuario(Model model) {
@@ -123,7 +119,7 @@ public class WebController {
 		else {
 			User nuevo= new User(nombre,contrasena);
 			
-			if(controlUsuarios.newUser(nombre,contrasena,controlPersonajes,controlFormacion,controlMercado)) {
+			if(controlUsuarios.newUser(nombre,contrasena,controlPersonajes,controlFormacion,controlMercado, controlBatalla)) {
 				currentUser = nuevo.getNombre();
 				model.addAttribute("name",currentUser);
 				
@@ -143,7 +139,11 @@ public class WebController {
 		List<Personaje> aMostrar=controlPersonajes.findAll();
 		model.addAttribute("personajes",aMostrar);
 		
-		return "mostrarTodosPersonajes";
+		if(ActualizarEncabezado(model)) {
+			return "mostrarTodosPersonajes";
+		}else {
+			return "errorNoLogin";
+		}
 	}
 	
 	@GetMapping("/login")
@@ -188,7 +188,6 @@ public class WebController {
 	@GetMapping ("/newPersonaje")
 	public String CreadorDePersonajes(Model model) {
 		if(ActualizarEncabezado(model)) {
-			
 			return "personajes";
 		}else {
 			return "errorNoLogin";
@@ -204,7 +203,6 @@ public class WebController {
 		}
 		else {
 			if(ActualizarEncabezado(model)) {
-				
 				return "personajes";
 			}else {
 				return "errorNoLogin";
@@ -216,7 +214,6 @@ public class WebController {
 	public String MostrarClasificacion(Model model) {
 		model.addAttribute("clasificacion", controlUsuarios.findTop10ByPuntosDesc());
 		if(ActualizarEncabezado(model)) {
-			
 			return "clasificacion";
 		}else {
 			return "errorNoLogin";
@@ -233,8 +230,8 @@ public class WebController {
 		
 		errorPuja=false;
 		pujaRealizada=false;
+		
 		if(ActualizarEncabezado(model)) {
-			
 			return "mercado";
 		}else {
 			return "errorNoLogin";
@@ -253,7 +250,6 @@ public class WebController {
 		}
 		
 		if(ActualizarEncabezado(model)) {
-			
 			return "formacion";
 		}else {
 			return "errorNoLogin";
@@ -269,8 +265,9 @@ public class WebController {
 	
 	@GetMapping("/menuPrincipal")
 	public String GetMenuPrincipal(Model model) {
+		model.addAttribute("batalla", controlBatalla.getBatalla());
+		
 		if(ActualizarEncabezado(model)) {
-			
 			return "menuPrincipal";
 		}else {
 			return "errorNoLogin";
@@ -308,8 +305,6 @@ public class WebController {
 	
 	@PostMapping("/ejecutarBatalla")
 	public String FormularioPersonajes(Model model) {
-		Batalla batalla= new Batalla();
-		controlBatalla.save(batalla);
 		controlBatalla.RealizarBatalla();
 		
 		return GetMenuPrincipal(model);

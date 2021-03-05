@@ -1,7 +1,5 @@
 package es.urjc.etsii.dad.Components;
 
-import java.util.List;
-
 import javax.persistence.*;
 
 @Entity
@@ -12,10 +10,6 @@ public class Batalla {
 	private Long id;
 	
 	private Enums.TipoBatalla tipo;
-	
-	@ManyToMany
-	private List<Personaje> participantes;
-
 
 	public Batalla() {
 		int random= (int) (Math.random()*Enums.TipoBatalla.values().length);

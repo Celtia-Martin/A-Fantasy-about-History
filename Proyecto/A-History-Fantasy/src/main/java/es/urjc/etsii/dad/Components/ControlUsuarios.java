@@ -1,12 +1,10 @@
 package es.urjc.etsii.dad.Components;
 
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,22 +13,25 @@ public class ControlUsuarios implements CommandLineRunner {
 	@Autowired
 	private UserRepository repository;
 	
-	public boolean newUser (String nombre, String contra,ControlPersonajes controlPersonajes,ControlFormaciones controlFormaciones,ControlMercado controlMercado) {
+	public boolean newUser (String nombre, String contra, ControlPersonajes controlPersonajes,ControlFormaciones controlFormaciones,ControlMercado controlMercado, BatallaService controlBatalla) {
 		Optional<User> mismoNombre= repository.findByNombre(nombre);
 		
-		if(repository.count()==0) {
+		if(repository.count() == 0) {
 			controlMercado.newMercado(controlPersonajes);
+			controlBatalla.nuevaBatalla();
 		}
 		
 		if(mismoNombre.isPresent()) {
 			return false;
 		}
 		else {
-			Formacion nuevaFormacion= new Formacion();
+			Formacion nuevaFormacion = new Formacion();
 			nuevaFormacion.initFormacion(controlPersonajes);
-			User nuevo=new User(nombre,contra);
+			
+			User nuevo = new User(nombre,contra);
 			nuevo.setFormacion(nuevaFormacion);
 			repository.save(nuevo);
+			
 			controlFormaciones.NewFormacion(nuevaFormacion);
 			nuevaFormacion.SetFormationToPersonaje();
 			return true;
