@@ -108,6 +108,8 @@ public class Formacion { //al eliminar un default se elimina tambien de la base 
 	public int contPersonajes() {
 		return personajes.size();
 	}
+	
+	
 }
 
 

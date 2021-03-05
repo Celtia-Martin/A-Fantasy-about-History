@@ -6,6 +6,9 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
+
+import javax.annotation.PostConstruct;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -61,21 +64,36 @@ public class WebController {
 	
 	private String currentUser;
 	
-	
-	public void ActualizarEncabezado(Model model) {
-		Optional<User> current= controlUsuarios.findByNombre(currentUser);
-		
-		long dinero = 0;
-		long puntos = 0;
-		
-		if(current.isPresent()) {
-			 dinero= current.get().getDinero();
-			 puntos= current.get().getPuntos();
-		}
+	@PostConstruct
+	 void started() {
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+	}
+	public boolean ActualizarEncabezado(Model model) {
+		if(currentUser!=null) {
 			
-		model.addAttribute("name",currentUser);
-		model.addAttribute("dinero",dinero);
-		model.addAttribute("puntos",puntos);
+			Optional<User> current= controlUsuarios.findByNombre(currentUser);
+			if(current.isPresent()) {
+				long dinero = 0;
+				long puntos = 0;
+				
+				if(current.isPresent()) {
+					 dinero= current.get().getDinero();
+					 puntos= current.get().getPuntos();
+				}
+					
+				model.addAttribute("name",currentUser);
+				model.addAttribute("dinero",dinero);
+				model.addAttribute("puntos",puntos);
+				return true;
+			}
+			else {
+				return false;
+			}
+			
+			
+		}
+		return false;
+		
 	}
 	
 	
@@ -169,8 +187,12 @@ public class WebController {
 	
 	@GetMapping ("/newPersonaje")
 	public String CreadorDePersonajes(Model model) {
-		ActualizarEncabezado(model);
-		return "personajes";
+		if(ActualizarEncabezado(model)) {
+			
+			return "personajes";
+		}else {
+			return "errorNoLogin";
+		}
 	}
 	
 	@PostMapping("/newPersonaje")
@@ -181,17 +203,24 @@ public class WebController {
 			return GetMenuPrincipal(model);
 		}
 		else {
-			ActualizarEncabezado(model);
-			return "personajes";
+			if(ActualizarEncabezado(model)) {
+				
+				return "personajes";
+			}else {
+				return "errorNoLogin";
+			}
 		}
 	}
 	
 	@GetMapping("/clasificacion")
 	public String MostrarClasificacion(Model model) {
 		model.addAttribute("clasificacion", controlUsuarios.findTop10ByPuntosDesc());
-		ActualizarEncabezado(model);
-		
-		return "clasificacion";
+		if(ActualizarEncabezado(model)) {
+			
+			return "clasificacion";
+		}else {
+			return "errorNoLogin";
+		}
 	}
 	
 	@GetMapping("/mercado")
@@ -204,9 +233,12 @@ public class WebController {
 		
 		errorPuja=false;
 		pujaRealizada=false;
-		ActualizarEncabezado(model);
-		
-		return "mercado";
+		if(ActualizarEncabezado(model)) {
+			
+			return "mercado";
+		}else {
+			return "errorNoLogin";
+		}
 	}
 	
 	@GetMapping("/formacion")
@@ -220,20 +252,29 @@ public class WebController {
 			}
 		}
 		
-		ActualizarEncabezado(model);
+		if(ActualizarEncabezado(model)) {
+			
+			return "formacion";
+		}else {
+			return "errorNoLogin";
+		}
 		
-		return "formacion";
 	}
 	
 	@GetMapping("/")
 	public String Inicio (Model model) {
+		currentUser=null;
 		return "index";
 	}
 	
 	@GetMapping("/menuPrincipal")
 	public String GetMenuPrincipal(Model model) {
-		ActualizarEncabezado(model);
-		return "menuPrincipal";
+		if(ActualizarEncabezado(model)) {
+			
+			return "menuPrincipal";
+		}else {
+			return "errorNoLogin";
+		}
 	}
 	
 	@PostMapping("/venderPersonaje/{id}")
@@ -274,6 +315,18 @@ public class WebController {
 		return GetMenuPrincipal(model);
 	}
 	
+	@GetMapping("/BorrarUsuario")
+	public String BorrarUsuario( Model model) {
+		Optional<User> user= controlUsuarios.findByNombre(currentUser);
+		if(user.isPresent()) {
+			
+			Formacion f= user.get().getFormacion();
+			controlFormacion.BorrarPersonajes(f.getId(), controlPersonajes);
+			controlUsuarios.delete(user.get());
+		}
+		
+		return Inicio(model);
+	}
 	@PostMapping("/refrescarMercado")
 	public String RefrescarMercado(Model model) {
 		controlPuja.ReiniciarMercado(controlMercado);

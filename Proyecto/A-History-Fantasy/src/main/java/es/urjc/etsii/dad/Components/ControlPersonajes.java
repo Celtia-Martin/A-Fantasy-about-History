@@ -58,6 +58,7 @@ public class ControlPersonajes implements CommandLineRunner {
 	public void deleteById(Long id){
 		repository.deleteById(id);
 	}
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -81,7 +82,13 @@ public class ControlPersonajes implements CommandLineRunner {
 		repository.save(new Personaje("María Teresa de Calcuta",2,TipoBatalla.DIPLOMATICO,200,100,150,200,false));
 		repository.save(new Personaje("Elvis",5,TipoBatalla.CULTURAL,2000,200,600,600,false));*/
 	}
-	public List<Personaje> findAll(){//Posteriormente mostrar paginas de personajes!
+	public List<Personaje> findAll(){
 		return repository.findAll();
+	}
+	public List<Personaje> findByFormacion(Formacion f){
+		return repository.findByFormacion(f);
+	}
+	public List<Personaje> findByFormacionID(Long id){
+		return repository.findByFormacion_Id(id);
 	}
 }

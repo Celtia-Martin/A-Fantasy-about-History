@@ -65,6 +65,9 @@ public class ControlUsuarios implements CommandLineRunner {
 	public void deleteByNombre(String nombre) {
 		repository.deleteByNombre(nombre);
 	}
+	public void delete(User user) {
+		repository.delete(user);
+	}
 	
 	
 	@Override
