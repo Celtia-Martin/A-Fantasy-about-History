@@ -71,7 +71,7 @@ public class WebController {
 	
 	@PostConstruct
 	 void started() {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+		//por ahora de testeo, al pasar mysql a update estas lineas deben comentarse
 		controlUsuarios.newUser("Celtia", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
 		controlUsuarios.newUser("Daniel", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
 		controlUsuarios.newUser("AristoGato", "Gato", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
