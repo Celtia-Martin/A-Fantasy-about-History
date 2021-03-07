@@ -15,6 +15,7 @@ public class User {
 	private String contrasena;
 	private long dinero;
 	private long puntos;
+	private boolean baneado;
 	
 	@OneToOne(cascade= CascadeType.ALL)
 	private Formacion formacion;
@@ -56,6 +57,12 @@ public class User {
 	}
 	public void setPuntos(long puntos) {
 		this.puntos = puntos;
+	}
+	public boolean isBaneado() {
+		return baneado;
+	}
+	public void setBaneado(boolean baneado) {
+		this.baneado = baneado;
 	}
 	
 }
