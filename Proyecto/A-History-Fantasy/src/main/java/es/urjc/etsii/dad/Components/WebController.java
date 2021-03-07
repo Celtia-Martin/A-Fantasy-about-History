@@ -85,6 +85,10 @@ public class WebController {
 		controlUsuarios.newUser("Musa", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
 		controlUsuarios.newUser("Jaimito", "chiste", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
 		controlUsuarios.newUser("Cactus", "noAgua", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
+		controlPersonajes.iniciar();
+		controlMercado.newMercado(controlPersonajes);
+		controlBatalla.nuevaBatalla();
+		
 	}
 	
 	public boolean ActualizarEncabezado(Model model) {
