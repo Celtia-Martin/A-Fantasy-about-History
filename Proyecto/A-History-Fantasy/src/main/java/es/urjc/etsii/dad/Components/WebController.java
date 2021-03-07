@@ -15,6 +15,7 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,10 @@ public class WebController {
 	private boolean datosInsuficientes = false;
 	private boolean errorPuja= false;
 	private boolean pujaRealizada= false;
+	private boolean baneado=false;
+	private boolean usuarioBaneadoConExito= false;
+	private boolean errorBaneo= false;
+
 	
 	@Autowired
 	private ControlUsuarios controlUsuarios;
@@ -67,6 +72,19 @@ public class WebController {
 	@PostConstruct
 	 void started() {
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+		controlUsuarios.newUser("Celtia", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
+		controlUsuarios.newUser("Daniel", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
+		controlUsuarios.newUser("AristoGato", "Gato", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
+		controlUsuarios.newUser("Paimon", "EmergencyFood", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
+		controlUsuarios.newUser("Richtofen", "hayquequemarlasconfire", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
+		controlUsuarios.newUser("M.Rajoy", "persianas", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
+		controlUsuarios.newUser("Kala", "ffviii", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
+		controlUsuarios.newUser("Panumo", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
+		controlUsuarios.newUser("Joselito", "joselito", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
+		controlUsuarios.newUser("Japi", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
+		controlUsuarios.newUser("Musa", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
+		controlUsuarios.newUser("Jaimito", "chiste", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
+		controlUsuarios.newUser("Cactus", "noAgua", controlPersonajes, controlFormacion, controlMercado, controlBatalla);
 	}
 	
 	public boolean ActualizarEncabezado(Model model) {
@@ -134,26 +152,18 @@ public class WebController {
 		}
 	}
 	
-	@GetMapping("/mostrarTodosPersonajes")
-	public String mostrarPersonajes(Model model) throws SQLException, IOException {
-		List<Personaje> aMostrar=controlPersonajes.findAll();
-		model.addAttribute("personajes",aMostrar);
-		
-		if(ActualizarEncabezado(model)) {
-			return "mostrarTodosPersonajes";
-		}else {
-			return "errorNoLogin";
-		}
-	}
+	
 	
 	@GetMapping("/login")
 	public String LogIn(Model model) {
 		model.addAttribute("errorUsuario", errorUsuario);
 		model.addAttribute("errorContra", errorContra);
-		
+		model.addAttribute("hasSidoBaneado",baneado);
 		errorUsuario = false;
 		errorContra = false;
 		datosInsuficientes = false;
+		baneado=false;
+
 		
 		return "login";
 	}
@@ -171,9 +181,16 @@ public class WebController {
 			User nuevo = new User(nombre,contrasena);
 			
 			if(controlUsuarios.LogIn(nombre,contrasena)) {
-				currentUser= nuevo.getNombre();
-				
-				return GetMenuPrincipal(model);
+				Optional<User> user= controlUsuarios.findByNombre(nombre);
+				if(user.get().isBaneado()) {
+					baneado=true;
+					return LogIn(model);
+				}
+				else {
+					currentUser= nuevo.getNombre();
+					return GetMenuPrincipal(model);
+				}
+
 			}
 			else {
 				errorUsuario = true;
@@ -328,6 +345,89 @@ public class WebController {
 		controlMercado.newMercado(controlPersonajes);
 		
 		return GetMenuPrincipal(model);
+	}
+	@GetMapping("/administrarUsuarios")
+	public String AdministrarUsuarios(Model model) {
+		if(ActualizarEncabezado(model)) {
+			Page<User> users= controlUsuarios.findWithPage(0);
+			model.addAttribute("hasPrev", users.hasPrevious());
+			model.addAttribute("hasNext", users.hasNext());
+			model.addAttribute("nextPage", users.getNumber()+1);
+			model.addAttribute("prevPage", users.getNumber()-1);
+			model.addAttribute("baneoExito", usuarioBaneadoConExito);
+			model.addAttribute("error",errorBaneo);
+			model.addAttribute("usuarios", users);
+			errorBaneo=false;
+			usuarioBaneadoConExito=false;
+			return "administradorUsuarios";
+		}
+		else {
+			return "errorNoLogin";
+		}
+	}
+	@GetMapping("/administrarUsuarios/{page}")
+	public String AdministrarUsuariosPage(Model model,@PathVariable int page) {
+		if(ActualizarEncabezado(model)) {
+		
+			Page<User> users= controlUsuarios.findWithPage(page);
+			model.addAttribute("hasPrev", users.hasPrevious());
+			model.addAttribute("hasNext", users.hasNext());
+			model.addAttribute("nextPage", users.getNumber()+1);
+			model.addAttribute("prevPage", users.getNumber()-1);
+			model.addAttribute("baneoExito", usuarioBaneadoConExito);
+			model.addAttribute("error",errorBaneo);
+			model.addAttribute("usuarios", users);
+			errorBaneo=false;
+			usuarioBaneadoConExito=false;
+		return "administradorUsuarios";
+		}
+		else {
+			return "errorNoLogin";
+		}
+	}
+	@PostMapping("/banear/{id}")
+	public String Banear(Model model,@PathVariable Long id) {
+		Optional<User> user= controlUsuarios.findById(id);
+		if(user.isPresent()) {
+			user.get().setBaneado(!user.get().isBaneado());
+			controlUsuarios.Update(user.get());
+			usuarioBaneadoConExito=true;
+			
+		}
+		else{
+			errorBaneo=true;
+		}
+		return AdministrarUsuarios(model);
+	}
+	@GetMapping("/mostrarTodosPersonajes")
+	public String mostrarPersonajes(Model model) throws SQLException, IOException {
+		Page<Personaje> aMostrar=controlPersonajes.findNoDefaultWithPage(0);
+		model.addAttribute("hasPrev", aMostrar.hasPrevious());
+		model.addAttribute("hasNext", aMostrar.hasNext());
+		model.addAttribute("nextPage", aMostrar.getNumber()+1);
+		model.addAttribute("prevPage", aMostrar.getNumber()-1);
+		model.addAttribute("personajes",aMostrar);
+		
+		if(ActualizarEncabezado(model)) {
+			return "mostrarTodosPersonajes";
+		}else {
+			return "errorNoLogin";
+		}
+	}
+	@GetMapping("/mostrarTodosPersonajes/{page}")
+	public String mostrarPersonajes(Model model,@PathVariable int page) throws SQLException, IOException {
+		Page<Personaje> aMostrar=controlPersonajes.findNoDefaultWithPage(page);
+		model.addAttribute("hasPrev", aMostrar.hasPrevious());
+		model.addAttribute("hasNext", aMostrar.hasNext());
+		model.addAttribute("nextPage", aMostrar.getNumber()+1);
+		model.addAttribute("prevPage", aMostrar.getNumber()-1);
+		model.addAttribute("personajes",aMostrar);
+		
+		if(ActualizarEncabezado(model)) {
+			return "mostrarTodosPersonajes";
+		}else {
+			return "errorNoLogin";
+		}
 	}
 	
 }

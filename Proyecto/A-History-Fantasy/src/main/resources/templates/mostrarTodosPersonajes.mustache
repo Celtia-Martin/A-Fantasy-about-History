@@ -28,7 +28,18 @@
 		{{/personajes}}
 		
 	</table>
-
+			{{#hasPrev}}
+		  	<div class="botonIzquierda"> 
+		  	<a href="/mostrarTodosPersonajes/{{prevPage}}"><button class="button button2">Página Anterior </button></a>
+		  	
+		  	</div>
+		  	{{/hasPrev}}
+		  	{{#hasNext}}
+		  	<div class="botonDerecha"> 
+		  	<a href="/mostrarTodosPersonajes/{{nextPage}}"><button class="button button2">Página Siguiente </button></a>
+		  	
+		  	</div>
+		  	{{/hasNext}}
 	<footer>
 		<p><center>
 			<a href="/menuPrincipal"><button class="button button1"> Atrás </button></a>

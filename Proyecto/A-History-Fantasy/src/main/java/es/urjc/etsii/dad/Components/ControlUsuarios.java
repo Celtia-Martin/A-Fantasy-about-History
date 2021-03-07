@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -69,10 +71,23 @@ public class ControlUsuarios implements CommandLineRunner {
 	public void delete(User user) {
 		repository.delete(user);
 	}
+	public void Update(User user) {
+		repository.save(user);
+	}
 	
+	public Page<User> findWithPage(int page){
+		Page<User> pagina= repository.findAll(PageRequest.of(page, 10));
+		return pagina;
+	}
+	public 	Optional<User> findById(Long id){
+		return repository.findById(id);
+	}
+
 	
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 	}
 }
+
+

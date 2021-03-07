@@ -91,4 +91,7 @@ public class ControlPersonajes implements CommandLineRunner {
 	public List<Personaje> findByFormacionID(Long id){
 		return repository.findByFormacion_Id(id);
 	}
+	public Page<Personaje> findNoDefaultWithPage(int page){
+		return repository.findByIsDefault(false, PageRequest.of(page, 10));
+	}
 }
