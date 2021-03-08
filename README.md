@@ -74,7 +74,7 @@ Se encarga de:
 ### CAPTURAS <a name="capturasPantalla"/>
 
 #### INICIO
-Pantalla donde se muestra el título de la aplicación y las opciones para entrar en ella.
+Pantalla donde se muestra el título de la aplicación y las opciones disponibles para entrar en ella.
 ![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/PANTALLAS/INICIO.png)
 
 #### INICIAR SESIÓN
