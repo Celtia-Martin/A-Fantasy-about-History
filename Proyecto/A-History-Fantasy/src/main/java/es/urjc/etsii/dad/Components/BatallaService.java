@@ -99,8 +99,8 @@ public class BatallaService {
 					puntosFinales += puntosTotales;
 				}
 					
-				puntos = puntosFinales;
-				dinero = puntosFinales * 2;
+				
+				dinero = Math.round(puntosFinales / 2);
 					
 				jug.setPuntos(jug.getPuntos() + puntosFinales);
 				jug.setDinero(jug.getDinero() + dinero);
