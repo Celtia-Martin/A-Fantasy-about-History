@@ -57,7 +57,8 @@ public class WebController {
 	@Autowired
 	private ControlPuja controlPuja;
 	
-	private String currentUser;
+	@Autowired
+	private UsserSession currentUser;
 	
 	@PostConstruct
 	 void started() {
@@ -83,24 +84,27 @@ public class WebController {
 	
 	public boolean ActualizarEncabezado(Model model) {
 		if(currentUser!=null) {
-			Optional<User> current= controlUsuarios.findByNombre(currentUser);
 			
-			if(current.isPresent()) {
-				long dinero = 0;
-				long puntos = 0;
+			if(currentUser.getCurrentName()!=null) {
+				Optional<User> current= controlUsuarios.findByNombre(currentUser.getCurrentName());
 				
 				if(current.isPresent()) {
-					 dinero= current.get().getDinero();
-					 puntos= current.get().getPuntos();
-				}
+					long dinero = 0;
+					long puntos = 0;
 					
-				model.addAttribute("name",currentUser);
-				model.addAttribute("dinero",dinero);
-				model.addAttribute("puntos",puntos);
-				return true;
-			}
-			else {
-				return false;
+					if(current.isPresent()) {
+						dinero= current.get().getDinero();
+						puntos= current.get().getPuntos();
+					}
+					
+					model.addAttribute("name",currentUser.getCurrentName());
+					model.addAttribute("dinero",dinero);
+					model.addAttribute("puntos",puntos);
+					return true;
+				}
+				else {
+					return false;
+				}
 			}
 		}
 		return false;
@@ -132,9 +136,7 @@ public class WebController {
 			User nuevo= new User(nombre,contrasena);
 			
 			if(controlUsuarios.newUser(nombre,contrasena,controlPersonajes,controlFormacion,controlMercado, controlBatalla)) {
-				currentUser = nuevo.getNombre();
-				model.addAttribute("name",currentUser);
-				
+				currentUser= new UsserSession(nuevo.getNombre());
 				return GetMenuPrincipal(model);
 			}
 			else {
@@ -181,7 +183,7 @@ public class WebController {
 					return LogIn(model);
 				}
 				else {
-					currentUser= nuevo.getNombre();
+					currentUser= new UsserSession(nuevo.getNombre());
 					return GetMenuPrincipal(model);
 				}
 
@@ -252,19 +254,23 @@ public class WebController {
 	@GetMapping("/formacion")
 	public String MostrarFormacion(Model model) {
 	
-		Optional<User> current= controlUsuarios.findByNombre(currentUser);
-		if(current.isPresent()) {
-			Formacion miFormacion= current.get().getFormacion();
-			if(miFormacion!=null) {
-				model.addAttribute("personajes",miFormacion.getPersonajes());
+		if(currentUser!=null) {
+			
+			Optional<User> current= controlUsuarios.findByNombre(currentUser.getCurrentName());
+			if(current.isPresent()) {
+				Formacion miFormacion= current.get().getFormacion();
+				if(miFormacion!=null) {
+					model.addAttribute("personajes",miFormacion.getPersonajes());
+				}
+			}
+			
+			if(ActualizarEncabezado(model)) {
+				return "formacion";
+			}else {
+				return "errorNoLogin";
 			}
 		}
-		
-		if(ActualizarEncabezado(model)) {
-			return "formacion";
-		}else {
-			return "errorNoLogin";
-		}
+		return "errorNoLogin";
 		
 	}
 	
@@ -287,31 +293,36 @@ public class WebController {
 	
 	@PostMapping("/venderPersonaje/{id}")
 	public String FormularioPersonajes(Model model,@PathVariable int id) {
-		Optional<User> current= controlUsuarios.findByNombre(currentUser);
-		
-		if(current.isPresent()) {
-			
-			controlFormacion.VenderPersonaje((long)id,current.get(), controlPersonajes);
-		}
-		return MostrarFormacion(model);
+		if(currentUser!=null) {
+			Optional<User> current= controlUsuarios.findByNombre(currentUser.getCurrentName());
+			if(current.isPresent()) {
+				
+				controlFormacion.VenderPersonaje((long)id,current.get(), controlPersonajes);
+			}
+			return MostrarFormacion(model);
+			}
+		return "errorNoLogin";
 	}
 	
 	@PostMapping("/pujarPersonaje/{id}")
 	public String PujandoPersonaje(Model model,@PathVariable int id,@RequestParam long valor) {
-		
-		Optional<User>current= controlUsuarios.findByNombre(currentUser);
-		Optional<Personaje> personaje= controlPersonajes.findById((long)id);
-		
-		if(current.isPresent()&&personaje.isPresent()) {
-			boolean completado= controlPuja.Pujar(current.get(), personaje.get(), (int) valor);
-			errorPuja= !completado;
-			pujaRealizada= completado;
+		if(currentUser!=null) {
+			
+			Optional<User>current= controlUsuarios.findByNombre(currentUser.getCurrentName());
+			Optional<Personaje> personaje= controlPersonajes.findById((long)id);
+			
+			if(current.isPresent()&&personaje.isPresent()) {
+				boolean completado= controlPuja.Pujar(current.get(), personaje.get(), (int) valor);
+				errorPuja= !completado;
+				pujaRealizada= completado;
+			}
+			else {
+				errorPuja= true;
+			}
+			
+			return MostrarMercado(model);
 		}
-		else {
-			errorPuja= true;
-		}
-		
-		return MostrarMercado(model);
+		return "errorNoLogin";
 	}
 	
 	@PostMapping("/ejecutarBatalla")
@@ -323,15 +334,18 @@ public class WebController {
 	
 	@GetMapping("/BorrarUsuario")
 	public String BorrarUsuario( Model model) {
-		Optional<User> user= controlUsuarios.findByNombre(currentUser);
-		if(user.isPresent()) {
+		if(currentUser!=null) {
+			Optional<User> user= controlUsuarios.findByNombre(currentUser.getCurrentName());
+			if(user.isPresent()) {
+				
+				Formacion f= user.get().getFormacion();
+				controlFormacion.BorrarPersonajes(f.getId(), controlPersonajes);
+				controlUsuarios.delete(user.get());
+			}
 			
-			Formacion f= user.get().getFormacion();
-			controlFormacion.BorrarPersonajes(f.getId(), controlPersonajes);
-			controlUsuarios.delete(user.get());
+			return Inicio(model);
 		}
-		
-		return Inicio(model);
+		return "errorNoLogin";
 	}
 	@PostMapping("/refrescarMercado")
 	public String RefrescarMercado(Model model) {
