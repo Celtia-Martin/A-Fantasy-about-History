@@ -136,7 +136,8 @@ public class WebController {
 			User nuevo= new User(nombre,contrasena);
 			
 			if(controlUsuarios.newUser(nombre,contrasena,controlPersonajes,controlFormacion,controlMercado, controlBatalla)) {
-				currentUser= new UsserSession(nuevo.getNombre());
+				//currentUser= new UsserSession(nuevo.getNombre());
+				currentUser.setCurrentName(nuevo.getNombre());
 				return GetMenuPrincipal(model);
 			}
 			else {
@@ -183,7 +184,7 @@ public class WebController {
 					return LogIn(model);
 				}
 				else {
-					currentUser= new UsserSession(nuevo.getNombre());
+					currentUser.setCurrentName(nuevo.getNombre());
 					return GetMenuPrincipal(model);
 				}
 
@@ -276,7 +277,7 @@ public class WebController {
 	
 	@GetMapping("/")
 	public String Inicio (Model model) {
-		currentUser=null;
+		currentUser.setCurrentName(null);
 		return "index";
 	}
 	

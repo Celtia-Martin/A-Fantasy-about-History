@@ -8,6 +8,9 @@ import org.springframework.web.context.annotation.SessionScope;
 public class UsserSession {
 	private String currentName;
 
+	public UsserSession() {
+		
+	}
 	public UsserSession(String name) {
 		currentName=name;
 	}

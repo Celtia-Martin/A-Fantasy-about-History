@@ -13,8 +13,6 @@ public interface PersonajeRepository extends JpaRepository<Personaje, Long> {
 
 
 	List<Personaje> findByIsDefaultAndTieneFormacion(boolean isDefault, boolean tieneFormacion);
-	List<Personaje> findByFormacion_Id(Long formacion_id);
-	List<Personaje> findByFormacion(Formacion formacion);
 	Optional<Personaje> findByNombre(String nombre);
 	Page<Personaje> findByIsDefaultAndTieneFormacion(boolean isDefault, boolean tieneFormacion,Pageable page);
 	Page<Personaje> findByIsDefault(boolean isDefault,Pageable page);

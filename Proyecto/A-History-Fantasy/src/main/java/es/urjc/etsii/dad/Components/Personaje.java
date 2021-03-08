@@ -24,10 +24,6 @@ public class Personaje {
 	private boolean tieneFormacion;
 
 	
-	@ManyToOne 
-	@JsonIgnore
-	private Formacion formacion;
-	
 	public Personaje() {
 		
 	}
@@ -69,10 +65,7 @@ public class Personaje {
 	public Long getId() {
 		return id;
 	}
-
-	public void setFormacion(Formacion formacion) {
-		this.formacion= formacion;
-	}
+  
 
 	public boolean isTieneFormacion() {
 		return tieneFormacion;

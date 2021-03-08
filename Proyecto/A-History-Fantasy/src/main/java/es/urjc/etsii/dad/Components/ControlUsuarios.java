@@ -31,7 +31,6 @@ public class ControlUsuarios implements CommandLineRunner {
 			repository.save(nuevo);
 			
 			controlFormaciones.NewFormacion(nuevaFormacion);
-			nuevaFormacion.SetFormationToPersonaje();
 			return true;
 		}
 	}

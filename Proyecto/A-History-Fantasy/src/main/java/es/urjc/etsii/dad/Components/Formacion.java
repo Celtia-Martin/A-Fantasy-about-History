@@ -15,9 +15,9 @@ public class Formacion { //al eliminar un default se elimina tambien de la base 
 	private Long id;
 	
 	@OneToMany
-	private List<Personaje> personajes= new ArrayList<>();
+	private List<Personaje> personajes= new ArrayList<>();//unidireccional
 	
-	@OneToOne(mappedBy="formacion")
+	@OneToOne(mappedBy="formacion")//bidireccional
 	private User propietario;
 	
 	public Formacion() {
@@ -77,11 +77,7 @@ public class Formacion { //al eliminar un default se elimina tambien de la base 
 
 	}
 	
-	public void SetFormationToPersonaje() {
-		for(Personaje p: personajes) {
-			p.setFormacion(this);
-		}
-	}
+
 	public void setPropietario(User user) {
 		propietario= user;
 	}

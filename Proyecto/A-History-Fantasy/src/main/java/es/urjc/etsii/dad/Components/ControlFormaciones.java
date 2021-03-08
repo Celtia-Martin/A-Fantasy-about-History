@@ -77,7 +77,6 @@ public class ControlFormaciones  implements CommandLineRunner{
 					long precio= aVender.getPrecio();
 					user.setDinero(user.getDinero()+precio);
 					aVender.setTieneFormacion(false);
-					aVender.setFormacion(null);
 					if(aVender.isDefault()) {
 						controlPersonajes.deleteById((long)idPersonaje);
 					}
