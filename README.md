@@ -17,6 +17,7 @@
 ## [3.- PANTALLAS](#pantallas)
 ### [3.1.- CAPTURAS ](#capturasPantalla)
 ### [3.2.- DIAGRAMA DE NAVEGACIÓN ](#diagramaNavegacion)
+## [4.- NOTAS FASE 2](#notasFase2)
 
 ## DESCRIPCION <a name="descripcion"/>
 
@@ -62,14 +63,63 @@ Se encarga de:
 
 ## MODELO DE DATOS <a name="modeloDeDatos"/>
 
+#### DIAGRAMA ENTIDAD RELACION
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/DIAGRAMA%20ENTIDAD%20RELACION.png)
+
+#### DIAGRAMA UML
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/DIAGRAMA%20UML.png)
 
 ## PANTALLAS <a name="pantallas"/>
 
 ### CAPTURAS <a name="capturasPantalla"/>
 
+#### INICIO
+Pantalla donde se muestra el título de la aplicación y las opciones para entrar en ella.
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/PANTALLAS/INICIO.png)
 
+#### INICIAR SESIÓN
+Pantalla para iniciar sesión con Usuario y Contraseña. Avisa si el usuario no existe o falta información.
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/PANTALLAS/INICIAR%20SESION.png)
+
+#### CREAR CUENTA
+Pantalla para crear una cuenta con Usuario y Contraseña. Avisa si el usuario ya existe en la aplicación o falta información.
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/PANTALLAS/CREAR%20CUENTA.png)
+
+#### MENU PRINCIPAL
+Pantalla principal de la aplicación. Tiene un banner superior donde se muestra el Título, el usuario actual y su dinero y puntos. Con el Navegador de la izquierda o los botones del centro, se pueden navegar entre pantallas. Los botones Borrar Usuario y Cerrar Sesión llevan a la pantalla de Inicio, realizando las acciones pertinentes. Aclaración: los botones marcados como ADMIN solo los puede ver un usuario Administrador, así como los botones Servidor Interno, que representan funcionalidad del mismo.
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/PANTALLAS/MENU%20PRINCIPAL.png)
+
+#### FORMACION
+Pantalla donde se muestran los personajes que tiene el equipo del usuario. Se pueden vender para obtener dinero.
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/PANTALLAS/FORMACION.png)
+
+#### MERCADO
+Pantalla donde se muestran los personajes en venta de la aplicación. Se puede pujar una cantidad superior o igual al precio del personaje, y se decide el ganador cuando el servidor interno refresca el mercado.
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/PANTALLAS/MERCADO.png)
+
+#### CLASIFICACION
+Pantalla donde se muestra el Top 10 de mejores puntuaciones en el juego.
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/PANTALLAS/CLASIFICACION.png)
+
+#### CREAR PERSONAJE
+Pantalla donde un Administrador puede añadir nuevos personajes a la base de datos. Avisa si falta algun tipo de información.
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/PANTALLAS/CREAR%20PERSONAJE.png)
+
+#### MOSTRAR BD
+Pantalla donde un Administrador puede consultar toda la base de datos de Personajes.
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/PANTALLAS/MOSTRAR%20BD.png)
+
+#### ADMINISTRAR
+Pantalla donde un Administrador puede banear a ciertos usuarios e impedir su entrada a la aplicación
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/PANTALLAS/ADMINISTRAR.png)
+
+#### ERROR LOGIN
+Pantalla de error que aparece cuando un usuario intenta entrar en una página sin iniciar sesión, por lo que no tendría acceso.
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/PANTALLAS/ERROR.png)
 
 ### DIAGRAMA DE NAVEGACIÓN <a name="diagramaNavegacion"/>
+
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/DIAGRAMA%20DE%20PANTALLAS.png)
 
 ## NOTAS DE LA FASE 2 <a name="notasFase2"/>
 
