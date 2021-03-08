@@ -11,8 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PersonajeRepository extends JpaRepository<Personaje, Long> {
 
-	//@Query("SELECT p FROM Personaje p WHERE")
-	//@Query ("SELECT * FROM Personaje  WHERE nombre == 'Celtia' ")
+
 	List<Personaje> findByIsDefaultAndTieneFormacion(boolean isDefault, boolean tieneFormacion);
 	List<Personaje> findByFormacion_Id(Long formacion_id);
 	List<Personaje> findByFormacion(Formacion formacion);

@@ -14,7 +14,7 @@ public class ControlMercado  implements CommandLineRunner {
 	@Autowired
 	private MercadoRepository repository;
 	public ControlMercado() {
-		// TODO Auto-generated constructor stub
+	
 	}
 	
 	public void newMercado(ControlPersonajes controlpersonaje) {

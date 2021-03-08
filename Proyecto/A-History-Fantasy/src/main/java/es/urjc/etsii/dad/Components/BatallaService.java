@@ -18,7 +18,7 @@ public class BatallaService {
 	
 	private Logger log = LoggerFactory.getLogger(BatallaService.class);
 
-	//Hacer consultas
+
 	
 	public void RealizarBatalla() {
 		Optional<Batalla> bat = batallas.findFirstBy();

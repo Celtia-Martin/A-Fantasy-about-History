@@ -17,8 +17,7 @@ public class ControlUsuarios implements CommandLineRunner {
 	
 	public boolean newUser (String nombre, String contra, ControlPersonajes controlPersonajes,ControlFormaciones controlFormaciones,ControlMercado controlMercado, BatallaService controlBatalla) {
 		Optional<User> mismoNombre= repository.findByNombre(nombre);
-		
-		
+	
 		
 		if(mismoNombre.isPresent()) {
 			return false;
@@ -83,7 +82,7 @@ public class ControlUsuarios implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
+		
 	}
 }
 

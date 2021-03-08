@@ -18,11 +18,11 @@ public class ControlFormaciones  implements CommandLineRunner{
 	@Autowired
 	private FormacionRepository repository;
 	public ControlFormaciones() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

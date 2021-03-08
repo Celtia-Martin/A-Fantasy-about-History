@@ -25,17 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import jdk.internal.org.jline.utils.Log;
-/*
- * <dependency>
-		<groupId> org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-	
-spring.datasource.url=jdbc:mysql://localhost:3306/HistoryFantasy
-spring.datasource.username=root
-spring.datasource.password=GatoPato115
-spring.jpa.hibernate.ddl-auto=create-drop
- */
+
 @Controller
 public class WebController {
 
