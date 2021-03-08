@@ -71,7 +71,7 @@ Se encarga de:
 
 ### DIAGRAMA DE NAVEGACIÓN <a name="diagramaNavegacion"/>
 
-### NOTAS DE LA FASE 2 <a name="notasFase2"/>
+## NOTAS DE LA FASE 2 <a name="notasFase2"/>
 
 Para esta segunda fase se han implementado toda la funcionalidad de la página, tanto la parte de los jugadores como la de los administradores, así como la creación de la base de datos, sus entidades, consultas y relaciones.
 
