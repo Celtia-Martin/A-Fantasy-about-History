@@ -125,6 +125,7 @@ public class WebController {
 
 	@PostMapping("/newUsuario")
 	public String newUser(@RequestParam String nombre ,@RequestParam String contrasena, Model model) {
+		
 		if(nombre.trim().equals("")||contrasena.trim().equals("")) {
 			datosInsuficientes = true;
 			model.addAttribute("datosInsuficientes",datosInsuficientes);
@@ -136,7 +137,6 @@ public class WebController {
 			User nuevo= new User(nombre,contrasena);
 			
 			if(controlUsuarios.newUser(nombre,contrasena,controlPersonajes,controlFormacion,controlMercado, controlBatalla)) {
-				//currentUser= new UsserSession(nuevo.getNombre());
 				currentUser.setCurrentName(nuevo.getNombre());
 				return GetMenuPrincipal(model);
 			}
@@ -201,6 +201,7 @@ public class WebController {
 	
 	@GetMapping ("/newPersonaje")
 	public String CreadorDePersonajes(Model model) {
+	
 		if(ActualizarEncabezado(model)) {
 			return "personajes";
 		}else {
@@ -437,6 +438,10 @@ public class WebController {
 		}else {
 			return "errorNoLogin";
 		}
+	}
+	@GetMapping("/error")
+	public String ErrorGeneral() {
+		return "error";
 	}
 	
 }

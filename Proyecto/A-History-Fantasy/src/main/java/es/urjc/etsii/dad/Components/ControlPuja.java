@@ -43,17 +43,25 @@ public class ControlPuja implements CommandLineRunner {
 			listo=false;
 			while(!listo) {
 				Optional<Puja> ganadora= repository.findFirstByPersonajePujado_IdOrderByValorDesc(p.getId());
+				
 				if(ganadora.isPresent()) {
+					
 					User ganador= ganadora.get().getUser();
+					
 					if(ganador.getDinero()>=ganadora.get().getValor()) {
+						
 						Formacion formacion= ganador.getFormacion();
+						
 						if(formacion.contPersonajes()<6) {
+							
 							p.setTieneFormacion(true);
 							formacion.addPersonaje(p);
 							ganador.setDinero(ganador.getDinero()-ganadora.get().getValor());
 							listo=true;
+						
 						}
 						else {
+							repository.delete(ganadora.get());
 							listo= false;
 						}
 						

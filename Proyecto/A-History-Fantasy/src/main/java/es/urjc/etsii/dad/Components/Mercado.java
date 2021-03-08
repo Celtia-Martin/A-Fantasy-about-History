@@ -11,7 +11,7 @@ public class Mercado {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@ManyToMany
+	@OneToMany
 	private List<Personaje> oferta=  new ArrayList<>();
 	
 	public Mercado() {
