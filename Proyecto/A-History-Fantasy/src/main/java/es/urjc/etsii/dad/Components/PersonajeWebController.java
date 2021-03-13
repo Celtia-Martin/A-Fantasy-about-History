@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -25,9 +27,9 @@ public class PersonajeWebController extends WebController {
 	
 	
 	@GetMapping ("/newPersonaje")
-	public String CreadorDePersonajes(Model model) {
+	public String CreadorDePersonajes(Model model,HttpServletRequest request) {
 	
-		if(ActualizarEncabezado(model)) {
+		if(ActualizarEncabezado(model,request,true)) {
 			return "personajes";
 		}else {
 			return "errorNoLogin";
@@ -35,14 +37,14 @@ public class PersonajeWebController extends WebController {
 	}
 	
 	@PostMapping("/newPersonaje")
-	public String FormularioPersonajes(Model model,@RequestParam String nombre,@RequestParam long rango,@RequestParam String tipo,@RequestParam long vMilitar,@RequestParam long vDiplo,@RequestParam long vCultu,@RequestParam long precio)  {
+	public String FormularioPersonajes(Model model,@RequestParam String nombre,@RequestParam long rango,@RequestParam String tipo,@RequestParam long vMilitar,@RequestParam long vDiplo,@RequestParam long vCultu,@RequestParam long precio,HttpServletRequest request)  {
 		Personaje p= new Personaje(nombre,rango,Enums.TipoBatalla.valueOf(tipo),precio,vMilitar,vDiplo,vCultu,false);
 
 		if(controlPersonajes.newPersonaje(p)) {
-			return GetMenuPrincipal(model);
+			return GetMenuPrincipal(model,request);
 		}
 		else {
-			if(ActualizarEncabezado(model)) {
+			if(ActualizarEncabezado(model,request,true)) {
 				return "personajes";
 			}else {
 				return "errorNoLogin";
@@ -50,7 +52,7 @@ public class PersonajeWebController extends WebController {
 		}
 	}
 	@GetMapping("/formacion")
-	public String MostrarFormacion(Model model) {
+	public String MostrarFormacion(Model model,HttpServletRequest request) {
 	
 		if(currentUser!=null) {
 			
@@ -62,7 +64,7 @@ public class PersonajeWebController extends WebController {
 				}
 			}
 			
-			if(ActualizarEncabezado(model)) {
+			if(ActualizarEncabezado(model,request,true)) {
 				return "formacion";
 			}else {
 				return "errorNoLogin";
@@ -72,20 +74,20 @@ public class PersonajeWebController extends WebController {
 		
 	}
 	@PostMapping("/venderPersonaje/{id}")
-	public String FormularioPersonajes(Model model,@PathVariable int id) {
+	public String FormularioPersonajes(Model model,@PathVariable int id,HttpServletRequest request) {
 		if(currentUser!=null) {
 			Optional<User> current= controlUsuarios.findByNombre(currentUser.getCurrentName());
 			if(current.isPresent()) {
 				
 				controlFormacion.VenderPersonaje((long)id,current.get(), controlPersonajes);
 			}
-			return MostrarFormacion(model);
+			return MostrarFormacion(model,request);
 			}
 		return "errorNoLogin";
 	}
 	
 	@GetMapping("/mostrarTodosPersonajes")
-	public String mostrarPersonajes(Model model) throws SQLException, IOException {
+	public String mostrarPersonajes(Model model,HttpServletRequest request) throws SQLException, IOException {
 		Page<Personaje> aMostrar=controlPersonajes.findNoDefaultWithPage(0);
 		model.addAttribute("hasPrev", aMostrar.hasPrevious());
 		model.addAttribute("hasNext", aMostrar.hasNext());
@@ -93,14 +95,14 @@ public class PersonajeWebController extends WebController {
 		model.addAttribute("prevPage", aMostrar.getNumber()-1);
 		model.addAttribute("personajes",aMostrar);
 		
-		if(ActualizarEncabezado(model)) {
+		if(ActualizarEncabezado(model,request,false)) {
 			return "mostrarTodosPersonajes";
 		}else {
 			return "errorNoLogin";
 		}
 	}
 	@GetMapping("/mostrarTodosPersonajes/{page}")
-	public String mostrarPersonajes(Model model,@PathVariable int page) throws SQLException, IOException {
+	public String mostrarPersonajes(Model model,@PathVariable int page,HttpServletRequest request) throws SQLException, IOException {
 		Page<Personaje> aMostrar=controlPersonajes.findNoDefaultWithPage(page);
 		model.addAttribute("hasPrev", aMostrar.hasPrevious());
 		model.addAttribute("hasNext", aMostrar.hasNext());
@@ -108,7 +110,7 @@ public class PersonajeWebController extends WebController {
 		model.addAttribute("prevPage", aMostrar.getNumber()-1);
 		model.addAttribute("personajes",aMostrar);
 		
-		if(ActualizarEncabezado(model)) {
+		if(ActualizarEncabezado(model,request,false)) {
 			return "mostrarTodosPersonajes";
 		}else {
 			return "errorNoLogin";

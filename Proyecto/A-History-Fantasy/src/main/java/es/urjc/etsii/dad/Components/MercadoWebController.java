@@ -3,6 +3,8 @@ package es.urjc.etsii.dad.Components;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +18,6 @@ public class MercadoWebController extends WebController {
 	@Autowired
 	private ControlMercado controlMercado;	
 
-
 	@Autowired
 	private ControlPersonajes controlPersonajes;
 	
@@ -29,7 +30,7 @@ public class MercadoWebController extends WebController {
 	}
 
 	@GetMapping("/mercado")
-	public String MostrarMercado(Model model) {
+	public String MostrarMercado(Model model,HttpServletRequest request) {
 		List<Personaje> oferta= controlMercado.findAllPersonajes();
 		
 		model.addAttribute("mercado",oferta);
@@ -39,14 +40,14 @@ public class MercadoWebController extends WebController {
 		errorPuja=false;
 		pujaRealizada=false;
 		
-		if(ActualizarEncabezado(model)) {
+		if(ActualizarEncabezado(model,request,true)) {
 			return "mercado";
 		}else {
 			return "errorNoLogin";
 		}
 	}
 	@PostMapping("/pujarPersonaje/{id}")
-	public String PujandoPersonaje(Model model,@PathVariable int id,@RequestParam long valor) {
+	public String PujandoPersonaje(Model model,@PathVariable int id,@RequestParam long valor,HttpServletRequest request) {
 		if(currentUser!=null) {
 			
 			Optional<User>current= controlUsuarios.findByNombre(currentUser.getCurrentName());
@@ -61,15 +62,15 @@ public class MercadoWebController extends WebController {
 				errorPuja= true;
 			}
 			
-			return MostrarMercado(model);
+			return MostrarMercado(model,request);
 		}
 		return "errorNoLogin";
 	}
 	@PostMapping("/refrescarMercado")
-	public String RefrescarMercado(Model model) {
+	public String RefrescarMercado(Model model,HttpServletRequest request) {
 		controlPuja.ReiniciarMercado(controlMercado);
 		controlMercado.newMercado(controlPersonajes);
 		
-		return GetMenuPrincipal(model);
+		return GetMenuPrincipal(model,request);
 	}
 }

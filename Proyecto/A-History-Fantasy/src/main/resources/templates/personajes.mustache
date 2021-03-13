@@ -9,7 +9,7 @@
 	</section>
 		
 	<form action = "/newPersonaje" method= "post" enctype="multipart/form-data">
-		
+		<input type="hidden" name="_csrf" value="{{token}}"/>
         <p><center> Nombre del personaje </center></p>
         
         <p><center>

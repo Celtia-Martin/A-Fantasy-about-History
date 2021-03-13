@@ -1,5 +1,7 @@
 package es.urjc.etsii.dad.Components;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +18,10 @@ public class BatallaWebController extends WebController{
 	private BatallaService controlBatalla;
 	
 	@PostMapping("/ejecutarBatalla")
-	public String FormularioPersonajes(Model model) {
+	public String FormularioPersonajes(Model model,HttpServletRequest request) {
 		controlBatalla.RealizarBatalla();
 		
-		return GetMenuPrincipal(model);
+		return GetMenuPrincipal(model,request);
 	}
 	
 

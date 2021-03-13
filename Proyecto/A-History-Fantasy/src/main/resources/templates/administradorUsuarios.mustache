@@ -33,6 +33,7 @@
 		    
 		    	<form action = "/banear/{{id}}" method= "post">
 		    		<td><input type='submit' value= 'Cambiar estado de baneo'/>
+		    		<input type="hidden" name="_csrf" value="{{token}}"/>
 		    		</td>
 		    	</form>
 		    	

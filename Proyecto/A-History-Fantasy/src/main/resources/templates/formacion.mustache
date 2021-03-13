@@ -30,7 +30,8 @@
 		    	<th>{{vCultural}}</th>
 		    	<th>{{precio}}</th>
 		    	<form action = "/venderPersonaje/{{id}}" method= "post" >
-		    		<td><input type='submit' value= 'Vender'/></td>
+		    		<td><input type='submit' value= 'Vender'/>
+		    		<input type="hidden" name="_csrf" value="{{token}}"/></td>
 		    	</form>
 		  	</tr>
 		  	

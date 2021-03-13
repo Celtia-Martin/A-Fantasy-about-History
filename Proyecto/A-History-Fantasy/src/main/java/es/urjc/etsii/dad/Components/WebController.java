@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,8 +53,12 @@ public class WebController {
 	protected UsserSession currentUser;
 	
 	
-	public boolean ActualizarEncabezado(Model model) {
+	public boolean ActualizarEncabezado(Model model,HttpServletRequest request,boolean formulario) {
 		if(currentUser!=null) {
+			if(formulario) {
+				CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+				 model.addAttribute("token", token.getToken()); 
+			}
 			
 			if(currentUser.getCurrentName()!=null) {
 				Optional<User> current= controlUsuarios.findByNombre(currentUser.getCurrentName());
@@ -81,10 +87,10 @@ public class WebController {
 	
 	
 
-	public String GetMenuPrincipal(Model model) {
+	public String GetMenuPrincipal(Model model,HttpServletRequest request) {
 		model.addAttribute("batalla", controlBatalla.getBatalla());
-		
-		if(ActualizarEncabezado(model)) {
+		model.addAttribute("esAdmin",request.isUserInRole("ADMIN"));
+		if(ActualizarEncabezado(model,request,false)) {
 			return "menuPrincipal";
 		}else {
 			return "errorNoLogin";

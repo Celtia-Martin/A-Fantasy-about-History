@@ -15,7 +15,7 @@ public class ControlUsuarios implements CommandLineRunner {
 	@Autowired
 	private UserRepository repository;
 	
-	public boolean newUser (String nombre, String contra, ControlPersonajes controlPersonajes,ControlFormaciones controlFormaciones,ControlMercado controlMercado, BatallaService controlBatalla) {
+	public boolean newUser (String nombre, String contra, ControlPersonajes controlPersonajes,ControlFormaciones controlFormaciones,ControlMercado controlMercado, BatallaService controlBatalla,boolean esAdmin) {
 		Optional<User> mismoNombre= repository.findByNombre(nombre);
 	
 		
@@ -27,6 +27,10 @@ public class ControlUsuarios implements CommandLineRunner {
 			nuevaFormacion.initFormacion(controlPersonajes);
 			
 			User nuevo = new User(nombre,contra);
+			nuevo.addRol("USER");
+			if(esAdmin) {
+				nuevo.addRol("ADMIN");
+			}
 			nuevo.setFormacion(nuevaFormacion);
 			repository.save(nuevo);
 			
@@ -34,6 +38,8 @@ public class ControlUsuarios implements CommandLineRunner {
 			return true;
 		}
 	}
+	
+	
 	
 	public boolean LogIn(String nombre, String contra) {
 		Optional<User> mismoNombre= repository.findByNombre(nombre);
