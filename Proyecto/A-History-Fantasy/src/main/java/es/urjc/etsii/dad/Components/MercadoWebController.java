@@ -34,12 +34,12 @@ public class MercadoWebController extends WebController {
 		List<Personaje> oferta= controlMercado.findAllPersonajes();
 		
 		model.addAttribute("mercado",oferta);
-		model.addAttribute("errorPuja",errorPuja);
-		model.addAttribute("pujaRealizada",pujaRealizada);
+		model.addAttribute("errorPuja",currentUser.isErrorPuja());
+		model.addAttribute("pujaRealizada",currentUser.isPujaRealizada());
 		
-		errorPuja=false;
-		pujaRealizada=false;
-		
+		currentUser.setErrorPuja(false);
+		currentUser.setPujaRealizada(false);
+	
 		if(ActualizarEncabezado(model,request,true)) {
 			return "mercado";
 		}else {
@@ -55,11 +55,12 @@ public class MercadoWebController extends WebController {
 			
 			if(current.isPresent()&&personaje.isPresent()) {
 				boolean completado= controlPuja.Pujar(current.get(), personaje.get(), (int) valor);
-				errorPuja= !completado;
-				pujaRealizada= completado;
+				currentUser.setErrorPuja(!completado);
+				currentUser.setPujaRealizada(completado);
+			
 			}
 			else {
-				errorPuja= true;
+				currentUser.setErrorPuja(true);
 			}
 			
 			return MostrarMercado(model,request);

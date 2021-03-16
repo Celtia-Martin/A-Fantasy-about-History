@@ -66,13 +66,13 @@ public class UserWebController extends WebController{
 	public String NuevoUsuario(Model model) {
 	
 	
-		model.addAttribute("errorUsuario", errorUsuario);
-		model.addAttribute("errorContra", errorContra);
-		model.addAttribute("datosInsuficientes",datosInsuficientes);
+		model.addAttribute("errorUsuario", currentUser.isErrorUsuario());
+		model.addAttribute("errorContra", currentUser.isErrorContra());
+		model.addAttribute("datosInsuficientes", currentUser.isDatosInsuficientes());
+		currentUser.setErrorUsuario(false);
+		currentUser.setErrorContra(false);
+		currentUser.setDatosInsuficientes(false);
 		
-		errorUsuario= false;
-		errorContra= false;
-		datosInsuficientes=false;
 
 		return "newUsuario";
 	}
@@ -81,9 +81,9 @@ public class UserWebController extends WebController{
 	public String newUser(@RequestParam String nombre ,@RequestParam String contrasena, Model model,HttpServletRequest request) {
 		
 		if(nombre.trim().equals("")||contrasena.trim().equals("")) {
-			datosInsuficientes = true;
-			model.addAttribute("datosInsuficientes",datosInsuficientes);
-			datosInsuficientes = false;
+			currentUser.setDatosInsuficientes(true);
+			model.addAttribute("datosInsuficientes",currentUser.isDatosInsuficientes());
+			currentUser.setDatosInsuficientes(false);
 			
 			return "newUsuario";
 		}
@@ -95,8 +95,8 @@ public class UserWebController extends WebController{
 				return Inicio(model);
 			}
 			else {
-				errorUsuario = true;
-				model.addAttribute("errorUsuario", errorUsuario);
+				currentUser.setErrorUsuario(true);
+				model.addAttribute("errorUsuario", currentUser.isErrorUsuario());
 				
 				return "newUsuario";
 			}
@@ -108,13 +108,14 @@ public class UserWebController extends WebController{
 	@GetMapping("/login")
 	public String LogIn(Model model) {
 		
-		model.addAttribute("errorUsuario", errorUsuario);
-		model.addAttribute("errorContra", errorContra);
-		model.addAttribute("hasSidoBaneado",baneado);
-		errorUsuario = false;
-		errorContra = false;
-		datosInsuficientes = false;
-		baneado=false;
+		model.addAttribute("errorUsuario", currentUser.isErrorUsuario());
+		model.addAttribute("errorContra",currentUser.isErrorContra());
+		model.addAttribute("hasSidoBaneado",currentUser.isBaneado());
+		currentUser.setErrorUsuario(false);
+		currentUser.setErrorContra(false);
+		currentUser.setDatosInsuficientes(false);
+		currentUser.setBaneado(false);
+		
 
 		
 		return "login";
@@ -173,11 +174,11 @@ public class UserWebController extends WebController{
 			model.addAttribute("hasNext", users.hasNext());
 			model.addAttribute("nextPage", users.getNumber()+1);
 			model.addAttribute("prevPage", users.getNumber()-1);
-			model.addAttribute("baneoExito", usuarioBaneadoConExito);
-			model.addAttribute("error",errorBaneo);
+			model.addAttribute("baneoExito", currentUser.isUsuarioBaneadoConExito());
+			model.addAttribute("error",currentUser.isErrorBaneo());
 			model.addAttribute("usuarios", users);
-			errorBaneo=false;
-			usuarioBaneadoConExito=false;
+			currentUser.setErrorBaneo(false);
+			currentUser.setUsuarioBaneadoConExito(false);
 			return "administradorUsuarios";
 		}
 		else {
@@ -193,11 +194,11 @@ public class UserWebController extends WebController{
 			model.addAttribute("hasNext", users.hasNext());
 			model.addAttribute("nextPage", users.getNumber()+1);
 			model.addAttribute("prevPage", users.getNumber()-1);
-			model.addAttribute("baneoExito", usuarioBaneadoConExito);
-			model.addAttribute("error",errorBaneo);
+			model.addAttribute("baneoExito", currentUser.isUsuarioBaneadoConExito());
+			model.addAttribute("error",currentUser.isErrorBaneo());
 			model.addAttribute("usuarios", users);
-			errorBaneo=false;
-			usuarioBaneadoConExito=false;
+			currentUser.setErrorBaneo(false);
+			currentUser.setUsuarioBaneadoConExito(false);
 		return "administradorUsuarios";
 		}
 		else {
@@ -210,11 +211,13 @@ public class UserWebController extends WebController{
 		if(user.isPresent()) {
 			user.get().setBaneado(!user.get().isBaneado());
 			controlUsuarios.Update(user.get());
-			usuarioBaneadoConExito=true;
+			currentUser.setUsuarioBaneadoConExito(true);
+	
 			
 		}
 		else{
-			errorBaneo=true;
+			currentUser.setErrorBaneo(true);
+			
 		}
 		return AdministrarUsuarios(model,request);
 	}

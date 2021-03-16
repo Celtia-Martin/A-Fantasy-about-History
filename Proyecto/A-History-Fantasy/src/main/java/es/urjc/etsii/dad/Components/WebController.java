@@ -31,14 +31,7 @@ import jdk.internal.org.jline.utils.Log;
 @Controller
 public class WebController {
 
-	protected boolean errorUsuario = false;
-	protected boolean errorContra = false;
-	protected boolean datosInsuficientes = false;
-	protected boolean errorPuja= false;
-	protected boolean pujaRealizada= false;
-	protected boolean baneado=false;
-	protected boolean usuarioBaneadoConExito= false;
-	protected boolean errorBaneo= false;
+	
 
 	
 	@Autowired
