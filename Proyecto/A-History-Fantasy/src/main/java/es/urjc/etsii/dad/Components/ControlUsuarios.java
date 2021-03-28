@@ -18,7 +18,6 @@ public class ControlUsuarios implements CommandLineRunner {
 	public boolean newUser (String nombre, String contra, ControlPersonajes controlPersonajes,ControlFormaciones controlFormaciones,ControlMercado controlMercado, BatallaService controlBatalla,boolean esAdmin) {
 		Optional<User> mismoNombre= repository.findByNombre(nombre);
 	
-		
 		if(mismoNombre.isPresent()) {
 			return false;
 		}
@@ -28,9 +27,11 @@ public class ControlUsuarios implements CommandLineRunner {
 			
 			User nuevo = new User(nombre,contra);
 			nuevo.addRol("USER");
+			
 			if(esAdmin) {
 				nuevo.addRol("ADMIN");
 			}
+			
 			nuevo.setFormacion(nuevaFormacion);
 			repository.save(nuevo);
 			

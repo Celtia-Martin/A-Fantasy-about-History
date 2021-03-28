@@ -16,10 +16,13 @@ public class BasicWebController extends WebController {
 	public BasicWebController() {
 		// TODO Auto-generated constructor stub
 	}
+	
 	@GetMapping("/menuPrincipal")
 	public String GetMenuPrincipal(Model model,HttpServletRequest request) {
+		
 		model.addAttribute("batalla", controlBatalla.getBatalla());
-		model.addAttribute("esAdmin",request.isUserInRole("ADMIN"));
+		model.addAttribute("esAdmin", request.isUserInRole("ADMIN"));
+		
 		if(ActualizarEncabezado(model,request,false)) {
 			return "menuPrincipal";
 		}else {
@@ -31,7 +34,6 @@ public class BasicWebController extends WebController {
 		currentUser.setCurrentName(null);
 		return "index";
 	}
-	
 	
 	@GetMapping("/error")
 	public String ErrorGeneral() {

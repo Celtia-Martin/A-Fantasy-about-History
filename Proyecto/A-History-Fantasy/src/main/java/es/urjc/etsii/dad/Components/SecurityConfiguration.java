@@ -10,8 +10,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+	
 	@Autowired
 	 public UserRepositoryAuthenticationProvider authenticationProvider;
+	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		BCryptPasswordEncoder bc= new BCryptPasswordEncoder();
@@ -21,20 +23,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		
-		
 		http.authorizeRequests().antMatchers("/").permitAll();
 		http.authorizeRequests().antMatchers("/newUsuario").permitAll();
 		http.authorizeRequests().antMatchers("/login").permitAll();
-		
 		
 		http.authorizeRequests().antMatchers("/mostrarTodosPersonajes").hasAnyRole("ADMIN");
 		http.authorizeRequests().antMatchers("/newPersonaje").hasAnyRole("ADMIN");
 		http.authorizeRequests().antMatchers("/administrarUsuarios").hasAnyRole("ADMIN");
 		
-		
-		
 		http.authorizeRequests().anyRequest().authenticated();
-		
 		
 		http.formLogin().loginPage("/login");
 		http.formLogin().usernameParameter("nombre");
@@ -45,15 +42,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.logout().logoutUrl("/error");
 		http.logout().logoutSuccessUrl("/");
 		
-		http.csrf().disable();
+		//http.csrf().disable();
 		
-		}
+	}
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
 		auth.authenticationProvider(authenticationProvider);
-	/*
-		auth.inMemoryAuthentication().withUser("ADMIN").password("115").roles("ADMIN");
-		auth.inMemoryAuthentication().withUser("Tipo de Incognito").password("115").roles("USER")*/
+		
+		auth.inMemoryAuthentication().withUser("user").password("pass")
+		 .roles("USER");
+
 	}
 
 }

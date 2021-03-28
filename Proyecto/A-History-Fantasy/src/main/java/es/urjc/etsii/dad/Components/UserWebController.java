@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserWebController extends WebController{
-
-	@Autowired
-	private BCryptPasswordEncoder encoder;
 	
 	@Autowired
 	private ControlPersonajes controlPersonajes;
@@ -43,9 +40,10 @@ public class UserWebController extends WebController{
 	 void started() {
 		//por ahora de testeo, al pasar mysql a update estas lineas deben comentarse
 		
-		controlUsuarios.newUser("Celtia", encoder.encode("115"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,true);
+		controlUsuarios.newUser("Celtia", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,true);
 		
-		controlUsuarios.newUser("Daniel", encoder.encode("115"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,true);
+		controlUsuarios.newUser("Daniel", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+		/*
 		controlUsuarios.newUser("AristoGato", encoder.encode("Gato"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
 		controlUsuarios.newUser("Paimon", encoder.encode("EmergencyFood"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
 		controlUsuarios.newUser("Richtofen", encoder.encode("hayquequemarlasconfire"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
@@ -57,22 +55,26 @@ public class UserWebController extends WebController{
 		controlUsuarios.newUser("Musa",encoder.encode("115") , controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
 		controlUsuarios.newUser("Jaimito",encoder.encode( "chiste"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
 		controlUsuarios.newUser("Cactus", encoder.encode( "noAgua"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+		*/
+		
 		controlPersonajes.iniciar();
 		controlMercado.newMercado(controlPersonajes);
 		controlBatalla.nuevaBatalla();
-		
 	}
+	
 	@GetMapping("/newUsuario")
-	public String NuevoUsuario(Model model) {
-	
-	
+	public String NuevoUsuario(Model model, HttpServletRequest request) {
+		
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		
+		model.addAttribute("token", token.getToken());
+		
 		model.addAttribute("errorUsuario", currentUser.isErrorUsuario());
 		model.addAttribute("errorContra", currentUser.isErrorContra());
 		model.addAttribute("datosInsuficientes", currentUser.isDatosInsuficientes());
 		currentUser.setErrorUsuario(false);
 		currentUser.setErrorContra(false);
 		currentUser.setDatosInsuficientes(false);
-		
 
 		return "newUsuario";
 	}
@@ -89,8 +91,7 @@ public class UserWebController extends WebController{
 		}
 		else {
 			
-			
-			if(controlUsuarios.newUser(nombre, encoder.encode(contrasena),controlPersonajes,controlFormacion,controlMercado, controlBatalla,false)) {
+			if(controlUsuarios.newUser(nombre, contrasena,controlPersonajes,controlFormacion,controlMercado, controlBatalla,false)) {
 			
 				return Inicio(model);
 			}
@@ -103,11 +104,12 @@ public class UserWebController extends WebController{
 		}
 	}
 	
-	
-	
 	@GetMapping("/login")
-	public String LogIn(Model model) {
+	public String LogIn(Model model, HttpServletRequest request) {
 		
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		
+		model.addAttribute("token", token.getToken()); 
 		model.addAttribute("errorUsuario", currentUser.isErrorUsuario());
 		model.addAttribute("errorContra",currentUser.isErrorContra());
 		model.addAttribute("hasSidoBaneado",currentUser.isBaneado());
@@ -116,13 +118,13 @@ public class UserWebController extends WebController{
 		currentUser.setDatosInsuficientes(false);
 		currentUser.setBaneado(false);
 		
-
-		
 		return "login";
 	}
+	
 	/*
 	@PostMapping("/login")
 	public String LoginPost(@RequestParam String nombre ,@RequestParam String contrasena, Model model,HttpServletRequest request) {
+		/*
 		if(nombre.trim().equals("")||contrasena.trim().equals("")) {
 			datosInsuficientes = true;
 			model.addAttribute("datosInsuficientes",datosInsuficientes);
@@ -153,7 +155,10 @@ public class UserWebController extends WebController{
 				return "login";
 			}
 		}
-	}*/
+		
+		return GetMenuPrincipal(model, request);
+	}
+	*/
 	
 	@GetMapping("/clasificacion")
 	public String MostrarClasificacion(Model model,HttpServletRequest request) {
@@ -212,7 +217,6 @@ public class UserWebController extends WebController{
 			user.get().setBaneado(!user.get().isBaneado());
 			controlUsuarios.Update(user.get());
 			currentUser.setUsuarioBaneadoConExito(true);
-	
 			
 		}
 		else{

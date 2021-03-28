@@ -1,4 +1,4 @@
-package es.urjc.etsii.dad.Components;
+package com.servidorInterno.HistoryFantasy;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,31 +13,23 @@ public class ControlMercado  implements CommandLineRunner {
 
 	@Autowired
 	private MercadoRepository repository;
-	
 	public ControlMercado() {
 	
 	}
 	
-	public void refrescarMercado() {
-		//Llamar al Servicio Interno
-	}
-	
 	public void newMercado(ControlPersonajes controlpersonaje) {
-		Optional<Mercado> current = repository.findFirstBy();
-		
+		Optional<Mercado> current= repository.findFirstBy();
 		if(current.isPresent()) {
 			repository.delete(current.get());
 		}
-		
 		Mercado nuevo= new Mercado();
 		List<Personaje> mercado= controlpersonaje.getRandomMercado();
 		nuevo.addPersonajes(mercado);
-		repository.save(nuevo);	
+		repository.save(nuevo);
+		
 	}
-	
 	public List<Personaje> findAllPersonajes(){
 		Optional<Mercado> mercado= repository.findFirstBy();
-		
 		if(mercado.isPresent()) {
 			return mercado.get().getOferta();
 		}
@@ -49,4 +41,6 @@ public class ControlMercado  implements CommandLineRunner {
 		
 		
 	}
+	
+
 }

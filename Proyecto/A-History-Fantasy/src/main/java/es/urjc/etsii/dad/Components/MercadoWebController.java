@@ -46,6 +46,7 @@ public class MercadoWebController extends WebController {
 			return "errorNoLogin";
 		}
 	}
+	
 	@PostMapping("/pujarPersonaje/{id}")
 	public String PujandoPersonaje(Model model,@PathVariable int id,@RequestParam long valor,HttpServletRequest request) {
 		if(currentUser!=null) {
@@ -57,7 +58,6 @@ public class MercadoWebController extends WebController {
 				boolean completado= controlPuja.Pujar(current.get(), personaje.get(), (int) valor);
 				currentUser.setErrorPuja(!completado);
 				currentUser.setPujaRealizada(completado);
-			
 			}
 			else {
 				currentUser.setErrorPuja(true);
@@ -67,10 +67,10 @@ public class MercadoWebController extends WebController {
 		}
 		return "errorNoLogin";
 	}
+	
 	@PostMapping("/refrescarMercado")
 	public String RefrescarMercado(Model model,HttpServletRequest request) {
-		controlPuja.ReiniciarMercado(controlMercado);
-		controlMercado.newMercado(controlPersonajes);
+		controlMercado.refrescarMercado();
 		
 		return GetMenuPrincipal(model,request);
 	}
