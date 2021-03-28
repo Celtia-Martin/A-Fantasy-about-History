@@ -43,19 +43,19 @@ public class UserWebController extends WebController{
 		controlUsuarios.newUser("Celtia", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,true);
 		
 		controlUsuarios.newUser("Daniel", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
-		/*
-		controlUsuarios.newUser("AristoGato", encoder.encode("Gato"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
-		controlUsuarios.newUser("Paimon", encoder.encode("EmergencyFood"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
-		controlUsuarios.newUser("Richtofen", encoder.encode("hayquequemarlasconfire"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
-		controlUsuarios.newUser("M.Rajoy",encoder.encode( "persianas"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
-		controlUsuarios.newUser("Kala",encoder.encode( "ffviii"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
-		controlUsuarios.newUser("Panumo",encoder.encode("115") , controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
-		controlUsuarios.newUser("Joselito", encoder.encode("joselito"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
-		controlUsuarios.newUser("Japi",encoder.encode("115") , controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
-		controlUsuarios.newUser("Musa",encoder.encode("115") , controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
-		controlUsuarios.newUser("Jaimito",encoder.encode( "chiste"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
-		controlUsuarios.newUser("Cactus", encoder.encode( "noAgua"), controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
-		*/
+		
+		controlUsuarios.newUser("AristoGato", "Gato", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+		controlUsuarios.newUser("Paimon", "EmergencyFood", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+		controlUsuarios.newUser("Richtofen","hayquequemarlasconfire", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+		controlUsuarios.newUser("M.Rajoy", "persianas", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+		controlUsuarios.newUser("Kala", "ffviii", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+		controlUsuarios.newUser("Panumo","115" , controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+		controlUsuarios.newUser("Joselito", "joselito", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+		controlUsuarios.newUser("Japi","115" , controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+		controlUsuarios.newUser("Musa","115" , controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+		controlUsuarios.newUser("Jaimito", "chiste", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+		controlUsuarios.newUser("Cactus",  "noAgua", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+		
 		
 		controlPersonajes.iniciar();
 		controlMercado.newMercado(controlPersonajes);

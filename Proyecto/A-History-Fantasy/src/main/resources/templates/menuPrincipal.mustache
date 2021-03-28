@@ -5,7 +5,7 @@
 	<section>
 		<h3> Próxima Batalla: {{batalla}}</h3>
 	</section>
-	
+	{{#esAdmin}}
 	<section>
 		<p><center>
 		<form action = "/ejecutarBatalla" method= "post" >
@@ -21,7 +21,7 @@
 		</form>
 		</center></p>
 	</section>
-	
+	{{/esAdmin}}
 	<section>
 		<p><center>
 			<a href="/formacion"><button class="button button2"> Formación </button>

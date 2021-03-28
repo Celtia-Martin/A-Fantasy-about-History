@@ -26,10 +26,10 @@ public class ControlUsuarios implements CommandLineRunner {
 			nuevaFormacion.initFormacion(controlPersonajes);
 			
 			User nuevo = new User(nombre,contra);
-			nuevo.addRol("USER");
+			nuevo.addRol("ROLE_USER");
 			
 			if(esAdmin) {
-				nuevo.addRol("ADMIN");
+				nuevo.addRol("ROLE_ADMIN");
 			}
 			
 			nuevo.setFormacion(nuevaFormacion);

@@ -21,6 +21,7 @@ public class BasicWebController extends WebController {
 	public String GetMenuPrincipal(Model model,HttpServletRequest request) {
 		
 		model.addAttribute("batalla", controlBatalla.getBatalla());
+	
 		model.addAttribute("esAdmin", request.isUserInRole("ADMIN"));
 		
 		if(ActualizarEncabezado(model,request,false)) {
