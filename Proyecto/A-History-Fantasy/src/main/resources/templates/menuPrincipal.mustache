@@ -10,6 +10,7 @@
 		<p><center>
 		<form action = "/ejecutarBatalla" method= "post" >
 		    <td><input type='submit' value= 'Ejecutar Batalla(Servidor Interno)'/></td>
+		    <input type='hidden' name='_csrf' value='{{token}}'/>
 		</form>
 		</center></p>
 	</section>
@@ -18,6 +19,7 @@
 		<p><center>
 		<form action = "/refrescarMercado" method= "post" >
 		    <td><input type='submit' value= 'Refrescar Mercado(Servidor Interno)'/></td>
+		    <input type='hidden' name='_csrf' value='{{token}}'/>
 		</form>
 		</center></p>
 	</section>
