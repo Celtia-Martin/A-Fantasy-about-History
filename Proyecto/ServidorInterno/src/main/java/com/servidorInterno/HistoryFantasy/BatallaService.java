@@ -1,4 +1,4 @@
-package es.urjc.etsii.dad.Components;
+package com.servidorInterno.HistoryFantasy;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +20,7 @@ public class BatallaService {
 	
 	public void RealizarBatalla() {
 		
-		CommManager cm = new CommManager();
-		cm.Comunicacion("Batalla");
+		//Llamada a función del servicio interno
 		
 	}
 

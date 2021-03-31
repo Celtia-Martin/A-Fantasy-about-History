@@ -22,6 +22,9 @@ public class ServicioInternoController {
 	private ControlPersonajes controlPersonajes;
 	
 	@Autowired
+	private BatallaService controlBatallas;
+	
+	@Autowired
 	private BatallaRepository batallas;
 	
 	@Autowired
@@ -117,6 +120,8 @@ public class ServicioInternoController {
 		}
 		
 		batallas.delete(bat.get());
+		
+		controlBatallas.nuevaBatalla();
 		
 		return "login";
 	}

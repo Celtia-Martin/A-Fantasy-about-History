@@ -19,7 +19,8 @@ public class ControlMercado  implements CommandLineRunner {
 	}
 	
 	public void refrescarMercado() {
-		//Llamar al Servicio Interno
+		CommManager cm = new CommManager();
+		cm.Comunicacion("Refresco");
 	}
 	
 	public void newMercado(ControlPersonajes controlpersonaje) {
