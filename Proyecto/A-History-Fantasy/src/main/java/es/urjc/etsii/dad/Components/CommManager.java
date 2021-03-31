@@ -11,7 +11,9 @@ public class CommManager{
 
 	public void Comunicacion(String s) {
 		try {
-			String host = "92.172.14.237";
+			//String host = "92.172.14.237";
+			//String host = "139.47.79.207";
+			String host = "127.0.0.1";
 			int port = 9350;
 			
 			Socket socket = new Socket(host,port);

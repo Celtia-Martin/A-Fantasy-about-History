@@ -17,11 +17,14 @@ import org.springframework.stereotype.Service;
 public class ComSockets {
 
 	@Autowired
-	public ServicioInternoController cont;
+	private EjecutarBatallaService batallaService;
+	
+	@Autowired
+	private RefrescarMercadoService mercadoService;
 	
 	public void Comunicacion() {
 		try {
-			int port = 9115;
+			int port = 9350;
 			ServerSocket serverSocket = new ServerSocket(port);
 			
 			while (true) {
@@ -37,10 +40,10 @@ public class ComSockets {
 				if(orden != null) {
 					switch(orden) {
 						case "Refresco":
-							cont.RefrescarMercado();
+							mercadoService.RefrescarMercado();
 							break;
 						case "Batalla":
-							cont.RealizarBatalla();
+							batallaService.RealizarBatalla();
 							break;
 					}
 				}
