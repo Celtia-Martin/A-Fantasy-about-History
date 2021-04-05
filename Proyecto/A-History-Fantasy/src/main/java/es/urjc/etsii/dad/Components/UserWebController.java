@@ -39,7 +39,8 @@ public class UserWebController extends WebController{
 	@PostConstruct
 	 void started() {
 		//por ahora de testeo, al pasar mysql a update estas lineas deben comentarse
-		
+		System.setProperty("javax.net.ssl.trustStore", "myclientkeystore");
+		System.setProperty("javax.net.ssl.trustStorePassword", "GatoPato");
 		controlUsuarios.newUser("Celtia", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,true);
 		
 		controlUsuarios.newUser("Daniel", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
