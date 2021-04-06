@@ -28,13 +28,8 @@ public class ComSockets {
 	public void Comunicacion() {
 		try {
 			
-			//System.setProperty("javax.net.ssl.keyStore", "myserverkeystore");
-			//System.setProperty("javax.net.ssl.keyStorePassword", "GatoPato");
 			int port = 9350;
 			ServerSocket serverSocket = new ServerSocket(port);
-			//ServerSocketFactory serverSocketFactory = SSLServerSocketFactory.getDefault();
-			//SSLServerSocket serverSocket = (SSLServerSocket) serverSocketFactory.createServerSocket(port);
-		
 			
 			while (true) {
 				Socket socket = serverSocket.accept();

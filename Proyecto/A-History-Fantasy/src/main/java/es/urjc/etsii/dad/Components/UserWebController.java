@@ -39,10 +39,12 @@ public class UserWebController extends WebController{
 	@PostConstruct
 	 void started() {
 		//por ahora de testeo, al pasar mysql a update estas lineas deben comentarse
+		/*
 		System.setProperty("javax.net.ssl.trustStore", "myclientkeystore");
 		System.setProperty("javax.net.ssl.trustStorePassword", "GatoPato");
-		controlUsuarios.newUser("Celtia", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,true);
+		*/
 		
+		controlUsuarios.newUser("Celtia", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,true);
 		controlUsuarios.newUser("Daniel", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
 		
 		controlUsuarios.newUser("AristoGato", "Gato", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
@@ -121,45 +123,6 @@ public class UserWebController extends WebController{
 		
 		return "login";
 	}
-	
-	/*
-	@PostMapping("/login")
-	public String LoginPost(@RequestParam String nombre ,@RequestParam String contrasena, Model model,HttpServletRequest request) {
-		/*
-		if(nombre.trim().equals("")||contrasena.trim().equals("")) {
-			datosInsuficientes = true;
-			model.addAttribute("datosInsuficientes",datosInsuficientes);
-			datosInsuficientes = false;
-			
-			return "login";
-		}
-		else {
-			User nuevo = new User(nombre,contrasena);
-			
-			if(controlUsuarios.LogIn(nombre,contrasena)) {
-				Optional<User> user= controlUsuarios.findByNombre(nombre);
-				if(user.get().isBaneado()) {
-					baneado=true;
-					return LogIn(model,request);
-				}
-				else {
-					currentUser.setCurrentName(nuevo.getNombre());
-					return GetMenuPrincipal(model,request);
-				}
-
-			}
-			else {
-				errorUsuario = true;
-				model.addAttribute("errorUsuario", errorUsuario);
-				errorUsuario = false;
-				
-				return "login";
-			}
-		}
-		
-		return GetMenuPrincipal(model, request);
-	}
-	*/
 	
 	@GetMapping("/clasificacion")
 	public String MostrarClasificacion(Model model,HttpServletRequest request) {

@@ -55,8 +55,14 @@ public class WebController {
 	}
 	
 	public String GetMenuPrincipal(Model model,HttpServletRequest request) {
+		
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		
+		model.addAttribute("token", token.getToken()); 
+		
 		model.addAttribute("batalla", controlBatalla.getBatalla());
 		model.addAttribute("esAdmin",request.isUserInRole("ADMIN"));
+		
 		if(ActualizarEncabezado(model,request,false)) {
 			return "menuPrincipal";
 		}else {

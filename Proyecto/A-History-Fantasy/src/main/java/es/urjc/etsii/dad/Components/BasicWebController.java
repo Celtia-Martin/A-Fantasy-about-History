@@ -3,6 +3,7 @@ package es.urjc.etsii.dad.Components;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +21,11 @@ public class BasicWebController extends WebController {
 	@GetMapping("/menuPrincipal")
 	public String GetMenuPrincipal(Model model,HttpServletRequest request) {
 		
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		
+		model.addAttribute("token", token.getToken()); 
+		
 		model.addAttribute("batalla", controlBatalla.getBatalla());
-	
 		model.addAttribute("esAdmin", request.isUserInRole("ADMIN"));
 		
 		if(ActualizarEncabezado(model,request,false)) {
