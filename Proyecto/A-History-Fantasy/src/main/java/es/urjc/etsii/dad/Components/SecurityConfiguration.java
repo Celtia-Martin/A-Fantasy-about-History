@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -38,10 +39,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.formLogin().loginPage("/login");
 		http.formLogin().usernameParameter("nombre");
 		http.formLogin().passwordParameter("contrasena");
-		http.formLogin().failureUrl("/error");
-		http.formLogin().defaultSuccessUrl("/menuPrincipal");
-		
-		http.logout().logoutUrl("/error");
+		//http.formLogin().failureUrl("/error");
+		http.formLogin().defaultSuccessUrl("/menuPrincipal");	
+		http.logout().logoutUrl("/");
 		http.logout().logoutSuccessUrl("/");
 		
 		//http.csrf().disable();
@@ -56,6 +56,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		 .roles("USER");
 
 	}
-
+	
 }
 

@@ -90,7 +90,7 @@ public class UserWebController extends WebController{
 			model.addAttribute("datosInsuficientes",currentUser.isDatosInsuficientes());
 			currentUser.setDatosInsuficientes(false);
 			
-			return "newUsuario";
+			return NuevoUsuario(model,request);
 		}
 		else {
 			
@@ -100,9 +100,8 @@ public class UserWebController extends WebController{
 			}
 			else {
 				currentUser.setErrorUsuario(true);
-				model.addAttribute("errorUsuario", currentUser.isErrorUsuario());
 				
-				return "newUsuario";
+				return NuevoUsuario(model,request);
 			}
 		}
 	}
