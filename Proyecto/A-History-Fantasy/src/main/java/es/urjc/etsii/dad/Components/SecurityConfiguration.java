@@ -39,7 +39,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.formLogin().loginPage("/login");
 		http.formLogin().usernameParameter("nombre");
 		http.formLogin().passwordParameter("contrasena");
-		//http.formLogin().failureUrl("/error");
 		http.formLogin().defaultSuccessUrl("/menuPrincipal");	
 		http.logout().logoutUrl("/");
 		http.logout().logoutSuccessUrl("/");
@@ -50,11 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-		auth.authenticationProvider(authenticationProvider);
-		
-		auth.inMemoryAuthentication().withUser("user").password("pass")
-		 .roles("USER");
-
+		auth.authenticationProvider(authenticationProvider);		
 	}
 	
 }

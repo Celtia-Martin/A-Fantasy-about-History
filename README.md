@@ -13,11 +13,15 @@
 ### [1.1.- APLICACION ](#aplicacion)
 ### [1.2.- ENTIDADES](#entidades)
 ### [1.3.- SERVIDOR INTERNO](#servidorInterno)
+### [1.4.- SEGURIDAD](#seguridad)
 ## [2.- MODELO DE DATOS](#modeloDeDatos)	
 ## [3.- PANTALLAS](#pantallas)
 ### [3.1.- CAPTURAS ](#capturasPantalla)
 ### [3.2.- DIAGRAMA DE NAVEGACIÓN ](#diagramaNavegacion)
+### [3.3.- DIAGRAMA DE CLASES ](#diagramaClases)
 ## [4.- NOTAS FASE 2](#notasFase2)
+## [5.- NOTAS FASE 3](#notasFase3)
+## [6.- DESPLIEGUE E INSTALACIÓN](#despliegue)
 
 ## DESCRIPCION <a name="descripcion"/>
 
@@ -25,11 +29,11 @@
 
 A Fantasy about History es una aplicación web que presenta un juego de tipo Fantasy (Biwenger, Comunio, La Liga Fantasy), pero que no depende de ningun suceso real, ya que se juega con personajes históricos. Como cualquier aplicación Fantasy, los usuarios tendrán que iniciar sesión y unirse a la liga del juego.
 
-Una vez dentro de esta liga, se nos ofrece una formación por defecto (con personajes generados automáticamente), que puede ser rellenada con personajes históricos. Con esta formación, se librará una batalla automática contra el resto de jugadores, consiguiendo más puntuación la que tenga mejores personajes para cada situación de la batalla. Se disputarán varias batallas (un día específico de la semana), y el ganador de la liga será aquel equipo que haya acumulado más puntos tras todas estas.
+Una vez dentro de esta liga, se nos ofrece una formación por defecto (con personajes generados automáticamente), que puede ser rellenada con personajes históricos. Con esta formación, se librará una batalla contra el resto de jugadores, consiguiendo más puntuación la que tenga mejores personajes para cada tipo de batalla. Se disputarán varias batallas (controladas por un ADMIN), y el ganador de la liga será aquel equipo que haya acumulado más puntos tras todas estas.
 
-Para conseguir mejores personajes, la liga tendrá su propio mercado de personajes en el que los jugadores pueden pujar. El que más oro ofrezca, se lo lleva para su equipo. Se comienza con 0 oro, y por cada punto obtenido en las batallas se consigue más. El mercado se refresca cada 24 horas, y ahi se decide quien gana la puja. Cada equipo tiene un máximo de 6 personajes, sin mínimo, y una vez llegada esta cantidad no se puede pujar por nuevos personajes. Por ello, es necesario vender personajes antiguos para comprar otros nuevos, y estos podrán volver a salir en el mercado.
+Para conseguir mejores personajes, la liga tendrá su propio mercado de personajes en el que los jugadores pueden pujar. El que más oro ofrezca, se lo lleva para su equipo. Se comienza con 0 oro, y por cada punto obtenido en las batallas se consigue más. El mercado se refresca a la carta (ADMIN), y ahi se decide quien gana la puja. Cada equipo tiene un máximo de 6 personajes, sin mínimo, y una vez llegada esta cantidad no se puede pujar por nuevos personajes. Por ello, es necesario vender personajes antiguos para comprar otros nuevos, y estos podrán volver a salir en el mercado.
 
-Las batallas tienen un día y hora concreto , y son totalmente automatizadas. Esto lo llevará el servidor interno. Estas batallas simuladas darán lugar a un resultado y a una serie de puntos repartidos entre todos los miembros de la liga, así como una cantidad específica de oro. Las batallas no se deciden solo por la calidad de los personajes: ofrecen una serie de información que harán que destaquen ciertos personajes sobre otros. Por ejemplo, si es una batalla cultural, los personajes culturales tendrán más peso. Así, se definen 3 tipos de personajes: militares, diplomáticos y culturales. 
+Las batallas simuladas darán lugar a un resultado y a una serie de puntos repartidos entre todos los miembros de la liga, así como una cantidad específica de oro. Las batallas no se deciden solo por la calidad de los personajes: ofrecen una serie de información que harán que destaquen ciertos personajes sobre otros. Por ejemplo, si es una batalla cultural, los personajes culturales tendrán más peso. Así, se definen 3 tipos de personajes: militares, diplomáticos y culturales. 
 
 Hay 2 niveles de jerarquía: el administrador de liga y el jugador. Un ADMINISTRADOR (normalmente los creadores) puede editar y ampliar las bases de datos, añadiendo personajes y batallas a las mismas. También pueden banear a jugadores de la liga. Un JUGADOR puede participar en batallas, pujar en el mercado, editar formaciones, etc.
 
@@ -49,17 +53,17 @@ Es estrictamente PRIVADO para los creadores la Simulación de Batallas, el repar
 
 **- Puja:** Tienen una ID, un Usuario pujante, un Personaje pujado y una cantidad de Dinero. Sirven para elegir al ganador del Personaje que se encuentra en el mercado.
 
-**OPCIONAL**: Añadir varias **LIGAS**, que pueden ser públicas o privadas.
-
 ### SERVIDOR INTERNO <a name="servidorInterno"/>
 
-Se encarga de:
+Todas las actividades que realiza el Servidor Interno son respuestas a las peticiones de la aplicación. La comunicación entre estos dos se realiza mediante sockets. La aplicación manda una orden al Servidor Interno, que realiza una serie de cálculos y actualiza la base de datos, sin devolver nada a la aplicación. Estas órdenes pueden ser:
 
 **- Simular las batallas:** Se calculan los puntos y el dinero de cada jugador a partir de las Formaciones que alineen.
 
 **- Refrescar el Mercado:** Selecciona aleatoriamente de la base de datos de personajes libres en la liga y los pone en el mercado. Esto ocurre cada 24 horas, en una hora concreta.
 
-**OPCIONAL**: Controlar el Calendario, el ratio de las batallas y la hora del refresco del mercado.
+### SEGURIDAD <a name="seguridad"/>
+
+
 
 ## MODELO DE DATOS <a name="modeloDeDatos"/>
 
@@ -121,6 +125,10 @@ Pantalla de error que aparece cuando un usuario intenta entrar en una página si
 
 ![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/DIAGRAMA%20DE%20PANTALLAS.png)
 
+### DIAGRAMA DE CLASES <a name="diagramaClases"/>
+
+
+
 ## NOTAS DE LA FASE 2 <a name="notasFase2"/>
 
 Para esta segunda fase se han implementado toda la funcionalidad de la página, tanto la parte de los jugadores como la de los administradores, así como la creación de la base de datos, sus entidades, consultas y relaciones.
@@ -132,4 +140,13 @@ También cabe destacar que el modo en que se inicia sesión y se crea una cuenta
 También hemos añadido al menú principal varios botones que ejecutan operaciones típicas del servidor interno, tales como refrescar el mercado o ejecutar una batalla aleatoria, para poder comenzar a testear su funcionamiento. Sin embargo, esto será totalmente transparente para el usuario en el proyecto final.
 
 En cuanto al esquema de MySql, por ahora está en modo "create-drop", ya que consideramos que a la aplicación aún le queda bastante desarrollo. De hecho, en el método Started() del WebController se inicializa la base de datos con algunos usuarios, personajes, un mercado y una batalla. Todo esto en pos de testear la aplicación. Esta inicialización se comentará/borrará en las versiones finales.
+
+## NOTAS DE LA FASE 3 <a name="notasFase3"/>
+
+
+
+## DESPLIEGUE E INSTALACIÓN <a name="despliegue"/>
+
+
+
 

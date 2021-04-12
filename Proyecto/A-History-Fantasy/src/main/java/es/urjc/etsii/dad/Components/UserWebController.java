@@ -39,14 +39,10 @@ public class UserWebController extends WebController{
 	@PostConstruct
 	 void started() {
 		//por ahora de testeo, al pasar mysql a update estas lineas deben comentarse
-		/*
-		System.setProperty("javax.net.ssl.trustStore", "myclientkeystore");
-		System.setProperty("javax.net.ssl.trustStorePassword", "GatoPato");
-		*/
-		
+	
 		controlUsuarios.newUser("Celtia", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,true);
-		controlUsuarios.newUser("Daniel", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
 		
+		controlUsuarios.newUser("Daniel", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);	
 		controlUsuarios.newUser("AristoGato", "Gato", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
 		controlUsuarios.newUser("Paimon", "EmergencyFood", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
 		controlUsuarios.newUser("Richtofen","hayquequemarlasconfire", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
@@ -58,8 +54,7 @@ public class UserWebController extends WebController{
 		controlUsuarios.newUser("Musa","115" , controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
 		controlUsuarios.newUser("Jaimito", "chiste", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
 		controlUsuarios.newUser("Cactus",  "noAgua", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
-		
-		
+			
 		controlPersonajes.iniciar();
 		controlMercado.newMercado(controlPersonajes);
 		controlBatalla.nuevaBatalla();
