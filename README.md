@@ -148,9 +148,11 @@ En cuanto al esquema de MySql, por ahora está en modo "create-drop", ya que con
 
 ## NOTAS DE LA FASE 3 <a name="notasFase3"/>
 
-Se ha implementado el apartado de seguridad en todas sus facetas. Se ha usado CSRF, Spring Security y se han definido los 2 roles de ADMIN y USER.
+Se ha implementado el apartado de seguridad en todas sus facetas. Se han usado tokens para evitar ataques CSRF, hemos codificado las contraseñas, se ha usado Spring Security y se han definido los 2 roles de ADMIN y USER.
 
-Para la comunicación entre las aplicaciones, hemos usado sockets. Esto se debe a que nuestra comunicacion se basa en enviar ordenes, y no en devolver ninguna información. Con sockets, podemos simplemente mandar Strings con el mensaje y que el servidor lo interprete. 
+Para la comunicación entre las aplicaciones, hemos usado sockets. Esto se debe a que nuestra comunicacion se basa en enviar ordenes, y no en devolver ninguna información. Con sockets podemos simplemente mandar Strings con la instrucción correspondiente y que el servidor lo interprete. El servidor interno modificará la base de datos según la instrucción recibida: podrá refrescar el mercado o ejecutar una batalla. Estas operaciones pueden tardar en caso de que se tenga un alto número de usuarios, y es por ello que se ha decidido que sea el servidor interno quién las ejecute. 
+
+Para el despliegue en una máquina virtual desde cero se ha usado Ubuntu ya que es gratuito y fácil de usar. 
 
 ## DESPLIEGUE E INSTALACIÓN <a name="despliegue"/>
 
