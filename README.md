@@ -63,7 +63,12 @@ Todas las actividades que realiza el Servidor Interno son respuestas a las petic
 
 ### SEGURIDAD <a name="seguridad"/>
 
+Para la implementación de la seguridad se ha usado Spring Security. Mediante la creación de una clase SecurityConfiguration configuramos qué páginas puede ver el usuario sin logearse, logeado, y siendo USER o ADMIN, que son los dos roles con los que cuenta la aplicación. También configuramos cual va a ser la página de login, y cual va a ser el "AuthenticationProvider", que en este caso será la base de datos. Este "AuthenticationProvider" comprobará si la contraseña introducida se corresponde con la del usuario en la base de datos ( estas contraseñas están protegidas por una operación Hash). Pero no es lo único que hace, ya que también comprueba si el usuario está baneado, y si ese es el caso no dejará logear al usuario, además de indicarle que ha sido baneado. Además de esta autentificación, se han protegido los formularios de ataques CSRF mediante tokens que se les pasa a los templates de mustache desde los controllers.
 
+A continuación podemos ver como vería la aplicación un usuario convencional y el administrador (respectivamente). Aclarar que por ahora solo hay un ADMIN en la base de datos, y que los nuevos usuarios que se creen en la base de datos tendrán el rol USER.
+
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/USER.png)
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/ADMIN.png)
 
 ## MODELO DE DATOS <a name="modeloDeDatos"/>
 
