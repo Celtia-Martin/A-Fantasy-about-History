@@ -65,6 +65,8 @@ Todas las actividades que realiza el Servidor Interno son respuestas a las petic
 
 Para la implementación de la seguridad se ha usado Spring Security. Mediante la creación de una clase SecurityConfiguration configuramos qué páginas puede ver el usuario sin logearse, logeado, y siendo USER o ADMIN, que son los dos roles con los que cuenta la aplicación. También configuramos cual va a ser la página de login, y cual va a ser el "AuthenticationProvider", que en este caso será la base de datos. Este "AuthenticationProvider" comprobará si la contraseña introducida se corresponde con la del usuario en la base de datos ( estas contraseñas están protegidas por una operación Hash). Pero no es lo único que hace, ya que también comprueba si el usuario está baneado, y si ese es el caso no dejará logear al usuario, además de indicarle que ha sido baneado. Además de esta autentificación, se han protegido los formularios de ataques CSRF mediante tokens que se les pasa a los templates de mustache desde los controllers.
 
+También se usa HTTPS, que hace uso de un certificado autofirmado para funcionar.
+
 A continuación podemos ver como vería la aplicación un usuario convencional y el administrador (respectivamente). Aclarar que por ahora solo hay un ADMIN en la base de datos, y que los nuevos usuarios que se creen en la base de datos tendrán el rol USER.
 
 ![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/USER.png)
@@ -148,7 +150,7 @@ En cuanto al esquema de MySql, por ahora está en modo "create-drop", ya que con
 
 ## NOTAS DE LA FASE 3 <a name="notasFase3"/>
 
-Se ha implementado el apartado de seguridad en todas sus facetas. Se han usado tokens para evitar ataques CSRF, hemos codificado las contraseñas, se ha usado Spring Security y se han definido los 2 roles de ADMIN y USER.
+Se ha implementado el apartado de seguridad en todas sus facetas. Se han usado tokens para evitar ataques CSRF, hemos codificado las contraseñas, se ha usado Spring Security, la pagina funciona con HTTPS y se han definido los 2 roles de ADMIN y USER.
 
 Para la comunicación entre las aplicaciones, hemos usado sockets. Esto se debe a que nuestra comunicacion se basa en enviar ordenes, y no en devolver ninguna información. Con sockets podemos simplemente mandar Strings con la instrucción correspondiente y que el servidor lo interprete. El servidor interno modificará la base de datos según la instrucción recibida: podrá refrescar el mercado o ejecutar una batalla. Estas operaciones pueden tardar en caso de que se tenga un alto número de usuarios, y es por ello que se ha decidido que sea el servidor interno quién las ejecute. 
 
