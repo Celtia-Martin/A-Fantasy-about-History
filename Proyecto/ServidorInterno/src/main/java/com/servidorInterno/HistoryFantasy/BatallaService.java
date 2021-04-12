@@ -18,11 +18,7 @@ public class BatallaService {
 	
 	private Logger log = LoggerFactory.getLogger(BatallaService.class);
 	
-	public void RealizarBatalla() {
-		
-		//Llamada a función del servicio interno
-		
-	}
+	
 
 	public void nuevaBatalla() {
 		Batalla batalla = new Batalla();
