@@ -170,7 +170,7 @@ A continuación se va a explicar como se han generado los jar y cómo se ha inst
 **3.- Ejecutar JAR:** Ahora que está todo preparado, se abre la consola en la carpeta del jar de la aplicación web y ejecutamos : **java -jar "nombre_del_jar_de_la_app_web". jar**. Después procedemos a hacer lo mismo en la carpeta donde se encuentra el jar del servidor interno: **java -jar "nombre_del_jar_del_servidor_interno". jar**.
 
 
--**La aplicación ya se está ejecutando**, y se puede comprobar accediendo desde el navegador web de la máquina virtual.
+-**La aplicación ya se está ejecutando**, y se puede comprobar accediendo desde el navegador web de la máquina virtual. Se puede acceder desde cualquier otra maquina con la ID correspondiente. Como la app corre en una máquina virtual, hay que especificar que use un adaptador de puentes para traducir la IP.
 
 
 Aclarar que mientras que la aplicación web tiene el esquema MySql en "create-drop", el servidor interno lo tiene como "update", y es por eso que ejecutamos la aplicación web primero. En un estado más avanzado de la aplicación donde la base de datos ya sea fija, ambos podrán estar en "update".
