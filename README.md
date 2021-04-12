@@ -147,6 +147,16 @@ En cuanto al esquema de MySql, por ahora está en modo "create-drop", ya que con
 
 ## DESPLIEGUE E INSTALACIÓN <a name="despliegue"/>
 
+A continuación se va a explicar como se han generado los jar y cómo se ha instalado la aplicación desde cero en una máquina virtual.
+
+-**Primero compilamos ambas aplicaciones** ( tanto la aplicación web como el servidor interno ) con Maven Clean. Luego lo hacemos con la opción de Maven Build. En la ventana de opciones que se despliega ponemos como opción en "goals" "package". Esto ya nos generá los jars necesarios.
+-En la máquina virtual (se ha usado el Sistema Operativo Ubuntu 20.04) primero debemos **instalar Java y MySql, así como MySql WorkBench**. Pero antes de ejecutar las aplicaciones, debemos cambiar la contraseña de MySql para el usuario root para que coincida con la añadida en el archivo properties de las aplicaciones. Esto lo hacemos abriendo MySql con el usuario correspondiente y ejecutando la linea "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'GatoPato115'", y después "FLUSH PRIVILEGES;". Una posible mejora sería poder modificar dicha contraseña añadiendola como argumento.
+-Ahora que está todo preparado, se abre la consola en la carpeta del jar de la aplicación web y ejecutamos : **java -jar "nombre_del_jar_de_la_app_web". jar**.
+-Después procedemos a hacer lo mismo en la carpeta donde se encuentra el jar del servidor interno: **java -jar "nombre_del_jar_del_servidor_interno". jar**.
+-**La aplicación ya se está ejecutando**, y se puede comprobar accediendo desde el navegador web de la máquina virtual.
+
+Aclarar que mientras que la aplicación web tiene el esquema MySql en "create-drop", el servidor interno lo tiene como "update", y es por eso que ejecutamos la aplicación web primero. En un estado más avanzado de la aplicación donde la base de datos ya sea fija, ambos podrán estar en "update".
+
 
 
 
