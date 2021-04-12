@@ -55,7 +55,7 @@ Es estrictamente PRIVADO para los creadores la Simulación de Batallas, el repar
 
 ### SERVIDOR INTERNO <a name="servidorInterno"/>
 
-Todas las actividades que realiza el Servidor Interno son respuestas a las peticiones de la aplicación. La comunicación entre estos dos se realiza mediante sockets. La aplicación manda una orden al Servidor Interno, que realiza una serie de cálculos y actualiza la base de datos, sin devolver nada a la aplicación. Estas órdenes pueden ser:
+Todas las actividades que realiza el Servidor Interno son respuestas a las peticiones de la aplicación. La comunicación entre estos dos se realiza mediante sockets. La aplicación manda una orden (en forma de mensaje String) al Servidor Interno. Este lo lee, interpretando que debe realizar una acción u otra. Entonces, realiza una serie de cálculos y actualiza la base de datos, sin devolver nada a la aplicación. Estas órdenes pueden ser:
 
 **- Simular las batallas:** Se calculan los puntos y el dinero de cada jugador a partir de las Formaciones que alineen.
 
@@ -127,7 +127,7 @@ Pantalla de error que aparece cuando un usuario intenta entrar en una página si
 
 ### DIAGRAMA DE CLASES <a name="diagramaClases"/>
 
-
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/DEFI.png)
 
 ## NOTAS DE LA FASE 2 <a name="notasFase2"/>
 
@@ -143,9 +143,28 @@ En cuanto al esquema de MySql, por ahora está en modo "create-drop", ya que con
 
 ## NOTAS DE LA FASE 3 <a name="notasFase3"/>
 
+Se ha implementado el apartado de seguridad en todas sus facetas. Se ha usado CSRF, Spring Security y se han definido los 2 roles de ADMIN y USER.
 
+Para la comunicación entre las aplicaciones, hemos usado sockets. Esto se debe a que nuestra comunicacion se basa en enviar ordenes, y no en devolver ninguna información. Con sockets, podemos simplemente mandar Strings con el mensaje y que el servidor lo interprete. 
 
 ## DESPLIEGUE E INSTALACIÓN <a name="despliegue"/>
+
+A continuación se va a explicar como se han generado los jar y cómo se ha instalado la aplicación desde cero en una máquina virtual.
+
+
+**1.-Compilamos ambas aplicaciones:** (tanto la aplicación web como el servidor interno) con Maven Clean. Luego lo hacemos con la opción de Maven Build. En la ventana de opciones que se despliega ponemos como opción en "goals" "package". Esto ya nos generá los jars necesarios.
+
+
+**2.- Máquina virtual:** Se ha usado el Sistema Operativo Ubuntu 20.04). Hay que **instalar Java y MySql, así como MySql WorkBench**. Pero antes de ejecutar las aplicaciones, debemos cambiar la contraseña de MySql para el usuario root para que coincida con la añadida en el archivo properties de las aplicaciones. Esto lo hacemos abriendo MySql con el usuario correspondiente y ejecutando la linea "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'GatoPato115'", y después "FLUSH PRIVILEGES;". Una posible mejora sería poder modificar dicha contraseña añadiendola como argumento.
+
+
+**3.- Ejecutar JAR:** Ahora que está todo preparado, se abre la consola en la carpeta del jar de la aplicación web y ejecutamos : **java -jar "nombre_del_jar_de_la_app_web". jar**. Después procedemos a hacer lo mismo en la carpeta donde se encuentra el jar del servidor interno: **java -jar "nombre_del_jar_del_servidor_interno". jar**.
+
+
+-**La aplicación ya se está ejecutando**, y se puede comprobar accediendo desde el navegador web de la máquina virtual.
+
+
+Aclarar que mientras que la aplicación web tiene el esquema MySql en "create-drop", el servidor interno lo tiene como "update", y es por eso que ejecutamos la aplicación web primero. En un estado más avanzado de la aplicación donde la base de datos ya sea fija, ambos podrán estar en "update".
 
 
 
