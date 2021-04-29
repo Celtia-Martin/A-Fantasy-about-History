@@ -7,21 +7,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import javax.transaction.Transactional;
+@Transactional
 @Service
 public class BatallaService {
 	@Autowired
 	private BatallaRepository batallas;
 	
-	@Autowired
-	private UserRepository jugadores;
+	
 	
 	private Logger log = LoggerFactory.getLogger(BatallaService.class);
 	
 	public void RealizarBatalla() {
 		
-		CommManager cm = new CommManager();
+		CommManager cm = new CommManager();//invalidar: para refrescar mercado: usuarios formaciones y personajes// ejecutar batalla usuarios
 		cm.Comunicacion("Batalla");
+		
 		
 	}
 

@@ -38,8 +38,9 @@ public class UserWebController extends WebController{
 	
 	@PostConstruct
 	 void started() {
+		//controlUsuarios.newUser("Sharky", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,true);
 		//por ahora de testeo, al pasar mysql a update estas lineas deben comentarse
-	
+		/*
 		controlUsuarios.newUser("Celtia", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,true);
 		
 		controlUsuarios.newUser("Daniel", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);	
@@ -57,7 +58,7 @@ public class UserWebController extends WebController{
 			
 		controlPersonajes.iniciar();
 		controlMercado.newMercado(controlPersonajes);
-		controlBatalla.nuevaBatalla();
+		controlBatalla.nuevaBatalla();*/
 	}
 	
 	@GetMapping("/newUsuario")

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,7 @@ public class PersonajeWebController extends WebController {
 	
 	@Autowired
 	private ControlPersonajes controlPersonajes;
+	
 	
 	
 	
@@ -51,6 +53,7 @@ public class PersonajeWebController extends WebController {
 			}
 		}
 	}
+	@Transactional
 	@GetMapping("/formacion")
 	public String MostrarFormacion(Model model,HttpServletRequest request) {
 	
@@ -80,6 +83,7 @@ public class PersonajeWebController extends WebController {
 			if(current.isPresent()) {
 				
 				controlFormacion.VenderPersonaje((long)id,current.get(), controlPersonajes);
+				
 			}
 			return MostrarFormacion(model,request);
 			}

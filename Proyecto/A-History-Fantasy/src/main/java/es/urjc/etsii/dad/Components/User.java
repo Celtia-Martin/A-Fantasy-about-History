@@ -99,6 +99,18 @@ public class User {
 	public boolean isAdmin() {
 		return roles.contains("ADMIN");
 	}
-	
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+	        return true;
+	    if (!(o instanceof User))
+	        return false;
+	    User other = (User)o;
+	    return other.getNombre()==nombre;
+	}
+	@Override
+	public final int hashCode() {
+	    return nombre.hashCode();
+	}
 }
 

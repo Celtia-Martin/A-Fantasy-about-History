@@ -8,13 +8,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
+import javax.transaction.Transactional;
+@Transactional
 @Service
 public class ControlUsuarios implements CommandLineRunner {
 
 	@Autowired
 	private UserRepository repository;
 	
+
 	public boolean newUser (String nombre, String contra, ControlPersonajes controlPersonajes,ControlFormaciones controlFormaciones,ControlMercado controlMercado, BatallaService controlBatalla,boolean esAdmin) {
 		Optional<User> mismoNombre= repository.findByNombre(nombre);
 	

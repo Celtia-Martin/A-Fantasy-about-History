@@ -68,4 +68,7 @@ public class ControlPersonajes implements CommandLineRunner {
 	public Page<Personaje> findNoDefaultWithPage(int page){
 		return repository.findByIsDefault(false, PageRequest.of(page, 10));
 	}
+	public void UpdatePersonaje(Personaje p) {
+		repository.save(p);
+	}
 }

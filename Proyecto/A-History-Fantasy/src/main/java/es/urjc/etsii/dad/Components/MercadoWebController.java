@@ -23,7 +23,8 @@ public class MercadoWebController extends WebController {
 	
 	@Autowired
 	private ControlPuja controlPuja;
-	
+	@Autowired
+	private ControlFormaciones controlFormacion;
 	
 	public MercadoWebController() {
 		
@@ -71,7 +72,6 @@ public class MercadoWebController extends WebController {
 	@PostMapping("/refrescarMercado")
 	public String RefrescarMercado(Model model,HttpServletRequest request) {
 		controlMercado.refrescarMercado();
-		
 		return GetMenuPrincipal(model,request);
 	}
 }

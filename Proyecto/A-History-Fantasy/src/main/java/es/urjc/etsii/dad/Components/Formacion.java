@@ -6,6 +6,9 @@ import java.util.Random;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import es.urjc.etsii.dad.Components.Enums.*;
 
 @Entity
@@ -14,7 +17,8 @@ public class Formacion { //al eliminar un default se elimina tambien de la base 
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@OneToMany
+	@OneToMany//(fetch = FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Personaje> personajes= new ArrayList<>();//unidireccional
 	
 	@OneToOne(mappedBy="formacion")//bidireccional

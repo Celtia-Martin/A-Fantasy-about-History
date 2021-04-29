@@ -36,7 +36,7 @@ public class ControlPuja implements CommandLineRunner {
 		}
 		
 	}
-	public void ReiniciarMercado(ControlMercado controlMercado) {
+	public void ReiniciarMercado(ControlMercado controlMercado,UserRepository userepo, ControlPersonajes controlPersonajes, FormacionRepository formRepository) {
 		List<Personaje> oferta= controlMercado.findAllPersonajes();
 		boolean listo;
 		for( Personaje p: oferta) {
@@ -58,7 +58,10 @@ public class ControlPuja implements CommandLineRunner {
 							formacion.addPersonaje(p);
 							ganador.setDinero(ganador.getDinero()-ganadora.get().getValor());
 							listo=true;
-						
+							//invalidar caches
+							userepo.save(ganador);
+							controlPersonajes.UpdatePersonaje(p);
+							formRepository.save(formacion);
 						}
 						else {
 							repository.delete(ganadora.get());

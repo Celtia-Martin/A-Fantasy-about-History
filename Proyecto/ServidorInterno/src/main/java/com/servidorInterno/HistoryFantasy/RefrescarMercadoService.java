@@ -15,13 +15,18 @@ public class RefrescarMercadoService {
 	
 	@Autowired
 	private ControlPersonajes controlPersonajes;
-	
+
+	@Autowired
+	UserRepository userRepo;
+	@Autowired
+	FormacionRepository formRepo;
+
 	public RefrescarMercadoService() {
 		// TODO Auto-generated constructor stub
 	}
 	@Transactional
 	public String RefrescarMercado() {
-		controlPuja.ReiniciarMercado(controlMercado);
+		controlPuja.ReiniciarMercado(controlMercado,userRepo,controlPersonajes,formRepo);
 		controlMercado.newMercado(controlPersonajes);
 		
 		return "login";

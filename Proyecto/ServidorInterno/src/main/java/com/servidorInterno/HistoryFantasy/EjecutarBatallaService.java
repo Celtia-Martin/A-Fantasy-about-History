@@ -19,6 +19,11 @@ public class EjecutarBatallaService {
 	
 	@Autowired
 	private UserRepository jugadores;
+	/*
+	@Autowired
+	private InvalidadorDeUser invUser;
+	*/
+	
 	
 	public EjecutarBatallaService() {
 		// TODO Auto-generated constructor stub
@@ -109,13 +114,14 @@ public class EjecutarBatallaService {
 					
 				jug.setPuntos(jug.getPuntos() + puntosFinales);
 				jug.setDinero(jug.getDinero() + dinero);
+				jugadores.save(jug);
 			}
 		}
 		
 		batallas.delete(bat.get());
 		
 		controlBatallas.nuevaBatalla();
-		
+		//invUser.Invalidar();
 		return "login";
 	}
 }

@@ -10,8 +10,10 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
-import es.urjc.etsii.dad.Components.Enums.*;
 
+import es.urjc.etsii.dad.Components.Enums.*;
+import javax.transaction.Transactional;
+@Transactional
 @Service
 public class ControlPersonajes implements CommandLineRunner {
 

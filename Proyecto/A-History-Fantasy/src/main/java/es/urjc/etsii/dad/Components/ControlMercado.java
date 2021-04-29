@@ -3,17 +3,21 @@ package es.urjc.etsii.dad.Components;
 import java.util.List;
 import java.util.Optional;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
-
+import javax.transaction.Transactional;
+@Transactional
 @Service
 public class ControlMercado  implements CommandLineRunner {
 
 	@Autowired
 	private MercadoRepository repository;
 	
+
 	public ControlMercado() {
 	
 	}
@@ -21,6 +25,8 @@ public class ControlMercado  implements CommandLineRunner {
 	public void refrescarMercado() {
 		CommManager cm = new CommManager();
 		cm.Comunicacion("Refresco");
+	
+		
 	}
 	
 	public void newMercado(ControlPersonajes controlpersonaje) {

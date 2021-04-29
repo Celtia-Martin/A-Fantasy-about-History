@@ -33,31 +33,43 @@ public class ComSockets {
 			
 			while (true) {
 				Socket socket = serverSocket.accept();
-				InputStream is = socket.getInputStream();
-				OutputStream os = socket.getOutputStream();
+				/*
+				Thread t= new Thread(new ProcesadorSocket(socket,batallaService,mercadoService));
+				t.start();
+				*/
+				InputStream is;
+				try {
+					is = socket.getInputStream();
 				
-				BufferedReader leerServidor =
-						 new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				
-				String orden = leerServidor.readLine();
-				
-				if(orden != null) {
-					switch(orden) {
-						case "Refresco":
-							mercadoService.RefrescarMercado();
-							break;
-						case "Batalla":
-							batallaService.RealizarBatalla();
-							break;
+					OutputStream os = socket.getOutputStream();
+					
+					BufferedReader leerServidor =
+							 new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					
+					String orden = leerServidor.readLine();
+					
+					if(orden != null) {
+						switch(orden) {
+							case "Refresco":
+								mercadoService.RefrescarMercado();
+								break;
+							case "Batalla":
+								batallaService.RealizarBatalla();
+								break;
+						}
 					}
-				}
-				
-				is.close();
-				os.close();
-				socket.close();
+					
+					is.close();
+					os.close();
+					socket.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
 		} catch (IOException e) {
 			System.err.println("Error I/O");
 		}
 	}
+	
 }
