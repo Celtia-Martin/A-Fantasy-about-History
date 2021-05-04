@@ -28,7 +28,7 @@ public class ComSockets {
 	public void Comunicacion() {
 		try {
 			
-			int port = 9350;
+			int port = 9000;
 			ServerSocket serverSocket = new ServerSocket(port);
 			
 			while (true) {

@@ -10,15 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Repository
-@CacheConfig(cacheNames="mercado")
-public interface MercadoRepository extends JpaRepository<Mercado, Long> {
-	@CacheEvict(allEntries=true)//eliminar cache cuando haya nueva entrada
-	Mercado save(Mercado mercado);
-	@JsonIgnore
 
-	
-	@Cacheable
+public interface MercadoRepository extends JpaRepository<Mercado, Long> {
+
 	Optional<Mercado>findById(Long id);
-	@Cacheable
 	Optional<Mercado>findFirstBy();
 }

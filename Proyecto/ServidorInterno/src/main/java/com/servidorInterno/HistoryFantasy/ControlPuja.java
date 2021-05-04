@@ -3,6 +3,8 @@ package com.servidorInterno.HistoryFantasy;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,7 @@ public class ControlPuja implements CommandLineRunner {
 		}
 		
 	}
+	@Transactional
 	public void ReiniciarMercado(ControlMercado controlMercado,UserRepository userepo, ControlPersonajes controlPersonajes, FormacionRepository formRepository) {
 		List<Personaje> oferta= controlMercado.findAllPersonajes();
 		boolean listo;

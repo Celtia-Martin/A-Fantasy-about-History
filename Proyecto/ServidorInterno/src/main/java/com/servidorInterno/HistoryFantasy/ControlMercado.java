@@ -3,6 +3,8 @@ package com.servidorInterno.HistoryFantasy;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
@@ -16,7 +18,7 @@ public class ControlMercado  implements CommandLineRunner {
 	public ControlMercado() {
 	
 	}
-	
+	@Transactional
 	public void newMercado(ControlPersonajes controlpersonaje) {
 		Optional<Mercado> current= repository.findFirstBy();
 		if(current.isPresent()) {

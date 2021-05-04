@@ -12,14 +12,18 @@ import javax.net.SocketFactory;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class CommManager{
 
 	private int connectionTimeout= 5;
+	@Value("${ip.server.interno}")
+	private String host;
 	public void Comunicacion(String s) {
 		try {
 			
-			String host = "127.0.0.1";
-			int port = 9350;
+		
+			int port = 9000;
 			
 			Socket socket= new Socket(host,port);
 			OutputStream out = socket.getOutputStream();
