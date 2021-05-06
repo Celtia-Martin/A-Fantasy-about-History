@@ -13,6 +13,8 @@ import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.persistence.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,8 @@ public class ComSockets {
 	@Autowired
 	private RefrescarMercadoService mercadoService;
 	
+	private Logger log = LoggerFactory.getLogger(ComSockets.class);
+	
 	public void Comunicacion() {
 		try {
 			
@@ -32,6 +36,8 @@ public class ComSockets {
 			ServerSocket serverSocket = new ServerSocket(port);
 			
 			while (true) {
+				log.warn("LO HA TIRAO AL AIRE");
+				
 				Socket socket = serverSocket.accept();
 				/*
 				Thread t= new Thread(new ProcesadorSocket(socket,batallaService,mercadoService));
@@ -47,6 +53,8 @@ public class ComSockets {
 							 new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					
 					String orden = leerServidor.readLine();
+					
+					log.warn("LO HA COGIO AR VUELO");
 					
 					if(orden != null) {
 						switch(orden) {
