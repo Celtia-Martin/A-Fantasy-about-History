@@ -22,6 +22,7 @@
 ## [4.- NOTAS FASE 2](#notasFase2)
 ## [5.- NOTAS FASE 3](#notasFase3)
 ## [6.- DESPLIEGUE E INSTALACIÓN](#despliegue)
+## [7.- DIAGRAMA DEL DESPLIEGUE EN DOCKER](#diagrama)
 
 ## DESCRIPCION <a name="descripcion"/>
 
@@ -176,5 +177,6 @@ A continuación se va a explicar como se han generado los jar y cómo se ha inst
 Aclarar que mientras que la aplicación web tiene el esquema MySql en "create-drop", el servidor interno lo tiene como "update", y es por eso que ejecutamos la aplicación web primero. En un estado más avanzado de la aplicación donde la base de datos ya sea fija, ambos podrán estar en "update".
 
 
+## DIAGRAMA DEL DESPLIEGUE EN DOCKER <a name="diagrama"/>
 
-
+![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/DiagramaDocker.png)
