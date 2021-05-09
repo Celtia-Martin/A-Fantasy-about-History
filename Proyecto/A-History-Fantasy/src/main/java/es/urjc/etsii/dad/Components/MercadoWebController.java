@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,7 @@ public class MercadoWebController extends WebController {
 	}
 
 	@GetMapping("/mercado")
-	public String MostrarMercado(Model model,HttpServletRequest request) {
+	public String MostrarMercado(Model model,HttpServletRequest request, HttpSession session) {
 		List<Personaje> oferta= controlMercado.findAllPersonajes();
 		
 		model.addAttribute("mercado",oferta);
@@ -41,7 +42,7 @@ public class MercadoWebController extends WebController {
 		currentUser.setErrorPuja(false);
 		currentUser.setPujaRealizada(false);
 	
-		if(ActualizarEncabezado(model,request,true)) {
+		if(ActualizarEncabezado(model,request,true, session)) {
 			return "mercado";
 		}else {
 			return "errorNoLogin";
@@ -49,7 +50,7 @@ public class MercadoWebController extends WebController {
 	}
 	
 	@PostMapping("/pujarPersonaje/{id}")
-	public String PujandoPersonaje(Model model,@PathVariable int id,@RequestParam long valor,HttpServletRequest request) {
+	public String PujandoPersonaje(Model model,@PathVariable int id,@RequestParam long valor,HttpServletRequest request, HttpSession session) {
 		if(currentUser!=null) {
 			
 			Optional<User>current= controlUsuarios.findByNombre(currentUser.getCurrentName());
@@ -64,14 +65,14 @@ public class MercadoWebController extends WebController {
 				currentUser.setErrorPuja(true);
 			}
 			
-			return MostrarMercado(model,request);
+			return MostrarMercado(model,request, session);
 		}
 		return "errorNoLogin";
 	}
 	
 	@PostMapping("/refrescarMercado")
-	public String RefrescarMercado(Model model,HttpServletRequest request) {
+	public String RefrescarMercado(Model model,HttpServletRequest request, HttpSession session) {
 		controlMercado.refrescarMercado();
-		return GetMenuPrincipal(model,request);
+		return GetMenuPrincipal(model,request, session);
 	}
 }

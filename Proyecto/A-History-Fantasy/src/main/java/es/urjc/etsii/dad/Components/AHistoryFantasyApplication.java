@@ -1,9 +1,9 @@
 package es.urjc.etsii.dad.Components;
 
+import java.util.Properties;
 
-import java.util.Collections;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,27 +15,55 @@ import org.springframework.session.hazelcast.config.annotation.web.http.EnableHa
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.JoinConfig;
+import com.hazelcast.core.*;
+import com.hazelcast.instance.impl.HazelcastInstanceFactory;
+import com.hazelcast.web.WebFilter;
 
 @SpringBootApplication
+@EnableHazelcastHttpSession
 @EnableCaching
-//@EnableHazelcastHttpSession
 public class AHistoryFantasyApplication implements CommandLineRunner{
 
-
+	private Logger log = LoggerFactory.getLogger(AHistoryFantasyApplication.class);
+	
 	public static void main(String[] args) {
 		SpringApplication.run(AHistoryFantasyApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-
-		
-	}
-	@Bean
-	public CacheManager cacheManager() {
-		return new ConcurrentMapCacheManager("personajes","formacion");
 	
 	}
+	
+	@Bean
+	public Config config() {
+		Config config = new Config();
+		
+		JoinConfig joinConfig = config.getNetworkConfig().getJoin();
+		joinConfig.getMulticastConfig().setEnabled(true);
+		
+		return config;
+	}
+	
+	@Bean
+    public HazelcastInstance hazelcastInstance() {
+		return HazelcastInstanceFactory.newHazelcastInstance(config());
+    }
+	
+	@Bean
+	public CacheManager cacheManager() {
+		return new ConcurrentMapCacheManager("personajes", "formacion");
+	}
+	
+	@Bean
+	public WebFilter webFilter(HazelcastInstance hazelcastInstance) {
 
+	    Properties properties = new Properties();
+	    properties.put("instance-name", hazelcastInstance.getName());
+	    properties.put("sticky-session", "false");
+	    properties.put("deferred-write", "true");
 
+	    return new WebFilter(properties);
+	}
+	
 }

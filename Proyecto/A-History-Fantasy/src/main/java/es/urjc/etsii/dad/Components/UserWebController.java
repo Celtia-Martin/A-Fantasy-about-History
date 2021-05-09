@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -79,7 +80,7 @@ public class UserWebController extends WebController{
 	}
 
 	@PostMapping("/newUsuario")
-	public String newUser(@RequestParam String nombre ,@RequestParam String contrasena, Model model,HttpServletRequest request) {
+	public String newUser(@RequestParam String nombre ,@RequestParam String contrasena, Model model,HttpServletRequest request, HttpSession session) {
 		
 		if(nombre.trim().equals("")||contrasena.trim().equals("")) {
 			currentUser.setDatosInsuficientes(true);
@@ -92,7 +93,7 @@ public class UserWebController extends WebController{
 			
 			if(controlUsuarios.newUser(nombre, contrasena,controlPersonajes,controlFormacion,controlMercado, controlBatalla,false)) {
 			
-				return Inicio(model);
+				return Inicio(model, session);
 			}
 			else {
 				currentUser.setErrorUsuario(true);
@@ -120,9 +121,9 @@ public class UserWebController extends WebController{
 	}
 	
 	@GetMapping("/clasificacion")
-	public String MostrarClasificacion(Model model,HttpServletRequest request) {
+	public String MostrarClasificacion(Model model,HttpServletRequest request, HttpSession session) {
 		model.addAttribute("clasificacion", controlUsuarios.findTop10ByPuntosDesc());
-		if(ActualizarEncabezado(model,request,false)) {
+		if(ActualizarEncabezado(model,request,false, session)) {
 			return "clasificacion";
 		}else {
 			return "errorNoLogin";
@@ -131,8 +132,8 @@ public class UserWebController extends WebController{
 	
 
 	@GetMapping("/administrarUsuarios")
-	public String AdministrarUsuarios(Model model,HttpServletRequest request) {
-		if(ActualizarEncabezado(model,request,true)) {
+	public String AdministrarUsuarios(Model model,HttpServletRequest request, HttpSession session) {
+		if(ActualizarEncabezado(model,request,true, session)) {
 			Page<User> users= controlUsuarios.findWithPage(0);
 			model.addAttribute("hasPrev", users.hasPrevious());
 			model.addAttribute("hasNext", users.hasNext());
@@ -150,8 +151,8 @@ public class UserWebController extends WebController{
 		}
 	}
 	@GetMapping("/administrarUsuarios/{page}")
-	public String AdministrarUsuariosPage(Model model,@PathVariable int page,HttpServletRequest request) {
-		if(ActualizarEncabezado(model,request,true)) {
+	public String AdministrarUsuariosPage(Model model,@PathVariable int page,HttpServletRequest request, HttpSession session) {
+		if(ActualizarEncabezado(model,request,true, session)) {
 		
 			Page<User> users= controlUsuarios.findWithPage(page);
 			model.addAttribute("hasPrev", users.hasPrevious());
@@ -170,7 +171,7 @@ public class UserWebController extends WebController{
 		}
 	}
 	@PostMapping("/banear/{id}")
-	public String Banear(Model model,@PathVariable Long id,HttpServletRequest request) {
+	public String Banear(Model model,@PathVariable Long id,HttpServletRequest request, HttpSession session) {
 		Optional<User> user= controlUsuarios.findById(id);
 		if(user.isPresent()) {
 			user.get().setBaneado(!user.get().isBaneado());
@@ -182,10 +183,10 @@ public class UserWebController extends WebController{
 			currentUser.setErrorBaneo(true);
 			
 		}
-		return AdministrarUsuarios(model,request);
+		return AdministrarUsuarios(model,request, session);
 	}
 	@GetMapping("/BorrarUsuario")
-	public String BorrarUsuario( Model model) {
+	public String BorrarUsuario( Model model, HttpSession session) {
 		if(currentUser!=null) {
 			Optional<User> user= controlUsuarios.findByNombre(currentUser.getCurrentName());
 			if(user.isPresent()) {
@@ -195,7 +196,7 @@ public class UserWebController extends WebController{
 				controlUsuarios.delete(user.get());
 			}
 			
-			return Inicio(model);
+			return Inicio(model, session);
 		}
 		return "errorNoLogin";
 	}

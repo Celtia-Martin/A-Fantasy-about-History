@@ -1,6 +1,7 @@
 package es.urjc.etsii.dad.Components;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -19,7 +20,7 @@ public class BasicWebController extends WebController {
 	}
 	
 	@GetMapping("/menuPrincipal")
-	public String GetMenuPrincipal(Model model,HttpServletRequest request) {
+	public String GetMenuPrincipal(Model model,HttpServletRequest request, HttpSession session) {
 		
 		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
 		
@@ -28,7 +29,7 @@ public class BasicWebController extends WebController {
 		model.addAttribute("batalla", controlBatalla.getBatalla());
 		model.addAttribute("esAdmin", request.isUserInRole("ADMIN"));
 		
-		if(ActualizarEncabezado(model,request,false)) {
+		if(ActualizarEncabezado(model,request,false, session)) {
 			return "menuPrincipal";
 		}else {
 			return "errorNoLogin";

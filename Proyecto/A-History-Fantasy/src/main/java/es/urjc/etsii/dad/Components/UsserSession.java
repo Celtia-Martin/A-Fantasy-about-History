@@ -1,12 +1,19 @@
 package es.urjc.etsii.dad.Components;
 
+import java.io.Serializable;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 @Component
 @SessionScope
-public class UsserSession {
+public class UsserSession implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String currentName;
 	
 	private boolean errorUsuario = false;

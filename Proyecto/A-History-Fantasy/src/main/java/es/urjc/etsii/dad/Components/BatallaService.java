@@ -14,16 +14,13 @@ public class BatallaService {
 	@Autowired
 	private BatallaRepository batallas;
 	
-	
+	@Autowired
+	private CommManager cm;
 	
 	private Logger log = LoggerFactory.getLogger(BatallaService.class);
 	
 	public void RealizarBatalla() {
-		
-		CommManager cm = new CommManager();//invalidar: para refrescar mercado: usuarios formaciones y personajes// ejecutar batalla usuarios
 		cm.Comunicacion("Batalla");
-		
-		
 	}
 
 	public void nuevaBatalla() {

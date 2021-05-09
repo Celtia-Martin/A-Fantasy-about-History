@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class UserRepositoryAuthenticationProvider implements AuthenticationProvi
 	@Autowired
 	protected UsserSession currentUser;
 	
+	@Autowired
+	private HttpSession session;
+	
 	private Logger log = LoggerFactory.getLogger(UserRepositoryAuthenticationProvider.class);
 	
 	public UserRepositoryAuthenticationProvider() {
@@ -37,7 +42,7 @@ public class UserRepositoryAuthenticationProvider implements AuthenticationProvi
 	@Override
 	public Authentication authenticate(Authentication auth) throws AuthenticationException {
 		// TODO Auto-generated method stub
-		log.warn("hola");
+		
 		Optional<User> user= userRepository.findByNombre(auth.getName());
 		
 		if(!user.isPresent()) {
@@ -61,8 +66,11 @@ public class UserRepositoryAuthenticationProvider implements AuthenticationProvi
 			roles.add(new SimpleGrantedAuthority(role));
 		}
 			
-		
 		currentUser.setCurrentName(auth.getName());
+		
+		session.setAttribute("nombre", auth.getName());
+		
+		log.warn("Nombre de Usuario: " + currentUser.getCurrentName());
 		
 		return new UsernamePasswordAuthenticationToken(user.get().getNombre(), password, roles);
 	}

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,9 @@ public class PersonajeWebController extends WebController {
 	
 	
 	@GetMapping ("/newPersonaje")
-	public String CreadorDePersonajes(Model model,HttpServletRequest request) {
+	public String CreadorDePersonajes(Model model,HttpServletRequest request, HttpSession session) {
 	
-		if(ActualizarEncabezado(model,request,true)) {
+		if(ActualizarEncabezado(model,request,true, session)) {
 			return "personajes";
 		}else {
 			return "errorNoLogin";
@@ -39,14 +40,14 @@ public class PersonajeWebController extends WebController {
 	}
 	
 	@PostMapping("/newPersonaje")
-	public String FormularioPersonajes(Model model,@RequestParam String nombre,@RequestParam long rango,@RequestParam String tipo,@RequestParam long vMilitar,@RequestParam long vDiplo,@RequestParam long vCultu,@RequestParam long precio,HttpServletRequest request)  {
+	public String FormularioPersonajes(Model model,@RequestParam String nombre,@RequestParam long rango,@RequestParam String tipo,@RequestParam long vMilitar,@RequestParam long vDiplo,@RequestParam long vCultu,@RequestParam long precio,HttpServletRequest request, HttpSession session)  {
 		Personaje p= new Personaje(nombre,rango,Enums.TipoBatalla.valueOf(tipo),precio,vMilitar,vDiplo,vCultu,false);
 
 		if(controlPersonajes.newPersonaje(p)) {
-			return GetMenuPrincipal(model,request);
+			return GetMenuPrincipal(model,request, session);
 		}
 		else {
-			if(ActualizarEncabezado(model,request,true)) {
+			if(ActualizarEncabezado(model,request,true, session)) {
 				return "personajes";
 			}else {
 				return "errorNoLogin";
@@ -55,7 +56,7 @@ public class PersonajeWebController extends WebController {
 	}
 	@Transactional
 	@GetMapping("/formacion")
-	public String MostrarFormacion(Model model,HttpServletRequest request) {
+	public String MostrarFormacion(Model model,HttpServletRequest request, HttpSession session) {
 	
 		if(currentUser!=null) {
 			
@@ -67,7 +68,7 @@ public class PersonajeWebController extends WebController {
 				}
 			}
 			
-			if(ActualizarEncabezado(model,request,true)) {
+			if(ActualizarEncabezado(model,request,true, session)) {
 				return "formacion";
 			}else {
 				return "errorNoLogin";
@@ -77,7 +78,7 @@ public class PersonajeWebController extends WebController {
 		
 	}
 	@PostMapping("/venderPersonaje/{id}")
-	public String FormularioPersonajes(Model model,@PathVariable int id,HttpServletRequest request) {
+	public String FormularioPersonajes(Model model,@PathVariable int id,HttpServletRequest request, HttpSession session) {
 		if(currentUser!=null) {
 			Optional<User> current= controlUsuarios.findByNombre(currentUser.getCurrentName());
 			if(current.isPresent()) {
@@ -85,13 +86,13 @@ public class PersonajeWebController extends WebController {
 				controlFormacion.VenderPersonaje((long)id,current.get(), controlPersonajes);
 				
 			}
-			return MostrarFormacion(model,request);
+			return MostrarFormacion(model,request, session);
 			}
 		return "errorNoLogin";
 	}
 	
 	@GetMapping("/mostrarTodosPersonajes")
-	public String mostrarPersonajes(Model model,HttpServletRequest request) throws SQLException, IOException {
+	public String mostrarPersonajes(Model model,HttpServletRequest request, HttpSession session) throws SQLException, IOException {
 		Page<Personaje> aMostrar=controlPersonajes.findNoDefaultWithPage(0);
 		model.addAttribute("hasPrev", aMostrar.hasPrevious());
 		model.addAttribute("hasNext", aMostrar.hasNext());
@@ -99,14 +100,14 @@ public class PersonajeWebController extends WebController {
 		model.addAttribute("prevPage", aMostrar.getNumber()-1);
 		model.addAttribute("personajes",aMostrar);
 		
-		if(ActualizarEncabezado(model,request,false)) {
+		if(ActualizarEncabezado(model,request,false, session)) {
 			return "mostrarTodosPersonajes";
 		}else {
 			return "errorNoLogin";
 		}
 	}
 	@GetMapping("/mostrarTodosPersonajes/{page}")
-	public String mostrarPersonajes(Model model,@PathVariable int page,HttpServletRequest request) throws SQLException, IOException {
+	public String mostrarPersonajes(Model model,@PathVariable int page,HttpServletRequest request, HttpSession session) throws SQLException, IOException {
 		Page<Personaje> aMostrar=controlPersonajes.findNoDefaultWithPage(page);
 		model.addAttribute("hasPrev", aMostrar.hasPrevious());
 		model.addAttribute("hasNext", aMostrar.hasNext());
@@ -114,7 +115,7 @@ public class PersonajeWebController extends WebController {
 		model.addAttribute("prevPage", aMostrar.getNumber()-1);
 		model.addAttribute("personajes",aMostrar);
 		
-		if(ActualizarEncabezado(model,request,false)) {
+		if(ActualizarEncabezado(model,request,false, session)) {
 			return "mostrarTodosPersonajes";
 		}else {
 			return "errorNoLogin";

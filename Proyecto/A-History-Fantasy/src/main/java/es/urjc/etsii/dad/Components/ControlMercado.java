@@ -17,16 +17,15 @@ public class ControlMercado  implements CommandLineRunner {
 	@Autowired
 	private MercadoRepository repository;
 	
-
+	@Autowired
+	private CommManager cm;
+	
 	public ControlMercado() {
 	
 	}
 	
 	public void refrescarMercado() {
-		CommManager cm = new CommManager();
 		cm.Comunicacion("Refresco");
-	
-		
 	}
 	
 	public void newMercado(ControlPersonajes controlpersonaje) {
