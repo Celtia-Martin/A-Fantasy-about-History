@@ -58,9 +58,7 @@ public class PersonajeWebController extends WebController {
 	@GetMapping("/formacion")
 	public String MostrarFormacion(Model model,HttpServletRequest request, HttpSession session) {
 	
-		if(currentUser!=null) {
-			
-			Optional<User> current= controlUsuarios.findByNombre(currentUser.getCurrentName());
+			Optional<User> current= controlUsuarios.findByNombre((String) request.getUserPrincipal().getName());
 			if(current.isPresent()) {
 				Formacion miFormacion= current.get().getFormacion();
 				if(miFormacion!=null) {
@@ -73,22 +71,20 @@ public class PersonajeWebController extends WebController {
 			}else {
 				return "errorNoLogin";
 			}
-		}
-		return "errorNoLogin";
+		
 		
 	}
 	@PostMapping("/venderPersonaje/{id}")
 	public String FormularioPersonajes(Model model,@PathVariable int id,HttpServletRequest request, HttpSession session) {
-		if(currentUser!=null) {
-			Optional<User> current= controlUsuarios.findByNombre(currentUser.getCurrentName());
+
+			Optional<User> current= controlUsuarios.findByNombre((String) request.getUserPrincipal().getName());
 			if(current.isPresent()) {
 				
 				controlFormacion.VenderPersonaje((long)id,current.get(), controlPersonajes);
 				
 			}
 			return MostrarFormacion(model,request, session);
-			}
-		return "errorNoLogin";
+
 	}
 	
 	@GetMapping("/mostrarTodosPersonajes")

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.context.annotation.SessionScope;
 
 
@@ -32,7 +34,7 @@ public class User {
 	}
 	public User(String nombre, String contrasena) {
 		this.nombre= nombre;
-		this.contrasenaHash= contrasena;
+		this.contrasenaHash = new BCryptPasswordEncoder().encode(contrasena);
 		roles= new ArrayList<String>();
 	}
 	public void setFormacion(Formacion f) {

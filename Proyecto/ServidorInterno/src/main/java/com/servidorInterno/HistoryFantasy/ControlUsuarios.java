@@ -1,4 +1,4 @@
-package es.urjc.etsii.dad.Components;
+package com.servidorInterno.HistoryFantasy;
 
 import java.util.Optional;
 import java.util.List;
@@ -43,9 +43,7 @@ public class ControlUsuarios implements CommandLineRunner {
 	}
 	
 	
-	public boolean estaVacia() {
-		return repository.count()==0;
-	}
+	
 	public boolean LogIn(String nombre, String contra) {
 		Optional<User> mismoNombre= repository.findByNombre(nombre);
 		

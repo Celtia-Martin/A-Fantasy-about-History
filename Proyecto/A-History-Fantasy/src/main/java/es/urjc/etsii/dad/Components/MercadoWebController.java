@@ -36,11 +36,10 @@ public class MercadoWebController extends WebController {
 		List<Personaje> oferta= controlMercado.findAllPersonajes();
 		
 		model.addAttribute("mercado",oferta);
-		model.addAttribute("errorPuja",currentUser.isErrorPuja());
-		model.addAttribute("pujaRealizada",currentUser.isPujaRealizada());
-		
-		currentUser.setErrorPuja(false);
-		currentUser.setPujaRealizada(false);
+		model.addAttribute("errorPuja",session.getAttribute("errorPuja"));
+		model.addAttribute("pujaRealizada",session.getAttribute("exitoPuja"));
+		session.setAttribute("errorPuja",false);
+		session.setAttribute("exitoPuja",false);
 	
 		if(ActualizarEncabezado(model,request,true, session)) {
 			return "mercado";
@@ -51,23 +50,22 @@ public class MercadoWebController extends WebController {
 	
 	@PostMapping("/pujarPersonaje/{id}")
 	public String PujandoPersonaje(Model model,@PathVariable int id,@RequestParam long valor,HttpServletRequest request, HttpSession session) {
-		if(currentUser!=null) {
-			
-			Optional<User>current= controlUsuarios.findByNombre(currentUser.getCurrentName());
+	
+			Optional<User>current= controlUsuarios.findByNombre((String) request.getUserPrincipal().getName());
 			Optional<Personaje> personaje= controlPersonajes.findById((long)id);
 			
 			if(current.isPresent()&&personaje.isPresent()) {
 				boolean completado= controlPuja.Pujar(current.get(), personaje.get(), (int) valor);
-				currentUser.setErrorPuja(!completado);
-				currentUser.setPujaRealizada(completado);
+				session.setAttribute("errorPuja",!completado);
+				session.setAttribute("exitoPuja",completado);
 			}
 			else {
-				currentUser.setErrorPuja(true);
+				session.setAttribute("errorPuja",true);
+			
 			}
 			
 			return MostrarMercado(model,request, session);
-		}
-		return "errorNoLogin";
+	
 	}
 	
 	@PostMapping("/refrescarMercado")

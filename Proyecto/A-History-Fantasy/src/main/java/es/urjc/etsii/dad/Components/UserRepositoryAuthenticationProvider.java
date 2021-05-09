@@ -27,12 +27,7 @@ public class UserRepositoryAuthenticationProvider implements AuthenticationProvi
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
-	protected UsserSession currentUser;
-	
-	@Autowired
-	private HttpSession session;
-	
+
 	private Logger log = LoggerFactory.getLogger(UserRepositoryAuthenticationProvider.class);
 	
 	public UserRepositoryAuthenticationProvider() {
@@ -46,18 +41,18 @@ public class UserRepositoryAuthenticationProvider implements AuthenticationProvi
 		Optional<User> user= userRepository.findByNombre(auth.getName());
 		
 		if(!user.isPresent()) {
-			currentUser.setErrorUsuario(true);
+
 			throw new BadCredentialsException("User not found");
 		}
 		
 		String password = (String) auth.getCredentials();
 		
 		if (!new BCryptPasswordEncoder().matches(password, user.get().getContrasena())) {
-			currentUser.setErrorContra(true);
+
 			throw new BadCredentialsException("Wrong password");
 		}
 		if(user.get().isBaneado()) {
-			currentUser.setBaneado(true);
+
 			throw new BadCredentialsException("Banned");
 		}
 		List<GrantedAuthority> roles = new ArrayList<>();
@@ -65,12 +60,9 @@ public class UserRepositoryAuthenticationProvider implements AuthenticationProvi
 		for (String role : user.get().getRoles()) {
 			roles.add(new SimpleGrantedAuthority(role));
 		}
-			
-		currentUser.setCurrentName(auth.getName());
+
 		
-		session.setAttribute("nombre", auth.getName());
-		
-		log.warn("Nombre de Usuario: " + currentUser.getCurrentName());
+
 		
 		return new UsernamePasswordAuthenticationToken(user.get().getNombre(), password, roles);
 	}

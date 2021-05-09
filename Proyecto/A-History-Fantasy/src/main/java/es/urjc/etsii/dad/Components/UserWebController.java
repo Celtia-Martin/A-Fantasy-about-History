@@ -36,44 +36,71 @@ public class UserWebController extends WebController{
 	public UserWebController() {
 		
 	}
+	@PostConstruct
+	 void started() {
+		
+		if (controlUsuarios.estaVacia()) {
+			controlUsuarios.newUser("Celtia", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,true);
+			
+			controlUsuarios.newUser("Daniel", "115", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);	
+			controlUsuarios.newUser("AristoGato", "Gato", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+			controlUsuarios.newUser("Paimon", "EmergencyFood", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+			controlUsuarios.newUser("Richtofen","hayquequemarlasconfire", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+			controlUsuarios.newUser("M.Rajoy", "persianas", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+			controlUsuarios.newUser("Kala", "ffviii", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+			controlUsuarios.newUser("Panumo","115" , controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+			controlUsuarios.newUser("Joselito", "joselito", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+			controlUsuarios.newUser("Japi","115" , controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+			controlUsuarios.newUser("Musa","115" , controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+			controlUsuarios.newUser("Jaimito", "chiste", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+			controlUsuarios.newUser("Cactus",  "noAgua", controlPersonajes, controlFormacion, controlMercado, controlBatalla,false);
+				
+			controlPersonajes.iniciar();
+			controlMercado.newMercado(controlPersonajes);
+			controlBatalla.nuevaBatalla();
+		}
+		
+		
+	}
+	
 	
 	@GetMapping("/newUsuario")
-	public String NuevoUsuario(Model model, HttpServletRequest request) {
+	public String NuevoUsuario(Model model, HttpServletRequest request,HttpSession http) {
 		
 		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
 		
 		model.addAttribute("token", token.getToken());
-		
-		model.addAttribute("errorUsuario", currentUser.isErrorUsuario());
-		model.addAttribute("errorContra", currentUser.isErrorContra());
-		model.addAttribute("datosInsuficientes", currentUser.isDatosInsuficientes());
-		currentUser.setErrorUsuario(false);
-		currentUser.setErrorContra(false);
-		currentUser.setDatosInsuficientes(false);
+	
+		model.addAttribute("errorUsuario",http.getAttribute("errorUsuario"));
+		model.addAttribute("errorContra", http.getAttribute("errorContra"));
+		model.addAttribute("datosInsuficientes", http.getAttribute("errorDatosInsu"));
+		http.setAttribute("errorUsuario",false);
+		http.setAttribute("errorContra",false);
+		http.setAttribute("errorDatosInsu",false);
 
 		return "newUsuario";
 	}
 
 	@PostMapping("/newUsuario")
-	public String newUser(@RequestParam String nombre ,@RequestParam String contrasena, Model model,HttpServletRequest request, HttpSession session) {
+	public String newUser(@RequestParam String nombre ,@RequestParam String contrasena, Model model,HttpServletRequest request, HttpSession http) {
 		
 		if(nombre.trim().equals("")||contrasena.trim().equals("")) {
-			currentUser.setDatosInsuficientes(true);
-			model.addAttribute("datosInsuficientes",currentUser.isDatosInsuficientes());
-			currentUser.setDatosInsuficientes(false);
+			http.setAttribute("errorDatosInsu",true);
+			model.addAttribute("datosInsuficientes",http.getAttribute("errorDatosInsu"));
+			http.setAttribute("errorDatosInsu",false);
 			
-			return NuevoUsuario(model,request);
+			return NuevoUsuario(model,request,http);
 		}
 		else {
 			
 			if(controlUsuarios.newUser(nombre, contrasena,controlPersonajes,controlFormacion,controlMercado, controlBatalla,false)) {
 			
-				return Inicio(model, session);
+				return Inicio(model);
 			}
 			else {
-				currentUser.setErrorUsuario(true);
 				
-				return NuevoUsuario(model,request);
+				http.setAttribute("errorUsuario",true);
+				return NuevoUsuario(model,request,http);
 			}
 		}
 	}
@@ -84,13 +111,14 @@ public class UserWebController extends WebController{
 		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
 		
 		model.addAttribute("token", token.getToken()); 
+		/*
 		model.addAttribute("errorUsuario", currentUser.isErrorUsuario());
 		model.addAttribute("errorContra",currentUser.isErrorContra());
 		model.addAttribute("hasSidoBaneado",currentUser.isBaneado());
 		currentUser.setErrorUsuario(false);
 		currentUser.setErrorContra(false);
 		currentUser.setDatosInsuficientes(false);
-		currentUser.setBaneado(false);
+		currentUser.setBaneado(false);*/
 		
 		return "login";
 	}
@@ -114,11 +142,12 @@ public class UserWebController extends WebController{
 			model.addAttribute("hasNext", users.hasNext());
 			model.addAttribute("nextPage", users.getNumber()+1);
 			model.addAttribute("prevPage", users.getNumber()-1);
-			model.addAttribute("baneoExito", currentUser.isUsuarioBaneadoConExito());
-			model.addAttribute("error",currentUser.isErrorBaneo());
+			model.addAttribute("baneoExito", session.getAttribute("baneoExito") );
+			model.addAttribute("error",session.getAttribute("errorBaneo"));
 			model.addAttribute("usuarios", users);
-			currentUser.setErrorBaneo(false);
-			currentUser.setUsuarioBaneadoConExito(false);
+			session.setAttribute("errorBaneo",false);
+			session.setAttribute("baneoExito",false);
+	
 			return "administradorUsuarios";
 		}
 		else {
@@ -134,11 +163,11 @@ public class UserWebController extends WebController{
 			model.addAttribute("hasNext", users.hasNext());
 			model.addAttribute("nextPage", users.getNumber()+1);
 			model.addAttribute("prevPage", users.getNumber()-1);
-			model.addAttribute("baneoExito", currentUser.isUsuarioBaneadoConExito());
-			model.addAttribute("error",currentUser.isErrorBaneo());
+			model.addAttribute("baneoExito", session.getAttribute("baneoExito"));
+			model.addAttribute("error",session.getAttribute("errorBaneo"));
 			model.addAttribute("usuarios", users);
-			currentUser.setErrorBaneo(false);
-			currentUser.setUsuarioBaneadoConExito(false);
+			session.setAttribute("errorBaneo",false);
+			session.setAttribute("baneoExito",false);
 		return "administradorUsuarios";
 		}
 		else {
@@ -151,19 +180,19 @@ public class UserWebController extends WebController{
 		if(user.isPresent()) {
 			user.get().setBaneado(!user.get().isBaneado());
 			controlUsuarios.Update(user.get());
-			currentUser.setUsuarioBaneadoConExito(true);
+			session.setAttribute("baneoExito",true);
 			
 		}
 		else{
-			currentUser.setErrorBaneo(true);
+			session.setAttribute("errorBaneo",true);
 			
 		}
 		return AdministrarUsuarios(model,request, session);
 	}
 	@GetMapping("/BorrarUsuario")
-	public String BorrarUsuario( Model model, HttpSession session) {
-		if(currentUser!=null) {
-			Optional<User> user= controlUsuarios.findByNombre(currentUser.getCurrentName());
+	public String BorrarUsuario( Model model, HttpSession session,HttpServletRequest request) {
+
+			Optional<User> user= controlUsuarios.findByNombre((String) request.getUserPrincipal().getName());
 			if(user.isPresent()) {
 				
 				Formacion f= user.get().getFormacion();
@@ -171,9 +200,8 @@ public class UserWebController extends WebController{
 				controlUsuarios.delete(user.get());
 			}
 			
-			return Inicio(model, session);
-		}
-		return "errorNoLogin";
+			return Inicio(model);
+	
 	}
 	
 

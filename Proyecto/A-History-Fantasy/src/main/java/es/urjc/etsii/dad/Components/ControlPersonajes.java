@@ -66,7 +66,7 @@ public class ControlPersonajes implements CommandLineRunner {
 		
 
 	}
-	public void iniciar() {//TESTING
+	public void iniciar() {
 		repository.save(new Personaje("Juana de Arco",5,TipoBatalla.MILITAR,2000,800,600,100,false));
 		repository.save(new Personaje("Mark Evans",1,TipoBatalla.MILITAR,100,200,100,150,false));
 		repository.save(new Personaje("Rosalia de Castro",4,TipoBatalla.CULTURAL,1500,100,600,600,false));

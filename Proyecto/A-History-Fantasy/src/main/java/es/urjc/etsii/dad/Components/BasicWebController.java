@@ -35,11 +35,12 @@ public class BasicWebController extends WebController {
 			return "errorNoLogin";
 		}
 	}
+	/*
 	@GetMapping("/")
-	public String Inicio (Model model) {
-		currentUser.setCurrentName(null);
+	public String Inicio (Model model, HttpSession session) {
+
 		return "index";
-	}
+	}*/
 	
 	@GetMapping("/error")
 	public String ErrorGeneral() {

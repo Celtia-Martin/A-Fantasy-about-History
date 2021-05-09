@@ -21,8 +21,7 @@ public class WebController {
 	@Autowired
 	private BatallaService controlBatalla;
 	
-	@Autowired
-	protected UsserSession currentUser;
+
 	
 	private Logger log = LoggerFactory.getLogger(WebController.class);
 	
@@ -69,15 +68,14 @@ public class WebController {
 	*/
 	
 	public boolean ActualizarEncabezado(Model model,HttpServletRequest request,boolean formulario, HttpSession session) {
-		if(currentUser!=null) {
+		
 			if(formulario) {
 				CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
 				model.addAttribute("token", token.getToken()); 
 			}
 			
 			if(request.getUserPrincipal().getName()!=null) {
-				log.warn("HAY NOMBRE");
-				
+
 				Optional<User> current= controlUsuarios.findByNombre((String) request.getUserPrincipal().getName());
 				
 				if(current.isPresent()) {
@@ -95,15 +93,10 @@ public class WebController {
 					return true;
 				}
 				else {
-					log.warn("NO ES PRESENT");
+				
 					return false;
 				}
 			}
-			
-			log.warn("EL NOMBRE ES NULL");
-		}
-		
-		log.warn("ES NULL");
 		
 		return false;
 	}
@@ -124,9 +117,8 @@ public class WebController {
 		}
 	}
 
-	public String Inicio (Model model, HttpSession session) {
-		//currentUser.setCurrentName(null);
-		session.setAttribute("nombre", null);
+	public String Inicio (Model model) {
+
 		return "index";
 	}
 	
