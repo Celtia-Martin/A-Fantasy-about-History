@@ -46,6 +46,10 @@ public class BasicWebController extends WebController {
 	public String ErrorGeneral() {
 		return "error";
 	}
+	@GetMapping("/logout")
+	public String LogOut() {
+		return "logout";
+	}
 	
 
 }

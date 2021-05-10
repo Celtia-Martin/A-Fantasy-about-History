@@ -8,13 +8,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	 public UserRepositoryAuthenticationProvider authenticationProvider;
-	
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		BCryptPasswordEncoder bc= new BCryptPasswordEncoder();
@@ -40,9 +43,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.formLogin().usernameParameter("nombre");
 		http.formLogin().passwordParameter("contrasena");
 		http.formLogin().defaultSuccessUrl("/menuPrincipal");	
-		http.logout().logoutUrl("/");
-		http.logout().logoutSuccessUrl("/");
-		
+		http.logout().logoutUrl("/logout");
+		http.logout().logoutSuccessUrl("/logout");
+		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		.logoutSuccessUrl("/logout.done").deleteCookies("JSESSIONID")
+		.invalidateHttpSession(true) ;
 		//http.csrf().disable();
 		
 	}
