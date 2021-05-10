@@ -1,5 +1,6 @@
 package es.urjc.etsii.dad.Components;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import org.springframework.web.context.annotation.SessionScope;
 
 
 @Entity
-public class User {
+public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

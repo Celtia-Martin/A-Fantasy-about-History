@@ -17,6 +17,7 @@ import com.hazelcast.config.Config;
 import com.hazelcast.config.JoinConfig;
 import com.hazelcast.core.*;
 import com.hazelcast.instance.impl.HazelcastInstanceFactory;
+import com.hazelcast.spring.cache.HazelcastCacheManager;
 import com.hazelcast.web.WebFilter;
 
 @SpringBootApplication
@@ -52,7 +53,8 @@ public class AHistoryFantasyApplication implements CommandLineRunner{
 	
 	@Bean
 	public CacheManager cacheManager() {
-		return new ConcurrentMapCacheManager("personajes","user");
+		return new HazelcastCacheManager(hazelcastInstance());
+		//return new ConcurrentMapCacheManager("personajes","user");
 	}
 	
 	@Bean

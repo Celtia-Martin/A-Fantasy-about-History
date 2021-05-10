@@ -1,5 +1,6 @@
 package es.urjc.etsii.dad.Components;
 
+import java.io.Serializable;
 import java.sql.Blob;
 
 import javax.persistence.*;
@@ -7,7 +8,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Personaje {
+public class Personaje  implements Serializable  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

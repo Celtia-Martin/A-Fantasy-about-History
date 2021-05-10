@@ -9,7 +9,11 @@ import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.hazelcast.spring.cache.HazelcastCache;
+import com.hazelcast.spring.cache.HazelcastCacheManager;
 //INSPECCIONAR
+/*
 @RestController
 public class CacheController {
 	@Autowired
@@ -28,4 +32,21 @@ public class CacheController {
 		ConcurrentMapCache cache = (ConcurrentMapCache) cachemgr.getCache("user");
 		return cache.getNativeCache();
 	}
+}
+*/
+
+@RestController
+public class CacheController {
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    // Debug only
+    @RequestMapping(value = "/cache")
+    public Map<Object, Object> getCacheContent() {
+        HazelcastCacheManager hazelcastCacheManager = (HazelcastCacheManager) cacheManager;
+        HazelcastCache hazelcastCache = (HazelcastCache) hazelcastCacheManager.getCache("user");
+        return hazelcastCache.getNativeCache();
+    }
+
 }

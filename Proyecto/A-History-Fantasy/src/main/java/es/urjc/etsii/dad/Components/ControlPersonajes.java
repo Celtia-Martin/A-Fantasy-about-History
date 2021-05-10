@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -15,11 +17,15 @@ import es.urjc.etsii.dad.Components.Enums.*;
 import javax.transaction.Transactional;
 @Transactional
 @Service
+@CacheConfig(cacheNames="personajes")
 public class ControlPersonajes implements CommandLineRunner {
 
 	@Autowired
 	private PersonajeRepository repository;
-	
+	@CacheEvict(allEntries=true)
+	public void InvalidarCache() {
+		
+	}
 	public boolean newPersonaje (Personaje p) {
 		Optional<Personaje> mismoNombre= repository.findByNombre(p.getNombre());
 	
@@ -88,4 +94,5 @@ public class ControlPersonajes implements CommandLineRunner {
 	public Page<Personaje> findNoDefaultWithPage(int page){
 		return repository.findByIsDefault(false, PageRequest.of(page, 10));
 	}
+	
 }

@@ -81,8 +81,7 @@ public class PersonajeWebController extends WebController {
 			Optional<User> current= controlUsuarios.findByNombre((String) request.getUserPrincipal().getName());
 			if(current.isPresent()) {
 				
-				controlFormacion.VenderPersonaje((long)id,current.get(), controlPersonajes);
-				controlUsuarios.Update(current.get());
+				controlFormacion.VenderPersonaje((long)id,current.get(), controlPersonajes,controlUsuarios);
 				controlUsuarios.InvalidarCache();
 				
 			}

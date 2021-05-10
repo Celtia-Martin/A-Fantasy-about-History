@@ -69,7 +69,7 @@ public class ControlFormaciones  implements CommandLineRunner{
 				
 			
 	}
-	public boolean VenderPersonaje( Long idPersonaje,User user,ControlPersonajes controlPersonajes) {
+	public boolean VenderPersonaje( Long idPersonaje,User user,ControlPersonajes controlPersonajes,ControlUsuarios controlUsuarios) {
 		Optional<Personaje> personaje= controlPersonajes.findById((long)idPersonaje);
 		if(personaje.isPresent()) {
 			Personaje aVender= personaje.get();
@@ -87,9 +87,9 @@ public class ControlFormaciones  implements CommandLineRunner{
 					}
 					
 					repository.save(formacion.get());
-				
-					
-					
+					user.setFormacion(formacion.get());
+					controlUsuarios.Update(user);
+					controlPersonajes.InvalidarCache();
 					return true;
 				}
 			}
