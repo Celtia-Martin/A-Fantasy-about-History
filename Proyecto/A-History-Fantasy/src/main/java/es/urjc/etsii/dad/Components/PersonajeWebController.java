@@ -60,7 +60,8 @@ public class PersonajeWebController extends WebController {
 	
 			Optional<User> current= controlUsuarios.findByNombre((String) request.getUserPrincipal().getName());
 			if(current.isPresent()) {
-				Formacion miFormacion= current.get().getFormacion();
+				Formacion miFormacion = controlFormacion.findByPropietario(current.get()).get();
+				
 				if(miFormacion!=null) {
 					model.addAttribute("personajes",miFormacion.getPersonajes());
 				}
