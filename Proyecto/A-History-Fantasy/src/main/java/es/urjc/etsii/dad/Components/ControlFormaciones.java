@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 @Transactional
@@ -42,16 +41,16 @@ public class ControlFormaciones  implements CommandLineRunner{
 		log.warn(idFormacion.toString());
 		if(f.isPresent()) {
 			List<Personaje> ps= f.get().getPersonajes();
-			log.warn("ES PRESENTE");
+			
 			int size=ps.size();
 			for(int i=0;i<size;i++) {
 				Personaje p= ps.remove(0);
-				log.warn(p.getId().toString());
+		
 				if(p.isDefault()) {
 					f.get().deletePersonaje(p.getId());
 					repository.save(f.get());
 					control.deleteById(p.getId());
-					log.warn(p.getId().toString() +" borrado presuntamente");
+					
 				}
 				else {
 					p.setTieneFormacion(false);
@@ -61,7 +60,7 @@ public class ControlFormaciones  implements CommandLineRunner{
 			}
 		}
 		else {
-			log.warn("NO PRESENTE");
+			
 		}
 	
 		

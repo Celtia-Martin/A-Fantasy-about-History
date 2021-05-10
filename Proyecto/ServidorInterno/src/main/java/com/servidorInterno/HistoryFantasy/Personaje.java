@@ -1,10 +1,9 @@
 package com.servidorInterno.HistoryFantasy;
 
-import java.sql.Blob;
+
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Personaje {

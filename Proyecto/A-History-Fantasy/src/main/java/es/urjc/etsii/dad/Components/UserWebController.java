@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -111,14 +110,7 @@ public class UserWebController extends WebController{
 		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
 		
 		model.addAttribute("token", token.getToken()); 
-		/*
-		model.addAttribute("errorUsuario", currentUser.isErrorUsuario());
-		model.addAttribute("errorContra",currentUser.isErrorContra());
-		model.addAttribute("hasSidoBaneado",currentUser.isBaneado());
-		currentUser.setErrorUsuario(false);
-		currentUser.setErrorContra(false);
-		currentUser.setDatosInsuficientes(false);
-		currentUser.setBaneado(false);*/
+	
 		
 		return "login";
 	}

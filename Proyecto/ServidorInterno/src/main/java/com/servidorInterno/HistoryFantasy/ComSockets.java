@@ -41,10 +41,7 @@ public class ComSockets {
 				log.warn("LO HA TIRAO AL AIRE");
 				
 				Socket socket = serverSocket.accept();
-				/*
-				Thread t= new Thread(new ProcesadorSocket(socket,batallaService,mercadoService));
-				t.start();
-				*/
+			
 				InputStream is;
 				try {
 					is = socket.getInputStream();
@@ -73,7 +70,7 @@ public class ComSockets {
 					os.close();
 					socket.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+					
 						e.printStackTrace();
 					}
 			}

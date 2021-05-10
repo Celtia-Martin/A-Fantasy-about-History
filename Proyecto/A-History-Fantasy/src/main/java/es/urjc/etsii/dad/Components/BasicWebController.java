@@ -16,7 +16,7 @@ public class BasicWebController extends WebController {
 	private BatallaService controlBatalla;
 	
 	public BasicWebController() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	@GetMapping("/menuPrincipal")
@@ -35,13 +35,7 @@ public class BasicWebController extends WebController {
 			return "errorNoLogin";
 		}
 	}
-	/*
-	@GetMapping("/")
-	public String Inicio (Model model, HttpSession session) {
 
-		return "index";
-	}*/
-	
 	@GetMapping("/error")
 	public String ErrorGeneral() {
 		return "error";

@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import org.springframework.cache.annotation.CacheConfig;
 
 @Entity
 public class Mercado {

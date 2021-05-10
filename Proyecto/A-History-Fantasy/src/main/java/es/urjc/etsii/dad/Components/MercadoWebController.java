@@ -24,8 +24,7 @@ public class MercadoWebController extends WebController {
 	
 	@Autowired
 	private ControlPuja controlPuja;
-	@Autowired
-	private ControlFormaciones controlFormacion;
+
 	
 	public MercadoWebController() {
 		

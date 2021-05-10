@@ -3,7 +3,6 @@ package es.urjc.etsii.dad.Components;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.persistence.*;
 
@@ -13,12 +12,12 @@ import org.hibernate.annotations.LazyCollectionOption;
 import es.urjc.etsii.dad.Components.Enums.*;
 
 @Entity
-public class Formacion  implements Serializable { //al eliminar un default se elimina tambien de la base de datos, RECORDAR
+public class Formacion  implements Serializable { 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@OneToMany//(fetch = FetchType.EAGER)
+	@OneToMany//
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Personaje> personajes= new ArrayList<>();//unidireccional
 	

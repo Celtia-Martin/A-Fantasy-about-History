@@ -121,7 +121,7 @@ public class EjecutarBatallaService {
 		batallas.delete(bat.get());
 		
 		controlBatallas.nuevaBatalla();
-		//invUser.Invalidar();
+	
 		return "login";
 	}
 }
