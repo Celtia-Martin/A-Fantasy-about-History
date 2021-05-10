@@ -12,7 +12,7 @@
 ## [1.- DESCRIPCION	](#descripcion)
 ### [1.1.- APLICACION ](#aplicacion)
 ### [1.2.- ENTIDADES](#entidades)
-### [1.3.- SERVIDOR INTERNO](#servidorInterno)
+### [1.3.- INTERFAZ SERVIDOR INTERNO](#servidorInterno)
 ### [1.4.- SEGURIDAD](#seguridad)
 ## [2.- MODELO DE DATOS](#modeloDeDatos)	
 ## [3.- PANTALLAS](#pantallas)
@@ -55,13 +55,15 @@ Es estrictamente PRIVADO para los creadores la Simulación de Batallas, el repar
 
 **- Puja:** Tienen una ID, un Usuario pujante, un Personaje pujado y una cantidad de Dinero. Sirven para elegir al ganador del Personaje que se encuentra en el mercado.
 
-### SERVIDOR INTERNO <a name="servidorInterno"/>
+### INTERFAZ SERVIDOR INTERNO <a name="servidorInterno"/>
 
-Todas las actividades que realiza el Servidor Interno son respuestas a las peticiones de la aplicación. La comunicación entre estos dos se realiza mediante sockets. La aplicación manda una orden (en forma de mensaje String) al Servidor Interno. Este lo lee, interpretando que debe realizar una acción u otra. Entonces, realiza una serie de cálculos y actualiza la base de datos, sin devolver nada a la aplicación. Estas órdenes pueden ser:
+Todas las actividades que realiza el Servidor Interno son respuestas a las peticiones de la aplicación. La comunicación entre estos dos se realiza mediante sockets. El servidor escuchará en el puerto 9000. 
 
-**- Simular las batallas:** Se calculan los puntos y el dinero de cada jugador a partir de las Formaciones que alineen. La web mandará el mensaje "Batalla" a través del Socket.
+La aplicación manda una orden (en forma de mensaje String) al Servidor Interno. Este lo lee, interpretando que debe realizar una acción u otra. Entonces, realiza una serie de cálculos y actualiza la base de datos, sin devolver nada a la aplicación. Estas órdenes pueden ser:
 
-**- Refrescar el Mercado:** Selecciona aleatoriamente de la base de datos de personajes libres en la liga y los pone en el mercado. Además, gestiona las pujas de los usuarios y el dinero que manejan. La web mandará el mensaje "Refrescar" a través del Socket.
+**- Simular las batallas:** Se calculan los puntos y el dinero de cada jugador a partir de las Formaciones que alineen. La web mandará el mensaje "Batalla" a través del Socket, y este ejecutará los cálculos pertinentes y actualizará la base de datos. Cuando haya acabado, le mandará un mensaje a la web para que invalide su caché. Luego se cierran las comunicaciones.
+
+**- Refrescar el Mercado:** Selecciona aleatoriamente de la base de datos de personajes libres en la liga y los pone en el mercado. Además, gestiona las pujas de los usuarios y el dinero que manejan. La web mandará el mensaje "Refrescar" a través del Socket para que se ejecuten dichas operaciones y actualice la base de datos. Al acabar se enviará a la web un mensaje para que invalide la caché.
 
 ### SEGURIDAD <a name="seguridad"/>
 
@@ -186,4 +188,7 @@ Aclarar que mientras que la aplicación web tiene el esquema MySql en "create-dr
 
 Se ha implementado la aplicación usando contenedores Docker, que se comunican entre sí mediante Docker Compose. Tanto la web como el servidor interno están en un contenedor independiente, y junto a la base de datos y el balanceador de carga forman la aplicación. El balanceador de carga está implementado con Haproxy, y gestiona dos nodos distintos de la web. Si uno cae, Haproxy se encarga de migrar al usuario al otro nodo, proporcionando además la posibilidad de separar a los usuarios entre los nodos y aligerar la carga.
 
-También se ha cacheado ...
+También se han cacheado algunas consultas a la table de personajes y de usuarios. Para la segunda, ha sido necesario usar el carácter bidireccional de los sockets, ya que el servidor interno, una vez haya acabado las operaciones pertinentes, enviará un mensaje a la web para que invalide la caché.
+
+Se ha eliminado la clase SessionScope ya que causaba problemas con Hazelcast. En su lugar se han utilizado HttpSession y HttpServletRequest.
+
