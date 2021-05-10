@@ -11,18 +11,18 @@ import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Repository
-//@CacheConfig(cacheNames="user")
+@CacheConfig(cacheNames="user")
 public interface UserRepository extends JpaRepository<User, Long> {
 	
-	//@CacheEvict(allEntries=true)//eliminar cache cuando haya nueva entrada
-	//User save(User user);
+	@CacheEvict(allEntries=true)//eliminar cache cuando haya nueva entrada
+	User save(User user);
 
-	//@Cacheable
+	@Cacheable
 	Optional<User> findByNombre( String Nombre);
-	//@Cacheable
+	@Cacheable
 	Optional<User> findById( Long id);
 	void deleteByNombre(String Nombre);
-	//@Cacheable
+	@Cacheable
 	List <User>findTop10ByOrderByPuntosDesc();
 	
 	

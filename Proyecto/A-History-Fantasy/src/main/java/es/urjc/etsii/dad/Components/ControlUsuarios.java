@@ -5,17 +5,24 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 @Transactional
 @Service
+@CacheConfig(cacheNames="user")
 public class ControlUsuarios implements CommandLineRunner {
 
 	@Autowired
 	private UserRepository repository;
-	
+	@CacheEvict(allEntries=true)
+	public void InvalidarCache() {
+		
+	}
 
 	public boolean newUser (String nombre, String contra, ControlPersonajes controlPersonajes,ControlFormaciones controlFormaciones,ControlMercado controlMercado, BatallaService controlBatalla,boolean esAdmin) {
 		Optional<User> mismoNombre= repository.findByNombre(nombre);

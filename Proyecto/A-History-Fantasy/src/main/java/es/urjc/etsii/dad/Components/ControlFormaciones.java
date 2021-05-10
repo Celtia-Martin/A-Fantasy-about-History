@@ -35,10 +35,7 @@ public class ControlFormaciones  implements CommandLineRunner{
 		repository.save(f);
 		
 	}
-	public Optional<Formacion> findByPropietario(User user){
 	
-		return repository.findByPropietario(user);
-	}
 	public void BorrarPersonajes(Long idFormacion,ControlPersonajes control) {
 		log.warn("Procedemos a borrar");
 		Optional<Formacion> f=repository.findById(idFormacion);

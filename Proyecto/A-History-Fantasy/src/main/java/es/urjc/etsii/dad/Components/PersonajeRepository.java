@@ -18,15 +18,13 @@ public interface PersonajeRepository extends JpaRepository<Personaje, Long> {
 	@CacheEvict(allEntries=true)//eliminar cache cuando haya nueva entrada
 	Personaje save(Personaje personaje);
 	
-	@Cacheable
+	
 	List<Personaje> findByIsDefaultAndTieneFormacion(boolean isDefault, boolean tieneFormacion);
-	@Cacheable
+
 	Optional<Personaje> findByNombre(String nombre);
-	@Cacheable
 	Page<Personaje> findByIsDefaultAndTieneFormacion(boolean isDefault, boolean tieneFormacion,Pageable page);
 	@Cacheable
 	Page<Personaje> findByIsDefault(boolean isDefault,Pageable page);
-	@Cacheable
 	Optional<Personaje> findById(Long id);
 	void deleteById(Long id);
 	void deleteByNombre(Long id);

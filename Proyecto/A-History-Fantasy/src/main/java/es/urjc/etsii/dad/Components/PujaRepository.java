@@ -14,8 +14,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public interface PujaRepository extends JpaRepository<Puja, Long> {
 	
 
-	Puja save(Puja puja);
-
 	Optional<Puja> findFirstByPersonajePujado_IdOrderByValorDesc(Long id);
 
 }

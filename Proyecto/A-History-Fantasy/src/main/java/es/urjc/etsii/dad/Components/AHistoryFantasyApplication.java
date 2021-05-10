@@ -52,7 +52,7 @@ public class AHistoryFantasyApplication implements CommandLineRunner{
 	
 	@Bean
 	public CacheManager cacheManager() {
-		return new ConcurrentMapCacheManager("personajes", "formacion");
+		return new ConcurrentMapCacheManager("personajes","user");
 	}
 	
 	@Bean

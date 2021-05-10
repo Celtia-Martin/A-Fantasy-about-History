@@ -11,14 +11,13 @@ import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Repository
-@CacheConfig(cacheNames="formacion")
+//@CacheConfig(cacheNames="formacion")
 public interface FormacionRepository extends JpaRepository<Formacion, Long> {
 	
-	@CacheEvict(allEntries=true)//eliminar cache cuando haya nueva entrada
+	//@CacheEvict(allEntries=true)//eliminar cache cuando haya nueva entrada
 	Formacion save(Formacion formacion);
 
 	
-	@Cacheable
-	Optional<Formacion> findByPropietario(User user);
+
 	
 }

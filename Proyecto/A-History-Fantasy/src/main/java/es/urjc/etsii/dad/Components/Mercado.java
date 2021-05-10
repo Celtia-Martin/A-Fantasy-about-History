@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.cache.annotation.CacheConfig;
+
 @Entity
 public class Mercado {
 	@Id
@@ -20,6 +22,7 @@ public class Mercado {
 	public void addPersonajes(List<Personaje> personajes) {
 		oferta.addAll(personajes);
 	}
+
 	public List<Personaje> getOferta(){
 		return oferta;
 	}

@@ -22,10 +22,10 @@ public class CacheController {
 		return cache.getNativeCache();
 	}
 
-	@RequestMapping(value="/cacheFormacion", method=RequestMethod.GET)
+	@RequestMapping(value="/cacheUsuarios", method=RequestMethod.GET)
 	public Map<Object,Object> getCacheFormacion(){
 		ConcurrentMapCacheManager cachemgr = (ConcurrentMapCacheManager) cacheManager;
-		ConcurrentMapCache cache = (ConcurrentMapCache) cachemgr.getCache("formacion");
+		ConcurrentMapCache cache = (ConcurrentMapCache) cachemgr.getCache("user");
 		return cache.getNativeCache();
 	}
 }

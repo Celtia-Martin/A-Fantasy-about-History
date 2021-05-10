@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,6 +17,7 @@ import javax.persistence.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jmx.export.notification.UnableToSendNotificationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -53,7 +55,7 @@ public class ComSockets {
 							 new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					
 					String orden = leerServidor.readLine();
-					
+					PrintWriter send = new PrintWriter(os, true);
 					log.warn("LO HA COGIO AR VUELO");
 					
 					if(orden != null) {
@@ -66,7 +68,7 @@ public class ComSockets {
 								break;
 						}
 					}
-					
+					send.print(true);
 					is.close();
 					os.close();
 					socket.close();

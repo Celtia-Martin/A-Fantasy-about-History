@@ -60,7 +60,7 @@ public class PersonajeWebController extends WebController {
 	
 			Optional<User> current= controlUsuarios.findByNombre((String) request.getUserPrincipal().getName());
 			if(current.isPresent()) {
-				Formacion miFormacion = controlFormacion.findByPropietario(current.get()).get();
+				Formacion miFormacion = current.get().getFormacion();
 				
 				if(miFormacion!=null) {
 					model.addAttribute("personajes",miFormacion.getPersonajes());
@@ -82,6 +82,7 @@ public class PersonajeWebController extends WebController {
 			if(current.isPresent()) {
 				
 				controlFormacion.VenderPersonaje((long)id,current.get(), controlPersonajes);
+				controlUsuarios.InvalidarCache();
 				
 			}
 			return MostrarFormacion(model,request, session);
