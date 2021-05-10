@@ -23,6 +23,7 @@
 ## [5.- NOTAS FASE 3](#notasFase3)
 ## [6.- DESPLIEGUE E INSTALACIÓN](#despliegue)
 ## [7.- DIAGRAMA DEL DESPLIEGUE EN DOCKER](#diagrama)
+## [8.- NOTAS FASE 4](#notasFase4)
 
 ## DESCRIPCION <a name="descripcion"/>
 
@@ -58,9 +59,9 @@ Es estrictamente PRIVADO para los creadores la Simulación de Batallas, el repar
 
 Todas las actividades que realiza el Servidor Interno son respuestas a las peticiones de la aplicación. La comunicación entre estos dos se realiza mediante sockets. La aplicación manda una orden (en forma de mensaje String) al Servidor Interno. Este lo lee, interpretando que debe realizar una acción u otra. Entonces, realiza una serie de cálculos y actualiza la base de datos, sin devolver nada a la aplicación. Estas órdenes pueden ser:
 
-**- Simular las batallas:** Se calculan los puntos y el dinero de cada jugador a partir de las Formaciones que alineen.
+**- Simular las batallas:** Se calculan los puntos y el dinero de cada jugador a partir de las Formaciones que alineen. La web mandará el mensaje "Batalla" a través del Socket.
 
-**- Refrescar el Mercado:** Selecciona aleatoriamente de la base de datos de personajes libres en la liga y los pone en el mercado. Esto ocurre cada 24 horas, en una hora concreta.
+**- Refrescar el Mercado:** Selecciona aleatoriamente de la base de datos de personajes libres en la liga y los pone en el mercado. Además, gestiona las pujas de los usuarios y el dinero que manejan. La web mandará el mensaje "Refrescar" a través del Socket.
 
 ### SEGURIDAD <a name="seguridad"/>
 
@@ -180,3 +181,9 @@ Aclarar que mientras que la aplicación web tiene el esquema MySql en "create-dr
 ## DIAGRAMA DEL DESPLIEGUE EN DOCKER <a name="diagrama"/>
 
 ![alt text](https://github.com/Celtia-Martin/A-Fantasy-about-History/blob/main/MEMORIA/DiagramaDocker.png)
+
+## NOTAS DE LA FASE 4 <a name="notasFase4"/>
+
+Se ha implementado la aplicación usando contenedores Docker, que se comunican entre sí mediante Docker Compose. Tanto la web como el servidor interno están en un contenedor independiente, y junto a la base de datos y el balanceador de carga forman la aplicación. El balanceador de carga está implementado con Haproxy, y gestiona dos nodos distintos de la web. Si uno cae, Haproxy se encarga de migrar al usuario al otro nodo, proporcionando además la posibilidad de separar a los usuarios entre los nodos y aligerar la carga.
+
+También se ha cacheado ...
