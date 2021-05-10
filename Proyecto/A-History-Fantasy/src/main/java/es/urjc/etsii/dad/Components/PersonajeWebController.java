@@ -82,6 +82,7 @@ public class PersonajeWebController extends WebController {
 			if(current.isPresent()) {
 				
 				controlFormacion.VenderPersonaje((long)id,current.get(), controlPersonajes);
+				controlUsuarios.Update(current.get());
 				controlUsuarios.InvalidarCache();
 				
 			}
