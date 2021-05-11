@@ -24,6 +24,7 @@
 ## [6.- DESPLIEGUE E INSTALACIÓN](#despliegue)
 ## [7.- DIAGRAMA DEL DESPLIEGUE EN DOCKER](#diagrama)
 ## [8.- NOTAS FASE 4](#notasFase4)
+## [9.- VIDEO DEMOSTRATIVO](#video)
 
 ## DESCRIPCION <a name="descripcion"/>
 
@@ -191,4 +192,8 @@ Se ha implementado la aplicación usando contenedores Docker, que se comunican e
 También se han cacheado algunas consultas a la table de personajes y de usuarios. Para la segunda, ha sido necesario usar el carácter bidireccional de los sockets, ya que el servidor interno, una vez haya acabado las operaciones pertinentes, enviará un mensaje a la web para que invalide la caché.
 
 Se ha eliminado la clase SessionScope ya que causaba problemas con Hazelcast. En su lugar se han utilizado HttpSession y HttpServletRequest.
+
+## VIDEO DEMOSTRATIVO <a name="video"/>
+
+<a href="https://youtu.be/r5VWQu1NNkI">** LINK DEL VIDEO **</a>
 
