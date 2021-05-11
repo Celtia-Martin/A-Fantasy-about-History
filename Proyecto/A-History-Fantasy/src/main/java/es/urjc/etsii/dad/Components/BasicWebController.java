@@ -40,9 +40,19 @@ public class BasicWebController extends WebController {
 	public String ErrorGeneral() {
 		return "error";
 	}
+	
 	@GetMapping("/logout")
-	public String LogOut() {
+	public String LogOut(Model model, HttpServletRequest request) {
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		
+		model.addAttribute("token", token.getToken()); 
+		
 		return "logout";
+	}
+	
+	@GetMapping("/loginerror")
+	public String LogError() {
+		return "errorLogin";
 	}
 	
 

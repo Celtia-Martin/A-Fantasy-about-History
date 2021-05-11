@@ -40,12 +40,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.formLogin().loginPage("/login");
 		http.formLogin().usernameParameter("nombre");
 		http.formLogin().passwordParameter("contrasena");
-		http.formLogin().defaultSuccessUrl("/menuPrincipal");	
-		http.logout().logoutUrl("/logout");
-		http.logout().logoutSuccessUrl("/logout");
-		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.logoutSuccessUrl("/logout.done").deleteCookies("JSESSIONID")
-		.invalidateHttpSession(true) ;
+		http.formLogin().defaultSuccessUrl("/menuPrincipal");
+		//http.logout().logoutUrl("/logout");
+		http.logout().logoutSuccessUrl("/");
+		//http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		//.logoutSuccessUrl("/logout.done").deleteCookies("JSESSIONID")
+		//.invalidateHttpSession(true) ;
 		//http.csrf().disable();
 		
 	}
