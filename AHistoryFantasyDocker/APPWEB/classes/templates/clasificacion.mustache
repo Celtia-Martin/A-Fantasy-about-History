@@ -1,0 +1,39 @@
+{{>Header}}
+
+{{>FijoApp}}
+
+	<section>
+		<h2> CLASIFICACION </h2>
+	</section>
+	
+	<section>
+		<p><center>
+			<h3> Puntos conseguidos en todas las batallas disputadas. </h3>
+		</center></p>
+		
+		<table border="1" align="center" cellspacing="0" cellpadding="10">
+		  	<tr>
+		    	<th>Posicion</th>
+		    	<th>Usuario</th>
+		    	<th>Puntos</th>
+		  	</tr>
+		  	
+		  	{{#clasificacion}}
+		  	
+		  	<tr>
+		    	<td>{{-index}}</td>
+		    	<td>{{nombre}}</td>
+		    	<td>{{puntos}}</td>
+		  	</tr>
+		  	
+		  	{{/clasificacion}}
+		</table>
+	</section>
+	
+	<footer>
+		<p><center>
+			<a href="/menuPrincipal"><button class="button button1"> Atrás </button></a>
+		</center></p>
+	</footer>
+	
+{{>Footer}}

@@ -1,0 +1,48 @@
+{{>Header}}
+
+	<h2> ------------ </h2>
+	<h2> ----------------------------- </h2>
+	<h2 color ="black">Introduce los datos para crear una cuenta nueva</h2>
+	<h2> ----------------------------- </h2>
+	<h2> ------------ </h2>
+	
+	{{#errorUsuario}}
+		<h5><center> El usuario ya existe</center> </h5>
+	{{/errorUsuario}}
+		
+	{{#errorContra}}
+		<h5><center> Debes añadir una contraseña</center> </h5>
+	{{/errorContra}}
+		
+	{{#datosInsuficientes}}
+		<h5><center> Datos insuficientes</center></h5>
+	{{/datosInsuficientes}}
+	
+	<form action = "/newUsuario" method= "post">	
+       
+        <p><center> Nombre de usuario </center></p>
+        
+        <p><center>
+  			<input type= 'text' name= 'nombre'/>
+        </center></p>
+  		
+        <p><center> Contraseña </center></p>
+      	
+        <p><center>
+		    <input type= 'password' name= 'contrasena'/>
+        </center></p>
+      
+        <p><center>
+	  		<input type='submit' value= 'Crear cuenta'/>
+        </center></p>
+        
+        <input type='hidden' name='_csrf' value='{{token}}'/>
+	</form>
+	
+	<footer>
+		<p><center>
+			<a href="/"><button class="button button1"> Atrás </button></a>
+		</center></p>
+	</footer>
+	
+{{>Footer}}

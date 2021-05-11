@@ -1,0 +1,78 @@
+{{>Header}}
+
+{{>FijoApp}}
+		
+	<section>
+		<h3> Próxima Batalla: {{batalla}}</h3>
+	</section>
+	{{#esAdmin}}
+	<section>
+		<p><center>
+		<form action = "/ejecutarBatalla" method= "post" >
+		    <td><input type='submit' value= 'Ejecutar Batalla(Servidor Interno)'/></td>
+		    <input type='hidden' name='_csrf' value='{{token}}'/>
+		</form>
+		</center></p>
+	</section>
+	
+	<section>
+		<p><center>
+		<form action = "/refrescarMercado" method= "post" >
+		    <td><input type='submit' value= 'Refrescar Mercado(Servidor Interno)'/></td>
+		    <input type='hidden' name='_csrf' value='{{token}}'/>
+		</form>
+		</center></p>
+	</section>
+	{{/esAdmin}}
+	<section>
+		<p><center>
+			<a href="/formacion"><button class="button button2"> Formación </button>
+		</center></p>
+	</section>
+		
+	<section>
+		<p><center>
+			<a href="/mercado"><button class="button button2"> Mercado </button>
+		</center></p>
+	</section>
+		
+	<section>
+		<p><center>
+			<a href="/clasificacion"><button class="button button2"> Clasificación </button></a>
+		</center></p>
+	</section>
+	
+	{{#esAdmin}}
+	
+	<section>
+		<p><center>
+			<a href="/newPersonaje"><button class="button button2"> Crear Personajes (Admin) </button></a>
+		</center></p>
+	</section>
+	
+	<section>
+		<p><center>
+			<a href="/administrarUsuarios"><button class="button button2"> Administrar Usuarios (Admin) </button></a>
+		</center></p>
+	</section>
+	
+	<section>
+		<p><center>
+			<a href="/mostrarTodosPersonajes"><button class="button button2"> Mostrar BD (Admin) </button></a>
+		</center></p>
+	</section>
+	
+	{{/esAdmin}}
+	
+	<footer>
+		<p><center>
+			<a href="/BorrarUsuario"><button class="button button1"> Borrar Usuario </button></a>
+		</center></p>
+		
+		<p><center>
+			<a href="/logout" ><button class="button button1"> Cerrar Sesión </button></a>
+			
+		</center></p>
+	</footer>
+
+{{>Footer}}

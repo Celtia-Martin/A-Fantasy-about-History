@@ -1,0 +1,65 @@
+{{>Header}}
+{{>FijoApp}}
+<table border="1" align="center" cellspacing="0" cellpadding="10">
+		{{#error}}
+			<h5><center>No se ha podido cambiar el estado de baneo del usuario </center></h5>
+		{{/error}}
+		
+		{{#baneoExito}}
+			<h5 class= "verde"><center> Se ha cambiado el estado del baneo del usuario con éxito </center></h5>
+		{{/baneoExito}}
+			<tr>
+		    	<th>Nombre</th>
+		    	<th>Puntos</th>
+		    	<th>Dinero</th>
+		    	<th>Baneado</th>
+		    	<th>Banear</th>
+
+		  	</tr>
+		  	
+		  	{{#usuarios}}
+		  	
+		  	<tr>
+		    	<th>{{nombre}}</th>
+		    	<th>{{puntos}}</th>
+		    	<th>{{dinero}}</th>
+		    	{{#baneado}}
+		    		<th>Sí</th>
+		    	{{/baneado}}
+		    	
+		    	{{^baneado}}
+		    	<th>No</th>
+		    	{{/baneado}}
+		    
+		    	<form action = "/banear/{{id}}" method= "post">
+		    		<td><input type='submit' value= 'Cambiar estado de baneo'/>
+		    		<input type="hidden" name="_csrf" value="{{token}}"/>
+		    		</td>
+		    	</form>
+		    	
+		    	
+		  	</tr>
+		  	{{/usuarios}}
+		  	
+	
+		  	
+</table>
+<footer>
+	  	{{#hasPrev}}
+		  	<div class="botonIzquierda"> 
+		  	<a href="/administrarUsuarios/{{prevPage}}"><button class="button button2">Página Anterior </button></a>
+		  	
+		  	</div>
+		  	{{/hasPrev}}
+		  	{{#hasNext}}
+		  	<div class="botonDerecha"> 
+		  	<a href="/administrarUsuarios/{{nextPage}}"><button class="button button2">Página Siguiente </button></a>
+		  	
+		  	</div>
+		  	{{/hasNext}}
+		  	
+		<p><center>
+			<a href="/menuPrincipal"><button class="button button1"> Atrás </button></a>
+		</center></p>
+	</footer>
+{{>Footer}}

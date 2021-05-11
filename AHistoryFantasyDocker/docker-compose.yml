@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+ dockermysql:
+  image: mysql
+  restart: always
+  environment:
+  - MYSQL_ROOT_PASSWORD=GatoPato115
+  - MYSQL_DATABASE=historyfantasy
+  cap_add:
+  - SYS_NICE
+
+ webA:
+  image: mesientoymecallo99/ahistoryfantasy:app
+  restart: always
+  ports:
+  - "8443:8443"
+  environment:
+  - SPRING_DATASOURCE_URL=jdbc:mysql://dockermysql:3306/historyfantasy?serverTimezone=UTC
+  - IP_SERVER_INTERNO=servidor
+  - SERVER_PORT=8443
+  depends_on:
+  - dockermysql
+  - servidor
+  links:
+  - dockermysql
+  - servidor
+
+ webB:
+  image: mesientoymecallo99/ahistoryfantasy:app
+  restart: always
+  ports:
+  - "8444:8444"
+  environment:
+  - SPRING_DATASOURCE_URL=jdbc:mysql://dockermysql:3306/historyfantasy?serverTimezone=UTC
+  - IP_SERVER_INTERNO=servidor
+  - SERVER_PORT=8444
+  depends_on:
+  - dockermysql
+  - servidor
+  links:
+  - dockermysql
+  - servidor
+
+ servidor:
+  image: mesientoymecallo99/ahistoryfantasy:server
+  restart: always
+  ports:
+  - "9000:9000"
+  environment:
+  - SPRING_DATASOURCE_URL=jdbc:mysql://dockermysql:3306/historyfantasy?serverTimezone=UTC
+  depends_on:
+  - dockermysql
+  links:
+  - dockermysql
+
+ haproxy:
+  image: ahistoryfantasy_haproxy
+  restart: always
+  ports:
+  - "80:80"
+  depends_on:
+  - webA
+  - webB
+  links:
+  - webA
+  - webB
+
+
+
+
+

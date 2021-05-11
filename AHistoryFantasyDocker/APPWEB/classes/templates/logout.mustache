@@ -1,0 +1,11 @@
+{{>Header}}
+
+	<h2>Ha salido de la aplicación con éxito </h2>
+		
+	<p><center><form action="/logout" method="post">
+    	<input type="submit" value="Sign Out" />
+        <input type="hidden" name="_csrf" value="{{token}}"/>
+    </form></center></p>
+
+
+{{>Footer}}
